@@ -7,13 +7,10 @@
     public class MonsterSpeciesBuilder : IMonsterSpeciesBuilder
     {
         private string _name;
-
         private string _info;
-
         //private IMonsterType _type;
         private Option<int> _evolutionLevel = Option.None<int>();
         private readonly IMonsterStats _stats = new MonsterStats(1, 1, 1, 1);
-
         private IMonsterSpecies _evolution;
         //private Option<IGameItem> _gameItem = Option.None<IGameItem>();
         //private List<IMoves> _movesList = new ArrayList<IMoves>();

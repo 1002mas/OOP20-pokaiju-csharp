@@ -4,14 +4,25 @@
     
     public class Monster : IMonster
     {
+        /// <summary>
+        /// Max Experience
+        /// </summary>
         public const int ExpCap = 1000;
+        
+        /// <summary>
+        /// Max level
+        /// </summary>
         public const int MaxLvl = 100;
+        
+        /// <summary>
+        /// Number of max moves
+        /// </summary>
         public const int NumMaxMoves = 4;
+        
         private const int MaxHpStep = 40;
         private const int MinHpStep = 10;
         private const int MaxStatsStep = 10;
         private const int MinStatsStep = 1;
-
         private readonly int _id;
         private int _exp;
         private int _level;

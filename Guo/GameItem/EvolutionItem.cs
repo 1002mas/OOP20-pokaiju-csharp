@@ -9,7 +9,7 @@ public class EvolutionItem : AbstractGameItem
     {
     }
 
-    public override bool Use(Monster m)
+    public override bool Use(Monster? m)
     {
         if (m.GetSpecies().GetEvolutionType() == EvolutionType.Item && m.CanEvolveByItem(this))
         {

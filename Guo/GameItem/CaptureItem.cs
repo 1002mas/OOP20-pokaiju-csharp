@@ -4,11 +4,11 @@ namespace Pokaiju.Guo.GameItem;
 
 public class CaptureItem : AbstractGameItem
 {
-    public CaptureItem(string nameItem, string description) : base(nameItem, description, GameItemTypes.Monsterball)
+    public CaptureItem(string nameItem, string description) : base(nameItem, description, GameItemTypes.MonsterBall)
     {
     }
 
-    public override bool Use(Monster m)
+    public override bool Use(Monster? m)
     {
         return true;
     }

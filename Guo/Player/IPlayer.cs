@@ -1,5 +1,6 @@
 using Guo.Player;
 using Pokaiju.Barattini;
+using Pokaiju.Carafassi.GameMaps;
 using Pokaiju.Guo.GameItem;
 
 namespace Pokaiju.Guo.Player;
@@ -9,12 +10,12 @@ public interface IPlayer
     /// <summary>
     ///     This function returns if team is full or not.
     /// </summary>
-    bool IsTeamFull { get; }
+    bool IsTeamFull { get;}
 
     /// <summary>
     ///     This function returns if Player has changed Map after movement.
     /// </summary>
-    bool HasPlayerChangedMap { get; }
+    bool HasPlayerChangedMap();
 
     /**
      * This function returns if the player has triggered an event.
@@ -120,7 +121,7 @@ public interface IPlayer
     ///     This function sets Player's position.
     ///     <param name="position">New position</param>
     /// </summary>
-    void SetPosition(KeyValuePair<int, int> position);
+    void SetPosition(Tuple<int, int> position);
 
     /// <summary>
     ///     This function evolves Monsters after a battle.
@@ -160,74 +161,60 @@ public interface IPlayer
     IGameMap GetMap();
 
 
-     /// <summary>
-     /// This function returns if Player has interaction with Npc.
-     
-     /// <param name="pos">Interact in the position</param>
-     
-     /// </summary>
-    bool InteractAt(KeyValuePair<int, int> pos);
+    /// <summary>
+    ///     This function returns if Player has interaction with Npc.
+    ///     <param name="pos">Interact in the position</param>
+    /// </summary>
+    bool InteractAt(Tuple<int, int> pos);
 
-      /// <summary>
-     /// This function returns if there was a interaction with Npc. 
-      /// </summary>
+    /// <summary>
+    ///     This function returns if there was a interaction with Npc.
+    /// </summary>
     Optional<NpcSimple> GetLastInteractionWithNpc();
 
-    /**
-     * This function returns a battle if a wild monster attacked while player was
-     * moving or the Player talked with a Npc.
-     * 
-     * @return a battle if any is present
-     */
+    /// <summary>
+    ///     This function returns a battle if a wild monster attacked while player was
+    ///     moving or the Player talked with a Npc.
+    /// </summary>
     Optional<MonsterBattle> GetPlayerBattle();
 
-    /**
-     * This function updates storage.
-     * 
-     * @param storage
-     */
+    /// <summary>
+    ///     This function updates storage.
+    ///     <param name="storage">Storage to be updated</param>
+    /// </summary>
     void SetStorage(MonsterStorage storage);
 
-    /**
-     * This function gets storage.
-     * 
-     * @return storage
-     */
+    /// <summary>
+    ///     This function gets storage.
+    /// </summary>
     MonsterStorage GetStorage();
 
-    /**
-     * This function sets player's gender.
-     * 
-     * @param gender
-     */
+    /// <summary>
+    ///     This function sets player's gender.
+    ///     <param name="gender">Gender to be set</param>
+    /// </summary>
     void SetGender(Gender gender);
 
-    /**
-     * This function sets player's trainerNumber.
-     * 
-     * @param trainerNumber
-     */
+    /// <summary>
+    ///     This function sets player's trainerNumber.
+    ///     <param name="trainerNumber">TrainerNumber to be set</param>
+    /// </summary>
     void SetTrainerNumber(int trainerNumber);
 
-    /**
-     * This function gets a list of Monsters.
-     * 
-     * @return list of Monster
-     */
+    /// <summary>
+    ///     This function gets a list of Monsters.
+    /// </summary>
     List<Monster> GetMonster();
 
-    /**
-     * This function sets a list of Monsters.
-     * 
-     * @param monster List of monster to set
-     */
+    /// <summary>
+    ///     This function sets a list of Monsters.
+    ///     <param name="monster">  List of monster to set</param>
+    /// </summary>
     void SetMonster(List<Monster> monster);
 
-    /**
-     * This function sets a list of GameItems.
-     * 
-     * @return list of GameItems
-     */
+    /// <summary>
+    ///     This function sets a list of GameItems.
+    /// </summary>
     List<IGameItem> GetItems();
 
     /// <summary>

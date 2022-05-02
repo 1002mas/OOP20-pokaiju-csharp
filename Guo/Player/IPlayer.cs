@@ -1,6 +1,9 @@
 using Guo.Player;
+using Optional;
 using Pokaiju.Barattini;
 using Pokaiju.Carafassi.GameMaps;
+using Pokaiju.Castorina.Npc;
+using Pokaiju.Castorina.Storage;
 using Pokaiju.Guo.GameItem;
 
 namespace Pokaiju.Guo.Player;
@@ -22,7 +25,7 @@ public interface IPlayer
      * 
      * @return true if the player has triggered an event
      */
-    bool IsTriggeredEvent { get; }
+    bool IsTriggeredEvent();
 
     /// <summary>
     ///     This function returns all player's monsters.
@@ -170,13 +173,13 @@ public interface IPlayer
     /// <summary>
     ///     This function returns if there was a interaction with Npc.
     /// </summary>
-    Optional<NpcSimple> GetLastInteractionWithNpc();
+    Option<INpcSimple> GetLastInteractionWithNpc();
 
     /// <summary>
     ///     This function returns a battle if a wild monster attacked while player was
     ///     moving or the Player talked with a Npc.
     /// </summary>
-    Optional<MonsterBattle> GetPlayerBattle();
+    Option<MonsterBattle> GetPlayerBattle();
 
     /// <summary>
     ///     This function updates storage.
@@ -213,7 +216,7 @@ public interface IPlayer
     void SetMonster(List<Monster> monster);
 
     /// <summary>
-    ///     This function sets a list of GameItems.
+    ///     This function gets a list of GameItems.
     /// </summary>
     List<IGameItem> GetItems();
 

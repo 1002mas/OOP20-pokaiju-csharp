@@ -6,7 +6,7 @@
         private const string AttackString = "ATTACK";
         private const string DefenseString = "DEFENSE";
         private const string SpeedString = "SPEED";
-        private Dictionary<string, int> _statsMap = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> _statsMap = new Dictionary<string, int>();
 
         /// <summary>
         /// MonsterStats constructor

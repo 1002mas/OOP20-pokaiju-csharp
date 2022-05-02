@@ -16,7 +16,7 @@
         /// <param name="evolutionLevel">evolutionLevel</param>
         public MonsterSpeciesByLevel(string name, string info, /*IMonsterType type,*/ IMonsterStats stats,
             IMonsterSpecies evolution, int evolutionLevel /*,List<Moves> movesList*/) 
-            : base(name, info, /*type,*/ stats, Option.Some<IMonsterSpecies>(evolution), EvolutionType.Level/*, movesList*/)
+            : base(name, info, /*type,*/ stats, Option.Some<>(evolution), EvolutionType.Level/*, movesList*/)
         {
             this._evolutionLevel = evolutionLevel;
         }

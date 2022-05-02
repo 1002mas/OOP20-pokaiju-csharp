@@ -17,9 +17,9 @@ namespace Pokaiju.Barattini
         private const int HighExp = 5_863_655;
         private const string MonsterName = "Paperino";
 
-        private IMonster _monster;
-        private IMonster _monsterByItem;
-        private IMonster _monsterByLevelAndItem;
+        private IMonster? _monster;
+        private IMonster? _monsterByItem;
+        private IMonster? _monsterByLevelAndItem;
 
         [SetUp]
         public void SetUp()
@@ -91,18 +91,18 @@ namespace Pokaiju.Barattini
         [Test]
         public void FirstStats()
         {
-            Assert.AreEqual(1, _monster.GetLevel());
-            Assert.AreEqual(0, _monster.GetExp());
-            Assert.AreEqual(Hlt, _monster.GetStats().Health);
+            Assert.AreEqual(1, _monster?.GetLevel());
+            Assert.AreEqual(0, _monster?.GetExp());
+            Assert.AreEqual(Hlt, _monster?.GetStats().Health);
         }
 
         [Test]
         public void EvolvingByLevel()
         {
-            _monster.IncExp((FirstEvolutionLevel - 2) * Monster.ExpCap);
-            Assert.AreEqual("Pippo", _monster.GetName());
-            _monster.IncExp(Monster.ExpCap);
-            if (_monster.CanEvolveByLevel())
+            _monster?.IncExp((FirstEvolutionLevel - 2) * Monster.ExpCap);
+            Assert.AreEqual("Pippo", _monster?.GetName());
+            _monster?.IncExp(Monster.ExpCap);
+            if ((bool)_monster?.CanEvolveByLevel())
             {
                 _monster.Evolve();
             }
@@ -125,9 +125,9 @@ namespace Pokaiju.Barattini
         public void EvolutionByRightItem()
         {
             var holdedItemRight = new EvolutionItem("PietraPaperino", "desc2");
-            Assert.AreEqual("Paperino", _monsterByItem.GetName());
-            Assert.True(_monsterByItem.CanEvolveByItem(holdedItemRight));
-            if (_monsterByItem.CanEvolveByItem(holdedItemRight))
+            Assert.AreEqual("Paperino", _monsterByItem?.GetName());
+            Assert.True(_monsterByItem?.CanEvolveByItem(holdedItemRight));
+            if ((bool)_monsterByItem?.CanEvolveByItem(holdedItemRight))
             {
                 _monsterByItem.Evolve();
             }
@@ -138,9 +138,9 @@ namespace Pokaiju.Barattini
         public void EvolutionByWrongItem()
         {
             var holdedItemWrong = new EvolutionItem("PietraPippo", "desc3");
-            Assert.AreEqual("Paperino", _monsterByItem.GetName());
-            Assert.False(_monsterByItem.CanEvolveByItem(holdedItemWrong));
-            if (_monsterByItem.CanEvolveByItem(holdedItemWrong))
+            Assert.AreEqual("Paperino", _monsterByItem?.GetName());
+            Assert.False(_monsterByItem?.CanEvolveByItem(holdedItemWrong));
+            if ((bool)_monsterByItem?.CanEvolveByItem(holdedItemWrong))
             {
                 _monsterByItem.Evolve();
             }
@@ -152,10 +152,10 @@ namespace Pokaiju.Barattini
         public void EvolveByLevelAndItem()
         {
             var holdedItem = new EvolutionItem("Pietra" + MonsterName, "desc4");
-            _monsterByLevelAndItem.IncExp((FirstEvolutionLevel - 2) * Monster.ExpCap);
-            Assert.AreEqual("Topolino", _monsterByLevelAndItem.GetName());
-            _monsterByLevelAndItem.IncExp(Monster.ExpCap);
-            if (_monsterByLevelAndItem.CanEvolveByLevel())
+            _monsterByLevelAndItem?.IncExp((FirstEvolutionLevel - 2) * Monster.ExpCap);
+            Assert.AreEqual("Topolino", _monsterByLevelAndItem?.GetName());
+            _monsterByLevelAndItem?.IncExp(Monster.ExpCap);
+            if ((bool)_monsterByLevelAndItem?.CanEvolveByLevel())
             {
                 _monsterByLevelAndItem.Evolve();
             }
@@ -179,7 +179,7 @@ namespace Pokaiju.Barattini
         [Test]
         public void SpeciesBuilderTest()
         {
-            Assert.AreEqual(_monster.GetSpecies().GetName(), "Pippo");
+            Assert.AreEqual(_monster?.GetSpecies().GetName(), "Pippo");
         }
     }
 }

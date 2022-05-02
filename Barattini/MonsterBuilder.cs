@@ -11,7 +11,7 @@
         //private List<Tuple<Moves, int>> _movesList;
         private bool _isWild;
         private int _level = MinLevel;
-        private IMonsterSpecies _species;
+        private IMonsterSpecies? _species;
         private readonly IMonsterStats _stats = new MonsterStats(-1, -1, -1, -1);
 
         static MonsterBuilder()
@@ -91,7 +91,7 @@
         {
             _movesList = new ArrayList(movesList);
             _movesList = this._movesList.subList(0,
-                movesList.Count() < Monster.NumMaxMoves ? movesList.Count() : Monster.NumMaxMoves);
+                movesList.Count < Monster.NumMaxMoves ? movesList.Count : Monster.NumMaxMoves);
             return this;
         }*/
 
@@ -117,17 +117,12 @@
             {
                 monster.LevelUp();
             }
-
             monster.IncExp(_exp);
-            foreach (var v in _stats.GetStatsAsMap())
+            foreach (var v in _stats.GetStatsAsMap().Where(stat => stat.Value > 0))
             {
-                if (v.Value > 0)
-                {
-                    monster.GetStats().GetStatsAsMap().Add(v.Key, v.Value);
-                    monster.GetMaxStats().GetStatsAsMap().Add(v.Key, v.Value);
-                }
+                monster.GetStats().GetStatsAsMap()[v.Key] = v.Value;
+                monster.GetMaxStats().GetStatsAsMap()[v.Key] = v.Value;
             }
-
             return monster;
         }
     }

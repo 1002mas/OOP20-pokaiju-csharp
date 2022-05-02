@@ -155,7 +155,7 @@ namespace Pokaiju.Barattini
         /// <summary>
         /// This function returns if the monster is evolving by item.
         /// </summary>
-        /// <param name="item">item</param>
+        /// <param name="item">evolution item</param>
         /// <returns>if monster evolves by item</returns>
         bool CanEvolveByItem(IGameItem item);
 

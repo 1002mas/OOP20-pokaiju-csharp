@@ -8,12 +8,12 @@ namespace Pokaiju.Barattini
 
     public class MonsterSpeciesBuilder : IMonsterSpeciesBuilder
     {
-        private string _name;
-        private string _info;
+        private string? _name;
+        private string? _info;
         //private IMonsterType _type;
         private Option<int> _evolutionLevel = Option.None<int>();
         private readonly IMonsterStats _stats = new MonsterStats(1, 1, 1, 1);
-        private IMonsterSpecies _evolution;
+        private IMonsterSpecies? _evolution;
         private Option<IGameItem> _gameItem = Option.None<IGameItem>();
         //private List<IMoves> _movesList = new ArrayList<IMoves>();
 
@@ -97,24 +97,31 @@ namespace Pokaiju.Barattini
         /// <inheritdoc cref="IMonsterSpeciesBuilder.Build"/>
         public IMonsterSpecies Build()
         {
-            if (_name == null || _info == null /*|| _type == null*/ ||
-                _evolution != null && !_evolutionLevel.HasValue && !_gameItem.HasValue /*||
+            if (_name is null || _info is null /*|| _type is null*/ ||
+                _evolution is not null && !_evolutionLevel.HasValue && !_gameItem.HasValue /*||
             _movesList.IsEmpty()*/)
             {
                 throw new IncompleteInitialization();
             }
 
-            if (this._evolutionLevel.HasValue)
+            if (_evolution is null)
+            {
+                return new MonsterSpeciesSimple(_name, _info, /*_type,*/ _stats /*, _movesList*/);
+            }
+
+            if (_evolutionLevel.HasValue)
             {
                 return new MonsterSpeciesByLevel(_name, _info, _stats, _evolution,
                     _evolutionLevel.ValueOrFailure() /*, _movesList*/);
             }
 
-            if (this._gameItem.HasValue)
+            if (_gameItem.HasValue)
             {
-                return new MonsterSpeciesByItem(_name, _info, _stats, _evolution, _gameItem.ValueOrFailure()/*, _movesList*/);
+                return new MonsterSpeciesByItem(_name, _info, _stats, _evolution,
+                    _gameItem.ValueOrFailure() /*, _movesList*/);
             }
-            return new MonsterSpeciesSimple(_name, _info, /*_type,*/ _stats /*, _movesList*/);
+            
+            throw new IncompleteInitialization();
         }
     }
 }

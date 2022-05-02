@@ -3,35 +3,33 @@
 namespace Pokaiju.Barattini
 {
     using Optional.Unsafe;
-    
+
     public class Monster : IMonster
     {
         /// <summary>
         /// Max Experience
         /// </summary>
         public const int ExpCap = 1000;
-        
+
         /// <summary>
         /// Max level
         /// </summary>
         public const int MaxLvl = 100;
-        
+
         /// <summary>
         /// Number of max moves
         /// </summary>
         public const int NumMaxMoves = 4;
-        
+
         private const int MaxHpStep = 40;
         private const int MinHpStep = 10;
         private const int MaxStatsStep = 10;
         private const int MinStatsStep = 1;
-        private readonly int _id;
         private int _exp;
         private int _level;
         private readonly bool _isWild;
 
         private IMonsterSpecies _species;
-
         //private List<Tuple<Moves, int>> _movesList;
         private readonly IMonsterStats _stats;
         private readonly IMonsterStats _maxStats;
@@ -105,7 +103,7 @@ namespace Pokaiju.Barattini
         {
             return this._level;
         }
-        
+
         private void SetLevel(int level)
         {
             this._level = level <= MaxLvl ? level : MaxLvl;
@@ -178,63 +176,87 @@ namespace Pokaiju.Barattini
 
         /*
          /// <inheritdoc cref="IMonster.GetMoves"/>
-         public IMoves GetMoves()
+         public IMoves GetMoves(int index)
         {
-            throw new NotImplementedException();
+            if(index is > GetNumberOfMoves() or < 0)
+            {
+                throw new ArgumentException();
+            }
+            return _movesList.Get(index).GetFirst();
         }*/
 
         /*/// <inheritdoc cref="IMonster.GetAllMoves"/>
          public List<IMoves> GetAllMoves()
         {
-            throw new NotImplementedException();
+            return Collections.unmodifiableList(movesList.stream().map(i -> i.getFirst()).collect(Collectors.toList()));
         }*/
 
         /*/// <inheritdoc cref="IMonster.GetCurrentPpByMove"/>
          public int GetCurrentPpByMove(IMoves move)
         {
-            throw new NotImplementedException();
+            return movesList.stream().filter(i -> i.getFirst().equals(move)).findAny().get().getSecond();
         }*/
 
         /*/// <inheritdoc cref="IMonster.IsOutOfPp"/>
          public bool IsOutOfPp(IMoves move)
         {
-            throw new NotImplementedException();
+            return movesList.stream().filter(i -> i.getFirst().equals(move)).findAny().get().getSecond() <= 0;
         }*/
 
         /*/// <inheritdoc cref="IMonster.RestoreMovePp"/>
          public void RestoreMovePp(IMoves move)
         {
-            throw new NotImplementedException();
+            final int index = getIndexOfMove(move);
+            final Pair<Moves, Integer> p = movesList.get(index);
+            movesList.remove(index);
+            movesList.add(index, new Pair<>(p.getFirst(), p.getFirst().getPP()));
         }*/
 
         /*/// <inheritdoc cref="IMonster.RestoreAllMovesPp"/>
          public void RestoreAllMovesPp()
         {
-            throw new NotImplementedException();
+            final List<Moves> moves = movesList.stream().map(i -> i.getFirst()).collect(Collectors.toList());
+            for (final var p : moves) {
+            restoreMovePP(p);
+        }
         }*/
 
         /*/// <inheritdoc cref="IMonster.DecMovePp"/>
          public void DecMovePp(IMoves move)
         {
-            throw new NotImplementedException();
+            final int index = getIndexOfMove(move);
+            final Pair<Moves, Integer> p = movesList.get(index);
+            movesList.remove(index);
+            movesList.add(index, new Pair<>(p.getFirst(), p.getSecond() - 1));
         }*/
+        
+        /*
+        private int GetIndexOfMove(IMoves move) {
+            for (int i = 0; i < this.movesList.size(); i++) {
+                if (movesList.get(i).getFirst().equals(move)) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        */
 
         /*/// <inheritdoc cref="IMonster.IsMoveSetFull"/>
          public bool IsMoveSetFull()
         {
-            throw new NotImplementedException();
+            return this.movesList.size() == NUM_MAX_MOVES;
         }*/
 
         /*/// <inheritdoc cref="IMonster.GetNumberOfMoves"/>
          public int GetNumberOfMoves()
         {
-            throw new NotImplementedException();
+            return this.movesList.size();
         }*/
 
         /*/// <inheritdoc cref="IMonster.GetType"/>
          public MonsterType GetType()
         {
-            throw new NotImplementedException();
+            return this.species.getType();
         }*/
 
         /// <inheritdoc cref="IMonster.CanEvolveByLevel"/>
@@ -245,11 +267,11 @@ namespace Pokaiju.Barattini
         }
 
         /// <inheritdoc cref="IMonster.CanEvolveByItem"/>
-         public bool CanEvolveByItem(IGameItem item)
+        public bool CanEvolveByItem(IGameItem item)
         {
             return _species.GetEvolution().HasValue && this._species.GetEvolutionType() == EvolutionType.Item
-                                                      && item.Equals(((MonsterSpeciesByItem) _species).GetItem())
-                                                      && item.GetGameType() == GameItemTypes.EvolutionTool;
+                                                    && item.Equals(((MonsterSpeciesByItem)_species).GetItem())
+                                                    && item.GetGameType() == GameItemTypes.EvolutionTool;
         }
 
         /// <inheritdoc cref="IMonster.Evolve"/>
@@ -281,28 +303,27 @@ namespace Pokaiju.Barattini
 
         public override int GetHashCode()
         {
-            return _id.GetHashCode();
+            return Id.GetHashCode();
         }
 
-        protected bool Equals(Monster other)
+        private bool Equals(IMonster other)
         {
-            return _id == other._id;
+            return Id == other.Id;
         }
 
         public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((Monster)obj);
+            return obj.GetType() == this.GetType() && Equals((IMonster)obj);
         }
 
         public override string ToString()
         {
-            return this._species.ToString() + "\nHealth: " + this._stats.Health + "\nAttack: " + this._stats.Attack
-                   + "\nDefense: " + this._stats.Defense + "\nSpeed: " + this._stats.Speed + "\nLevel: "
-                   + this._level + "\nExp: " + this._exp + /*"\nMoves:" + this._movesList.ToString() +*/ "\nIsWild: "
-                   + this._isWild + "\n";
+            return _species + "\nHealth: " + _stats.Health + "\nAttack: " + _stats.Attack
+                   + "\nDefense: " + _stats.Defense + "\nSpeed: " + _stats.Speed + "\nLevel: "
+                   + _level + "\nExp: " + _exp + /*"\nMoves:" + _movesList.ToString() +*/ "\nIsWild: "
+                   + _isWild + "\n";
         }
     }
 }

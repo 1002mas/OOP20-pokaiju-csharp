@@ -41,7 +41,7 @@
         /// <param name="info">info</param>
         /// <param name="type">type</param>
         /// <param name="stats">stats</param>
-        /// <param name="movesList">movesList</param>
+        /// <param name="movesList">moves list</param>
         public MonsterSpeciesSimple(string name, string info, /*IMonsterType type,*/
             IMonsterStats stats /*, List<Moves> movesList*/)
             : this(name, info, stats, Option.None<IMonsterSpecies>(), EvolutionType.None)
@@ -63,7 +63,7 @@
         /*/// <inheritdoc cref="IMonsterSpecies.GetType"/>
          public MonsterType getType()
         {
-            throw new NotImplementedException();
+            return this.type;
         }*/
 
         /// <inheritdoc cref="IMonsterSpecies.GetBaseStats"/>
@@ -87,7 +87,7 @@
         /*/// <inheritdoc cref="IMonsterSpecies.GetAllLearnableMoves"/>
          public List<IMoves> GetAllLearnableMoves()
         {
-            throw new NotImplementedException();
+            return Collections.unmodifiableList(this.movesList);
         }*/
 
         public override string ToString()

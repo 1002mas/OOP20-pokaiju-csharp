@@ -1,8 +1,12 @@
 using Optional;
 using Pokaiju.Barattini;
+using Pokaiju.Carafassi.GameEvents;
 
 namespace Pokaiju.Carafassi.GameMaps
 {
+    /// <summary>
+    /// It elaborates raw data of a IGameMapData.
+    /// </summary>
     public interface IGameMap
     {
         /// <summary>
@@ -26,6 +30,8 @@ namespace Pokaiju.Carafassi.GameMaps
         /// It changes map if any map is linked at the given position.
         /// </summary>
         /// <param name="playerPosition">The position where you want to change map.</param>
+        /// <exception cref="ArgumentException">The map cannot be changed due to wrong position
+        /// or missing linked map.</exception>
         void ChangeMap(Tuple<int, int> playerPosition);
 
         /// <summary>
@@ -52,8 +58,7 @@ namespace Pokaiju.Carafassi.GameMaps
         /// It returns the game event at the given position in the current map if any is present.
         /// </summary>
         /// <param name="position">The position where event should trigger.</param>
-        // TODO use GameEvent
-        Option<int> GetEventAt(Tuple<int, int> position);
+        Option<IGameEvent> GetEventAt(Tuple<int, int> position);
 
         /// <summary>
         /// It returns a list of all enabled npcs in the current map.

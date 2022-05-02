@@ -6,46 +6,59 @@ namespace Pokaiju.Guo.Player;
 
 public interface IPlayer
 {
- /// <summary>
- ///     This function returns the position of the Player.
- ///     @return Player's position
- /// </summary>
- KeyValuePair<int, int> GetPosition();
-
-    /// <summary>
-    ///     This function returns all player's monsters.
-    /// </summary>
-    List<Monster> GetAllMonsters { get; }
-
-    /// <summary>
-    ///     This function returns all player's GameItems
-    /// </summary>
-    Dictionary<IGameItem, int> GetAllItems { get; }
-
-    /// <summary>
-    ///     This function returns Player's name.
-    /// </summary>
-    string GetName { get; }
-
-    /// <summary>
-    ///     This function returns Player's TrainerNumber.
-    /// </summary>
-    int GetTrainerNumber { get; }
-
-    /// <summary>
-    ///     This function returns Player's gender.
-    /// </summary>
-    Gender GetGender { get; }
-
-    /// <summary>
-    ///     This function returns Player's Money.
-    /// </summary>
-    int GetMoney { get; }
-
     /// <summary>
     ///     This function returns if team is full or not.
     /// </summary>
     bool IsTeamFull { get; }
+
+    /// <summary>
+    ///     This function returns if Player has changed Map after movement.
+    /// </summary>
+    bool HasPlayerChangedMap { get; }
+
+    /**
+     * This function returns if the player has triggered an event.
+     * 
+     * @return true if the player has triggered an event
+     */
+    bool IsTriggeredEvent { get; }
+
+    /// <summary>
+    ///     This function returns all player's monsters.
+    /// </summary>
+    List<Monster> GetAllMonsters();
+
+
+    /// <summary>
+    ///     This function returns all player's GameItems
+    /// </summary>
+    Dictionary<IGameItem, int> GetAllItems();
+
+    /// <summary>
+    ///     This function returns Player's name.
+    /// </summary>
+    string GetName();
+
+    /// <summary>
+    ///     This function returns Player's TrainerNumber.
+    /// </summary>
+    int GetTrainerNumber();
+
+    /// <summary>
+    ///     This function returns Player's gender.
+    /// </summary>
+    Gender GetGender();
+
+    /// <summary>
+    ///     This function returns Player's Money.
+    /// </summary>
+    int GetMoney();
+
+    /// <summary>
+    ///     This function returns the position of the Player.
+    ///     @return Player's position
+    /// </summary>
+    Tuple<int, int> GetPosition();
 
     /// <summary>
     ///     This function adds new GameItem to player's bag.
@@ -141,33 +154,23 @@ public interface IPlayer
     /// </summary>
     bool MoveRight();
 
-    /**
-     * This function gets the GameMap.
-     * 
-     * @return map
-     */
+    /// <summary>
+    ///     This function gets the GameMap.
+    /// </summary>
     IGameMap GetMap();
 
-    /**
-     * This function returns if Player has changed Map after movement.
-     * 
-     * @return true if changed map
-     */
-    bool HasPlayerChangedMap();
 
-    /**
-     * This function returns if Player has interaction with Npc.
-     * 
-     * @param pos
-     * @return true if there is a Npc
-     */
+     /// <summary>
+     /// This function returns if Player has interaction with Npc.
+     
+     /// <param name="pos">Interact in the position</param>
+     
+     /// </summary>
     bool InteractAt(KeyValuePair<int, int> pos);
 
-    /**
-     * This function returns if there was a interaction with Npc.
-     * 
-     * @return last interacted Npc
-     */
+      /// <summary>
+     /// This function returns if there was a interaction with Npc. 
+      /// </summary>
     Optional<NpcSimple> GetLastInteractionWithNpc();
 
     /**
@@ -191,13 +194,6 @@ public interface IPlayer
      * @return storage
      */
     MonsterStorage GetStorage();
-
-    /**
-     * This function returns if the player has triggered an event.
-     * 
-     * @return true if the player has triggered an event
-     */
-    bool IsTriggeredEvent();
 
     /**
      * This function sets player's gender.

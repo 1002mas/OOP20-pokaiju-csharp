@@ -11,4 +11,9 @@
       <PackageReference Include="Optional" Version="5.0.0-alpha" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Guo\GameItem" />
+      <Folder Include="Guo\Player" />
+    </ItemGroup>
+
 </Project>

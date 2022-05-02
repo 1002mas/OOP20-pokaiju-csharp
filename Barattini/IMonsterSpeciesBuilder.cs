@@ -1,4 +1,6 @@
-﻿namespace Pokaiju.Barattini
+﻿using Pokaiju.Guo.GameItem;
+
+namespace Pokaiju.Barattini
 {
     using Microsoft.VisualBasic.CompilerServices;
     
@@ -68,15 +70,13 @@
         /// <param name="speed">speed</param>
         /// <returns>IMonsterSpeciesBuilder</returns>
         IMonsterSpeciesBuilder Speed(int speed);
-
-        /*
+        
         /// <summary>
         /// Build species item
         /// </summary>
         /// <param name="gameItem">gameItem</param>
         /// <returns>IMonsterSpeciesBuilder</returns>
         IMonsterSpeciesBuilder GameItem(IGameItem gameItem);
-        */
 
         /*
         /// <summary>

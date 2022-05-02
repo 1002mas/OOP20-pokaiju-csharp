@@ -1,4 +1,6 @@
-﻿namespace Pokaiju.Barattini
+﻿using Pokaiju.Guo.GameItem;
+
+namespace Pokaiju.Barattini
 {
     using Optional.Unsafe;
     
@@ -242,11 +244,13 @@
                    this._level >= ((MonsterSpeciesByLevel)_species).GetEvolutionLevel();
         }
 
-        /*/// <inheritdoc cref="IMonster.CanEvolveByItem"/>
+        /// <inheritdoc cref="IMonster.CanEvolveByItem"/>
          public bool CanEvolveByItem(IGameItem item)
         {
-            throw new NotImplementedException();
-        }*/
+            return _species.GetEvolution().HasValue && this._species.GetEvolutionType() == EvolutionType.Item
+                                                      && item.Equals(((MonsterSpeciesByItem) _species).GetItem())
+                                                      && item.GetGameType() == GameItemTypes.EvolutionTool;
+        }
 
         /// <inheritdoc cref="IMonster.Evolve"/>
         public void Evolve()

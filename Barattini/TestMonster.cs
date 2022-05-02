@@ -1,7 +1,8 @@
 ﻿namespace Pokaiju.Barattini
 {
-    interface Barattini1
+    public class TestMonster
     {
-        
+    
     }
 }
+

@@ -1,4 +1,5 @@
 ﻿using Pokaiju.Guo.GameItem;
+using Pokaiju.Pierantoni;
 
 namespace Pokaiju.Barattini
 {
@@ -80,7 +81,7 @@ namespace Pokaiju.Barattini
         /// <returns>if the monster is alive</returns>
         bool IsAlive();
 
-        /*
+        
         /// <summary>
         /// This function returns a move from a list of moves.
         /// </summary>
@@ -93,7 +94,7 @@ namespace Pokaiju.Barattini
         /// This function returns the list of all moves.
         /// </summary>
         /// <returns>all monster moves</returns>
-        List<IMoves> GetAllMoves();
+        IList<IMoves> GetAllMoves();
     
         /// <summary>
         /// This function returns the current PP of the move.
@@ -142,9 +143,7 @@ namespace Pokaiju.Barattini
         /// This function returns the type of the monster.
         /// </summary>
         /// <returns>type of the monster</returns>
-        MonsterType GetType();
-        
-        */
+        MonsterType GetMonsterType();
 
         /// <summary>
         /// This function returns true if monster evolve by level, false otherwise.

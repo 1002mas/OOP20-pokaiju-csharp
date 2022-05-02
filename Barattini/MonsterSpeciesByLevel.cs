@@ -1,4 +1,6 @@
-﻿namespace Pokaiju.Barattini
+﻿using Pokaiju.Pierantoni;
+
+namespace Pokaiju.Barattini
 {
     using Optional;
 
@@ -11,12 +13,14 @@
         /// </summary>
         /// <param name="name">name</param>
         /// <param name="info">info</param>
+        /// <param name="type">type</param>
         /// <param name="stats">stats</param>
         /// <param name="evolution">evolution</param>
         /// <param name="evolutionLevel">evolutionLevel</param>
-        public MonsterSpeciesByLevel(string name, string info, /*IMonsterType type,*/ IMonsterStats stats,
-            IMonsterSpecies evolution, int evolutionLevel /*,List<Moves> movesList*/) 
-            : base(name, info, /*type,*/ stats, Option.Some<>(evolution), EvolutionType.Level/*, movesList*/)
+        /// <param name="movesList">movesList</param>
+        public MonsterSpeciesByLevel(string name, string info, MonsterType type, IMonsterStats stats,
+            IMonsterSpecies evolution, int evolutionLevel, IList<IMoves> movesList) 
+            : base(name, info, type, stats, Option.Some<>(evolution), EvolutionType.Level, movesList)
         {
             this._evolutionLevel = evolutionLevel;
         }

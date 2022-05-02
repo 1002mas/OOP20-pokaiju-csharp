@@ -1,4 +1,6 @@
-﻿namespace Pokaiju.Barattini
+﻿using Pokaiju.Pierantoni;
+
+namespace Pokaiju.Barattini
 {
     using Microsoft.VisualBasic.CompilerServices;
     
@@ -54,15 +56,13 @@
         /// <param name="isWild">isWild</param>
         /// <returns>IMonsterBuilder</returns>
         IMonsterBuilder Wild(bool isWild);
-
-        /*
+        
         /// <summary>
         /// Build monster's moves.
         /// </summary>
         /// <param name="movesList">movesList</param>
         /// <returns>IMonsterBuilder</returns>
-        IMonsterBuilder MovesList(List<Tuple<IMoves, int>> movesList);
-        */
+        IMonsterBuilder MovesList(IList<Tuple<IMoves, int>> movesList);
 
         /// <summary>
         /// Build monster's species.

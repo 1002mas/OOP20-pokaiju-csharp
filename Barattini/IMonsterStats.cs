@@ -26,6 +26,6 @@
         /// This function returns monster statistics as map.
         /// </summary>
         /// <returns>statistics map</returns>
-        Dictionary<string, int> GetStatsAsMap();
+        IDictionary<string, int> GetStatsAsMap();
     }
 }

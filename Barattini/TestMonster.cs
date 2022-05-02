@@ -1,5 +1,5 @@
-﻿using Optional;
-using Pokaiju.Guo.GameItem;
+﻿using Pokaiju.Guo.GameItem;
+using Pokaiju.Pierantoni;
 
 namespace Pokaiju.Barattini
 {
@@ -24,68 +24,69 @@ namespace Pokaiju.Barattini
         [SetUp]
         public void SetUp()
         {
-            /*
-            List<IMoves> monsterSpeciesMoves;
-            List<Tuple<IMoves, Integer>> listOfMoves;
             IMoves m1 = new Moves("Braciere", 50, MonsterType.Fire, 10);
             IMoves m2 = new Moves("Attacco", 10, MonsterType.Fire, 10);
             IMoves m3 = new Moves("Volo", 50, MonsterType.Fire, 10);
             IMoves m4 = new Moves("Fossa", 50, MonsterType.Fire, 10);
-            
-            listOfMoves = List.of(new Tuple<>(m1, 10), new Tuple<>(m2, 10), new Tuple<>(m3, 10), new Tuple<>(m4, 10));
-            monsterSpeciesMoves = List<IMoves>(m1, m2, m3, m4);
-            */
+
+            IList<Tuple<IMoves, int>> listOfMoves = new List<Tuple<IMoves, int>>
+            {
+                new Tuple<IMoves, int>(m1, 10), new Tuple<IMoves, int>(m2, 10),
+                new Tuple<IMoves, int>(m3, 10), new Tuple<IMoves, int>(m4, 10)
+            };
+
+            IList<IMoves> monsterSpeciesMoves = new List<IMoves>{m1, m2, m3, m4};
 
             // LEVEL TEST INITIALIZATION
             var secondEvolution = new MonsterSpeciesBuilder().Name("Pippo3").Info("Info3")
-                /*.MonsterType(MonsterType.Fire)*/.Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd)
-                /*.MovesList(monsterSpeciesMoves)*/.Build();
+                .MonsterType(MonsterType.Fire).Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd)
+                .MovesList(monsterSpeciesMoves).Build();
 
             var firstEvolution = new MonsterSpeciesBuilder().Name("Pippo2").Info("Info2")
-                /*.monsterType(MonsterType.Fire)*/.Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd)
-                .Evolution(secondEvolution).EvolutionLevel(SecondEvolutionLevel) /*.movesList(monsterSpeciesMoves)*/
+                .MonsterType(MonsterType.Fire).Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd)
+                .Evolution(secondEvolution).EvolutionLevel(SecondEvolutionLevel).MovesList(monsterSpeciesMoves)
                 .Build();
 
             var species = new MonsterSpeciesBuilder().Name("Pippo").Info("Info")
-                /*.MonsterType(MonsterType.Fire)*/.Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd)
+                .MonsterType(MonsterType.Fire).Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd)
                 .Evolution(firstEvolution)
-                .EvolutionLevel(FirstEvolutionLevel) /*.movesList(monsterSpeciesMoves)*/.Build();
+                .EvolutionLevel(FirstEvolutionLevel).MovesList(monsterSpeciesMoves).Build();
 
             _monster = new MonsterBuilder().Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd).Wild(false)
-                .Species(species) /*.MovesList(listOfMoves)*/.Build();
+                .Species(species).MovesList(listOfMoves).Build();
 
             // ITEM TEST INITIALIZATION
             IGameItem neededItem = new EvolutionItem("Pietra" + MonsterName, "desc1");
 
             var firstEvolutionByItem = new MonsterSpeciesBuilder().Name(MonsterName + "2")
                 .Info("Info2")
-                /*.MonsterType(MonsterType.Water)*/.Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd)
-                /*.MovesList(monsterSpeciesMoves)*/.Build();
+                .MonsterType(MonsterType.Water).Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd)
+                .MovesList(monsterSpeciesMoves).Build();
 
             var speciesByItem = new MonsterSpeciesBuilder().Name(MonsterName).Info("Info")
-                /*.MonsterType(MonsterType.WATER)*/.Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd)
-                .Evolution(firstEvolutionByItem).GameItem(neededItem) /*.MovesList(monsterSpeciesMoves)*/.Build();
+                .MonsterType(MonsterType.Water).Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd)
+                .Evolution(firstEvolutionByItem).GameItem(neededItem).MovesList(monsterSpeciesMoves).Build();
 
             _monsterByItem = new MonsterBuilder().Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd).Wild(false)
-                .Species(speciesByItem) /*.MovesList(listOfMoves)*/.Build();
+                .Species(speciesByItem).MovesList(listOfMoves).Build();
 
             // FIRST EVOLUTION WITH LEVEL, SECOND WITH ITEM INITIALIZATION
             var secondEvolutionByLevelAndItem = new MonsterSpeciesBuilder().Name("Topolino3")
-                .Info("Info3") /*.MonsterType(MonsterType.Grass)*/.Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd)
-                /*.MovesList(monsterSpeciesMoves)*/.Build();
+                .Info("Info3").MonsterType(MonsterType.Grass).Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd)
+                .MovesList(monsterSpeciesMoves).Build();
 
             var firstEvolutionByLevelAndItem = new MonsterSpeciesBuilder().Name("Topolino2")
-                .Info("Info2") /*.MonsterType(MonsterType.Grass)*/.Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd)
-                .Evolution(secondEvolutionByLevelAndItem).GameItem(neededItem) /*.MovesList(monsterSpeciesMoves)*/
+                .Info("Info2").MonsterType(MonsterType.Grass).Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd)
+                .Evolution(secondEvolutionByLevelAndItem).GameItem(neededItem).MovesList(monsterSpeciesMoves)
                 .Build();
 
             var speciesByLevelAndItem = new MonsterSpeciesBuilder().Name("Topolino").Info("Info")
-                /*.monsterType(MonsterType.Grass)*/.Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd)
+                .MonsterType(MonsterType.Grass).Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd)
                 .Evolution(firstEvolutionByLevelAndItem).EvolutionLevel(FirstEvolutionLevel)
-                /*.MovesList(monsterSpeciesMoves)*/.Build();
+                .MovesList(monsterSpeciesMoves).Build();
 
             _monsterByLevelAndItem = new MonsterBuilder().Health(Hlt).Attack(Atk).Defense(Dfs).Speed(Spd)
-                .Wild(false).Species(speciesByLevelAndItem) /*.MovesList(listOfMoves)*/.Build();
+                .Wild(false).Species(speciesByLevelAndItem).MovesList(listOfMoves).Build();
         }
 
         [Test]
@@ -106,6 +107,7 @@ namespace Pokaiju.Barattini
             {
                 _monster.Evolve();
             }
+
             Assert.AreEqual("Pippo2", _monster.GetName());
             _monster.IncExp((SecondEvolutionLevel - _monster.GetLevel() - 1) * Monster.ExpCap);
             _monster.IncExp(Monster.ExpCap);
@@ -113,6 +115,7 @@ namespace Pokaiju.Barattini
             {
                 _monster.Evolve();
             }
+
             Assert.AreEqual("Pippo3", _monster.GetName());
             Assert.AreEqual(SecondEvolutionLevel, _monster.GetLevel());
             Assert.AreEqual(0, _monster.GetExp());
@@ -131,6 +134,7 @@ namespace Pokaiju.Barattini
             {
                 _monsterByItem.Evolve();
             }
+
             Assert.AreEqual(MonsterName + "2", _monsterByItem.GetName());
         }
 
@@ -144,6 +148,7 @@ namespace Pokaiju.Barattini
             {
                 _monsterByItem.Evolve();
             }
+
             Assert.AreNotEqual(MonsterName + "2", _monsterByItem.GetName());
             Assert.AreEqual(MonsterName, _monsterByItem.GetName());
         }
@@ -159,6 +164,7 @@ namespace Pokaiju.Barattini
             {
                 _monsterByLevelAndItem.Evolve();
             }
+
             Assert.AreEqual("Topolino2", _monsterByLevelAndItem.GetName());
             _monsterByLevelAndItem
                 .IncExp((SecondEvolutionLevel - _monsterByLevelAndItem.GetLevel() - 1) * Monster.ExpCap);

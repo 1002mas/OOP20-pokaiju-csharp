@@ -1,9 +1,10 @@
-﻿using Pokaiju.Guo.GameItem;
+﻿using System.Collections.Immutable;
+using Pokaiju.Guo.GameItem;
+using Pokaiju.Pierantoni;
+using Optional.Unsafe;
 
 namespace Pokaiju.Barattini
 {
-    using Optional.Unsafe;
-
     public class Monster : IMonster
     {
         /// <summary>
@@ -28,9 +29,8 @@ namespace Pokaiju.Barattini
         private int _exp;
         private int _level;
         private readonly bool _isWild;
-
         private IMonsterSpecies _species;
-        //private List<Tuple<Moves, int>> _movesList;
+        private readonly IList<Tuple<IMoves, int>> _movesList;
         private readonly IMonsterStats _stats;
         private readonly IMonsterStats _maxStats;
 
@@ -43,19 +43,20 @@ namespace Pokaiju.Barattini
         /// <param name="level">level</param>
         /// <param name="isWild">isWild</param>
         /// <param name="species">species</param>
+        /// <param name="movesList">movesList</param>
         public Monster(int id, IMonsterStats stats, int exp, int level, bool isWild,
-            IMonsterSpecies species /*, List<Tuple<IMoves, int>> movesList*/)
+            IMonsterSpecies species, IEnumerable<Tuple<IMoves, int>> movesList)
         {
             Id = id;
-            this._maxStats =
+            _maxStats =
                 new MonsterStats(stats.Health, stats.Attack, stats.Defense, stats.Speed);
-            this._stats =
+            _stats =
                 new MonsterStats(_maxStats.Health, _maxStats.Attack, _maxStats.Defense, _maxStats.Speed);
-            this._exp = exp;
-            this._level = level;
-            this._isWild = isWild;
-            this._species = species;
-            //this._movesList = new ArrayList(movesList);
+            _exp = exp;
+            _level = level;
+            _isWild = isWild;
+            _species = species;
+            _movesList = new List<Tuple<IMoves, int>>(movesList);
         }
 
 
@@ -71,15 +72,15 @@ namespace Pokaiju.Barattini
         /// <inheritdoc cref="IMonster.SetHealth"/>
         public void SetHealth(int hlt)
         {
-            this._stats.Health = hlt <= this.GetMaxHealth() ? hlt : this.GetMaxHealth();
-            this._stats.Health = hlt <= 0 ? 0 : this._stats.Health;
+            _stats.Health = hlt <= GetMaxHealth() ? hlt : GetMaxHealth();
+            _stats.Health = hlt <= 0 ? 0 : _stats.Health;
         }
 
         /// <inheritdoc cref="IMonster.RestoreStats"/>
         public void RestoreStats()
         {
-            var maxStatsMap = this._maxStats.GetStatsAsMap();
-            var statsMap = this._stats.GetStatsAsMap();
+            var maxStatsMap = _maxStats.GetStatsAsMap();
+            var statsMap = _stats.GetStatsAsMap();
             foreach (var s in maxStatsMap)
             {
                 statsMap[s.Key] = s.Value;
@@ -89,45 +90,45 @@ namespace Pokaiju.Barattini
         /// <inheritdoc cref="IMonster.GetMaxHealth"/>
         public int GetMaxHealth()
         {
-            return this._maxStats.Health;
+            return _maxStats.Health;
         }
 
         /// <inheritdoc cref="IMonster.GetInfo"/>
         public string GetInfo()
         {
-            return this._species.GetInfo();
+            return _species.GetInfo();
         }
 
         /// <inheritdoc cref="IMonster.GetLevel"/>
         public int GetLevel()
         {
-            return this._level;
+            return _level;
         }
 
         private void SetLevel(int level)
         {
-            this._level = level <= MaxLvl ? level : MaxLvl;
+            _level = level <= MaxLvl ? level : MaxLvl;
         }
 
         /// <inheritdoc cref="IMonster.LevelUp"/>
         public void LevelUp()
         {
-            this._level++;
-            this._exp = 0;
+            _level++;
+            _exp = 0;
             OnLevelUp(1);
         }
 
         /// <inheritdoc cref="IMonster.IncExp"/>
         public void IncExp(int exp)
         {
-            var incLevel = (this._exp + exp) / ExpCap;
-            var oldLevel = this._level;
+            var incLevel = (_exp + exp) / ExpCap;
+            var oldLevel = _level;
             SetLevel(incLevel + _level);
-            incLevel = this._level - oldLevel;
-            this._exp = (this._exp + exp) % ExpCap;
-            if (this._level == MaxLvl)
+            incLevel = _level - oldLevel;
+            _exp = (_exp + exp) % ExpCap;
+            if (_level == MaxLvl)
             {
-                this._exp = 0;
+                _exp = 0;
             }
 
             if (incLevel > 0)
@@ -141,10 +142,10 @@ namespace Pokaiju.Barattini
             var rand = new Random();
             for (var i = 0; i < level; i++)
             {
-                this._maxStats.Health = this._maxStats.Health + rand.Next(MinHpStep, MaxHpStep);
-                this._maxStats.Attack = this._maxStats.Attack + rand.Next(MinStatsStep, MaxStatsStep);
-                this._maxStats.Defense = this._maxStats.Defense + rand.Next(MinStatsStep, MaxStatsStep);
-                this._maxStats.Speed = this._maxStats.Speed + rand.Next(MinStatsStep, MaxStatsStep);
+                _maxStats.Health = _maxStats.Health + rand.Next(MinHpStep, MaxHpStep);
+                _maxStats.Attack = _maxStats.Attack + rand.Next(MinStatsStep, MaxStatsStep);
+                _maxStats.Defense = _maxStats.Defense + rand.Next(MinStatsStep, MaxStatsStep);
+                _maxStats.Speed = _maxStats.Speed + rand.Next(MinStatsStep, MaxStatsStep);
             }
 
             RestoreStats();
@@ -153,7 +154,7 @@ namespace Pokaiju.Barattini
         /// <inheritdoc cref="IMonster.GetExp"/>
         public int GetExp()
         {
-            return this._exp;
+            return _exp;
         }
 
         /// <inheritdoc cref="IMonster.GetExpCap"/>
@@ -165,99 +166,109 @@ namespace Pokaiju.Barattini
         /// <inheritdoc cref="IMonster.IsWild"/>
         public bool IsWild()
         {
-            return this._isWild;
+            return _isWild;
         }
 
         /// <inheritdoc cref="IMonster.IsAlive"/>
         public bool IsAlive()
         {
-            return this._stats.Health > 0;
+            return _stats.Health > 0;
         }
 
-        /*
-         /// <inheritdoc cref="IMonster.GetMoves"/>
-         public IMoves GetMoves(int index)
+
+        /// <inheritdoc cref="IMonster.GetMoves"/>
+        public IMoves GetMoves(int index)
         {
-            if(index is > GetNumberOfMoves() or < 0)
+            if (index < 0 || index > GetNumberOfMoves())
             {
-                throw new ArgumentException();
+                throw new ArgumentException("Argument Exception");
             }
-            return _movesList.Get(index).GetFirst();
-        }*/
-
-        /*/// <inheritdoc cref="IMonster.GetAllMoves"/>
-         public List<IMoves> GetAllMoves()
-        {
-            return Collections.unmodifiableList(movesList.stream().map(i -> i.getFirst()).collect(Collectors.toList()));
-        }*/
-
-        /*/// <inheritdoc cref="IMonster.GetCurrentPpByMove"/>
-         public int GetCurrentPpByMove(IMoves move)
-        {
-            return movesList.stream().filter(i -> i.getFirst().equals(move)).findAny().get().getSecond();
-        }*/
-
-        /*/// <inheritdoc cref="IMonster.IsOutOfPp"/>
-         public bool IsOutOfPp(IMoves move)
-        {
-            return movesList.stream().filter(i -> i.getFirst().equals(move)).findAny().get().getSecond() <= 0;
-        }*/
-
-        /*/// <inheritdoc cref="IMonster.RestoreMovePp"/>
-         public void RestoreMovePp(IMoves move)
-        {
-            final int index = getIndexOfMove(move);
-            final Pair<Moves, Integer> p = movesList.get(index);
-            movesList.remove(index);
-            movesList.add(index, new Pair<>(p.getFirst(), p.getFirst().getPP()));
-        }*/
-
-        /*/// <inheritdoc cref="IMonster.RestoreAllMovesPp"/>
-         public void RestoreAllMovesPp()
-        {
-            final List<Moves> moves = movesList.stream().map(i -> i.getFirst()).collect(Collectors.toList());
-            for (final var p : moves) {
-            restoreMovePP(p);
+            return _movesList[index].Item1;
         }
-        }*/
 
-        /*/// <inheritdoc cref="IMonster.DecMovePp"/>
-         public void DecMovePp(IMoves move)
+        /// <inheritdoc cref="IMonster.GetAllMoves"/>
+        public IList<IMoves> GetAllMoves()
         {
-            final int index = getIndexOfMove(move);
-            final Pair<Moves, Integer> p = movesList.get(index);
-            movesList.remove(index);
-            movesList.add(index, new Pair<>(p.getFirst(), p.getSecond() - 1));
-        }*/
-        
-        /*
-        private int GetIndexOfMove(IMoves move) {
-            for (int i = 0; i < this.movesList.size(); i++) {
-                if (movesList.get(i).getFirst().equals(move)) {
+            return _movesList.Select(i => i.Item1).ToImmutableList();
+        }
+
+        /// <inheritdoc cref="IMonster.GetCurrentPpByMove"/>
+        public int GetCurrentPpByMove(IMoves move)
+        {
+            //return movesList.stream().filter(i->i.getFirst().equals(move)).findAny().get().getSecond();
+            return _movesList.Where(i => i.Item1.Equals(move)).Select(i => i.Item2).First();
+        }
+
+        /// <inheritdoc cref="IMonster.IsOutOfPp"/>
+        public bool IsOutOfPp(IMoves move)
+        {
+            //return movesList.stream().filter(i->i.getFirst().equals(move)).findAny().get().getSecond() <= 0;
+            return _movesList.Where(i => i.Item1.Equals(move)).Select(i => i.Item2).First() <= 0;
+            
+        }
+
+        /// <inheritdoc cref="IMonster.RestoreMovePp"/>
+        public void RestoreMovePp(IMoves move)
+        {
+            var index = GetIndexOfMove(move);
+            var p = _movesList[index];
+            _movesList.RemoveAt(index);
+            _movesList.Insert(index, new Tuple<IMoves, int>(p.Item1, p.Item1.GetPp()));
+        }
+
+        /// <inheritdoc cref="IMonster.RestoreAllMovesPp"/>
+        public void RestoreAllMovesPp()
+        {
+            //List<IMoves> moves = _movesList.stream().map(i->i.getFirst()).collect(Collectors.toList());
+            /*for (var p : moves) {
+                RestoreMovePP(p);
+            }*/
+            var moves = _movesList.Select(i => i.Item1).ToList();
+            foreach(var p in moves)
+            {
+                RestoreMovePp(p);
+            }
+        }
+
+        /// <inheritdoc cref="IMonster.DecMovePp"/>
+        public void DecMovePp(IMoves move)
+        {
+            var index = GetIndexOfMove(move);
+            var p = _movesList[index];
+            _movesList.RemoveAt(index);
+            _movesList.Insert(index, new Tuple<IMoves, int>(p.Item1, p.Item2 - 1));
+        }
+
+        private int GetIndexOfMove(IMoves move)
+        {
+            for (var i = 0; i < _movesList.Count; i++)
+            {
+                if (_movesList[i].Item1.Equals(move))
+                {
                     return i;
                 }
             }
+
             return -1;
         }
-        */
 
-        /*/// <inheritdoc cref="IMonster.IsMoveSetFull"/>
-         public bool IsMoveSetFull()
+        /// <inheritdoc cref="IMonster.IsMoveSetFull"/>
+        public bool IsMoveSetFull()
         {
-            return this.movesList.size() == NUM_MAX_MOVES;
-        }*/
+            return _movesList.Count == NumMaxMoves;
+        }
 
-        /*/// <inheritdoc cref="IMonster.GetNumberOfMoves"/>
-         public int GetNumberOfMoves()
+        /// <inheritdoc cref="IMonster.GetNumberOfMoves"/>
+        public int GetNumberOfMoves()
         {
-            return this.movesList.size();
-        }*/
+            return _movesList.Count;
+        }
 
-        /*/// <inheritdoc cref="IMonster.GetType"/>
-         public MonsterType GetType()
+        /// <inheritdoc cref="IMonster.GetMonsterType"/>
+        public MonsterType GetMonsterType()
         {
-            return this.species.getType();
-        }*/
+            return _species.GetMonsterType();
+        }
 
         /// <inheritdoc cref="IMonster.CanEvolveByLevel"/>
         public bool CanEvolveByLevel()
@@ -277,28 +288,28 @@ namespace Pokaiju.Barattini
         /// <inheritdoc cref="IMonster.Evolve"/>
         public void Evolve()
         {
-            if (this._species.GetEvolution().HasValue)
+            if (_species.GetEvolution().HasValue)
             {
-                this._species = this._species.GetEvolution().ValueOrFailure();
+                _species = _species.GetEvolution().ValueOrFailure();
             }
         }
 
         /// <inheritdoc cref="IMonster.GetSpecies"/>
         public IMonsterSpecies GetSpecies()
         {
-            return this._species;
+            return _species;
         }
 
         /// <inheritdoc cref="IMonster.GetStats"/>
         public IMonsterStats GetStats()
         {
-            return this._stats;
+            return _stats;
         }
 
         /// <inheritdoc cref="IMonster.GetMaxStats"/>
         public IMonsterStats GetMaxStats()
         {
-            return this._maxStats;
+            return _maxStats;
         }
 
         public override int GetHashCode()

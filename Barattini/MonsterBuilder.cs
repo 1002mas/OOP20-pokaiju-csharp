@@ -1,4 +1,6 @@
-﻿namespace Pokaiju.Barattini
+﻿using Pokaiju.Pierantoni;
+
+namespace Pokaiju.Barattini
 {
     using Microsoft.VisualBasic.CompilerServices;
 
@@ -8,7 +10,7 @@
         private const int MinLevel = 1;
         private static int _id;
         private int _exp;
-        //private List<Tuple<Moves, int>> _movesList;
+        private IList<Tuple<IMoves, int>>? _movesList;
         private bool _isWild;
         private int _level = MinLevel;
         private IMonsterSpecies? _species;
@@ -86,14 +88,15 @@
             return this;
         }
 
-        /*/// <inheritdoc cref="IMonsterBuilder.MovesList"/>
-         public IMonsterBuilder MovesList(List<Tuple<IMoves, int>> movesList)
+        /// <inheritdoc cref="IMonsterBuilder.MovesList"/>
+         public IMonsterBuilder MovesList(IList<Tuple<IMoves, int>> movesList)
         {
-            _movesList = new ArrayList(movesList);
-            _movesList = this._movesList.subList(0,
+            _movesList = new List<Tuple<IMoves, int>>(movesList);
+            var range = new Range(0,
                 movesList.Count < Monster.NumMaxMoves ? movesList.Count : Monster.NumMaxMoves);
+            _movesList = _movesList.Take(range).ToList();
             return this;
-        }*/
+        }
 
         /// <inheritdoc cref="IMonsterBuilder.Species"/>
         public IMonsterBuilder Species(IMonsterSpecies species)
@@ -105,13 +108,13 @@
         /// <inheritdoc cref="IMonsterBuilder.Build"/>
         public IMonster Build()
         {
-            if (_id <= 0 || _species == null /*|| _movesList.isEmpty()*/)
+            if (_id <= 0 || _species == null ||  _movesList is null )
             {
                 throw new IncompleteInitialization();
             }
 
             IMonster monster = new Monster(_id, _species.GetBaseStats(), 0, MinLevel, _isWild,
-                _species /*, _movesList*/);
+                _species, _movesList);
             _id++;
             for (var i = MinLevel; i < _level; i++)
             {

@@ -1,4 +1,5 @@
 ﻿using Pokaiju.Guo.GameItem;
+using Pokaiju.Pierantoni;
 
 namespace Pokaiju.Barattini
 {
@@ -13,12 +14,14 @@ namespace Pokaiju.Barattini
         /// </summary>
         /// <param name="name">name</param>
         /// <param name="info">info</param>
+        /// <param name="type">type</param>
         /// <param name="stats">stats</param>
         /// <param name="evolutionItem">evolutionItem</param>
         /// <param name="evolution">evolution</param>
-        public MonsterSpeciesByItem(string name, string info, /*IMonsterType type,*/ IMonsterStats stats,
-            IMonsterSpecies evolution, IGameItem evolutionItem/*, List<Moves> movesList*/)
-            : base(name, info, /*type,*/ stats, Option.Some(evolution), EvolutionType.Item /*, movesList*/)
+        /// <param name="movesList">movesList</param>
+        public MonsterSpeciesByItem(string name, string info, MonsterType type, IMonsterStats stats,
+            IMonsterSpecies evolution, IGameItem evolutionItem, IList<IMoves> movesList)
+            : base(name, info, type, stats, Option.Some(evolution), EvolutionType.Item , movesList)
         {
             _evolutionItem = evolutionItem;
         }

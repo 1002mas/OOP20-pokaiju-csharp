@@ -1,4 +1,5 @@
 ﻿using Pokaiju.Guo.GameItem;
+using Pokaiju.Pierantoni;
 
 namespace Pokaiju.Barattini
 {
@@ -10,12 +11,12 @@ namespace Pokaiju.Barattini
     {
         private string? _name;
         private string? _info;
-        //private IMonsterType _type;
+        private MonsterType _type;
         private Option<int> _evolutionLevel = Option.None<int>();
         private readonly IMonsterStats _stats = new MonsterStats(1, 1, 1, 1);
         private IMonsterSpecies? _evolution;
         private Option<IGameItem> _gameItem = Option.None<IGameItem>();
-        //private List<IMoves> _movesList = new ArrayList<IMoves>();
+        private IList<IMoves> _movesList = new List<IMoves>();
 
         /// <inheritdoc cref="IMonsterSpeciesBuilder.Name"/>
         public IMonsterSpeciesBuilder Name(string name)
@@ -31,12 +32,12 @@ namespace Pokaiju.Barattini
             return this;
         }
 
-        /*/// <inheritdoc cref="IMonsterSpeciesBuilder.MonsterType"/>
-         public IMonsterSpeciesBuilder MonsterType(MonsterType type)
+        /// <inheritdoc cref="IMonsterSpeciesBuilder.MonsterType"/>
+        public IMonsterSpeciesBuilder MonsterType(MonsterType type)
         {
-            this._type = type;
+            _type = type;
             return this;
-        }*/
+        }
 
         /// <inheritdoc cref="IMonsterSpeciesBuilder.Evolution"/>
         public IMonsterSpeciesBuilder Evolution(IMonsterSpecies evolution)
@@ -81,46 +82,45 @@ namespace Pokaiju.Barattini
         }
 
         /// <inheritdoc cref="IMonsterSpeciesBuilder.GameItem"/>
-         public IMonsterSpeciesBuilder GameItem(IGameItem gameItem)
+        public IMonsterSpeciesBuilder GameItem(IGameItem gameItem)
         {
             _gameItem = Option.Some(gameItem);
             return this;
         }
 
-        /*/// <inheritdoc cref="IMonsterSpeciesBuilder.MovesList"/>
-         public IMonsterSpeciesBuilder MovesList(List<Moves> movesList)
+        /// <inheritdoc cref="IMonsterSpeciesBuilder.MovesList"/>
+        public IMonsterSpeciesBuilder MovesList(IList<IMoves> movesList)
         {
             _movesList = movesList;
             return this;
-        }*/
+        }
 
         /// <inheritdoc cref="IMonsterSpeciesBuilder.Build"/>
         public IMonsterSpecies Build()
         {
-            if (_name is null || _info is null /*|| _type is null*/ ||
-                _evolution is not null && !_evolutionLevel.HasValue && !_gameItem.HasValue /*||
-            _movesList.IsEmpty()*/)
+            if (_name is null || _info is null ||
+                _evolution is not null && !_evolutionLevel.HasValue && !_gameItem.HasValue || !_movesList.Any())
             {
                 throw new IncompleteInitialization();
             }
 
             if (_evolution is null)
             {
-                return new MonsterSpeciesSimple(_name, _info, /*_type,*/ _stats /*, _movesList*/);
+                return new MonsterSpeciesSimple(_name, _info, _type, _stats, _movesList);
             }
 
             if (_evolutionLevel.HasValue)
             {
-                return new MonsterSpeciesByLevel(_name, _info, _stats, _evolution,
-                    _evolutionLevel.ValueOrFailure() /*, _movesList*/);
+                return new MonsterSpeciesByLevel(_name, _info, _type, _stats, _evolution,
+                    _evolutionLevel.ValueOrFailure(), _movesList);
             }
 
             if (_gameItem.HasValue)
             {
-                return new MonsterSpeciesByItem(_name, _info, _stats, _evolution,
-                    _gameItem.ValueOrFailure() /*, _movesList*/);
+                return new MonsterSpeciesByItem(_name, _info, _type, _stats, _evolution,
+                    _gameItem.ValueOrFailure(), _movesList);
             }
-            
+
             throw new IncompleteInitialization();
         }
     }

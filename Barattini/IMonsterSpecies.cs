@@ -1,4 +1,6 @@
-﻿namespace Pokaiju.Barattini
+﻿using Pokaiju.Pierantoni;
+
+namespace Pokaiju.Barattini
 {
     using Optional;
     
@@ -15,14 +17,12 @@
         /// </summary>
         /// <returns>info</returns>
         string GetInfo();
-
-        /*
+        
         /// <summary>
         /// This function returns monster's type.
         /// </summary>
         /// <returns>monster type</returns>
-        MonsterType GetType();
-        */
+        MonsterType GetMonsterType();
 
         /// <summary>
         /// This function returns monster's statistics.
@@ -41,13 +41,11 @@
         /// </summary>
         /// <returns>next evolution monster</returns>
         Option<IMonsterSpecies> GetEvolution();
-
-        /*
+        
         /// <summary>
         /// This function returns a list of all learnable moves.
         /// </summary>
         /// <returns>a list of all learnable moves</returns>
-        List<IMoves> GetAllLearnableMoves();
-        */
+        IList<IMoves> GetAllLearnableMoves();
     }
 }

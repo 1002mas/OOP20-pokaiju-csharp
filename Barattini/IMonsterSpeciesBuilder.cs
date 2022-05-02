@@ -1,4 +1,5 @@
 ﻿using Pokaiju.Guo.GameItem;
+using Pokaiju.Pierantoni;
 
 namespace Pokaiju.Barattini
 {
@@ -19,15 +20,13 @@ namespace Pokaiju.Barattini
         /// <param name="info">info</param>
         /// <returns>IMonsterSpeciesBuilder</returns>
         IMonsterSpeciesBuilder Info(string info);
-
-        /*
+        
         /// <summary>
         /// Build species type.
         /// </summary>
         /// <param name="type">type</param>
         /// <returns>IMonsterSpeciesBuilder</returns>
         IMonsterSpeciesBuilder MonsterType(MonsterType type);
-        */
 
         /// <summary>
         /// Build species evolution.
@@ -77,15 +76,13 @@ namespace Pokaiju.Barattini
         /// <param name="gameItem">gameItem</param>
         /// <returns>IMonsterSpeciesBuilder</returns>
         IMonsterSpeciesBuilder GameItem(IGameItem gameItem);
-
-        /*
+        
         /// <summary>
         /// Build species moves.
         /// </summary>
         /// <param name="movesList">movesList</param>
         /// <returns>IMonsterSpeciesBuilder</returns>
-        IMonsterSpeciesBuilder MovesList(List<IMoves> movesList);
-        */
+        IMonsterSpeciesBuilder MovesList(IList<IMoves> movesList);
 
         /// <summary>
         /// MonsterSpecies.

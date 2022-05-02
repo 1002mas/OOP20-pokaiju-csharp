@@ -6,7 +6,7 @@
         private const string AttackString = "ATTACK";
         private const string DefenseString = "DEFENSE";
         private const string SpeedString = "SPEED";
-        private readonly Dictionary<string, int> _statsMap = new Dictionary<string, int>();
+        private readonly IDictionary<string, int> _statsMap = new Dictionary<string, int>();
 
         /// <summary>
         /// MonsterStats constructor
@@ -52,7 +52,7 @@
         }
 
         /// <inheritdoc cref="IMonsterStats.GetStatsAsMap"/>
-        public Dictionary<string, int> GetStatsAsMap()
+        public IDictionary<string, int> GetStatsAsMap()
         {
             return this._statsMap;
         }

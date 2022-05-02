@@ -24,7 +24,7 @@ public interface IMoves
      * 
      * @return Move's type
      */
-    MonsterType GetType();
+    MonsterType GetMonsterType();
 
     /**
      * 

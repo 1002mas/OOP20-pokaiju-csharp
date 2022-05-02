@@ -22,7 +22,7 @@ class MonsterTypeAttribute : Attribute
         }
     }
     public String Name { get; }
-    public  Dictionary<String, Double> DamageMultiplier = new Dictionary<String, Double>();
+    public  IDictionary<String, Double> DamageMultiplier = new Dictionary<String, Double>();
 }
 
 public  static class MonsterTypes

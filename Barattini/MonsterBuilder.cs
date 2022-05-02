@@ -7,9 +7,7 @@
         private const string LastIdPath = "data/generatedId.dat";
         private const int MinLevel = 1;
         private static int _id;
-
         private int _exp;
-
         //private List<Tuple<Moves, int>> _movesList;
         private bool _isWild;
         private int _level = MinLevel;

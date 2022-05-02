@@ -6,12 +6,9 @@
     {
         private readonly Option<IMonsterSpecies> _evolution;
         private readonly string _name;
-
         private readonly string _info;
-
         //private IMonsterType _type;
         private readonly EvolutionType _evolutionType;
-
         private readonly IMonsterStats _stats;
         //private List<Moves> _movesList;
 

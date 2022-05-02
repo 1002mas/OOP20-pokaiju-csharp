@@ -1,4 +1,6 @@
-﻿namespace Pokaiju.Barattini
+﻿using Pokaiju.Guo.GameItem;
+
+namespace Pokaiju.Barattini
 {
     public interface IMonster
     {
@@ -149,16 +151,13 @@
         /// </summary>
         /// <returns>if monster can evolve by level</returns>
         bool CanEvolveByLevel();
-
-        /*
+        
         /// <summary>
         /// This function returns if the monster is evolving by item.
         /// </summary>
         /// <param name="item">item</param>
         /// <returns>if monster evolves by item</returns>
         bool CanEvolveByItem(IGameItem item);
-        */
-        
 
         /// <summary>
         /// This function evolve the monster.

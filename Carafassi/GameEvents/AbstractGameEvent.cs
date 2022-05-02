@@ -119,5 +119,31 @@ namespace Pokaiju.Carafassi.GameEvents
                 Active = false;
             }
         }
+
+        private bool Equals(AbstractGameEvent other)
+        {
+            return EventId == other.EventId;
+        }
+
+        /// <inheritdoc cref="object.Equals(object?)"/>>
+        public override bool Equals(object? obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((AbstractGameEvent) obj);
+        }
+
+        /// <inheritdoc cref="object.GetHashCode"/>>
+        public override int GetHashCode()
+        {
+            return EventId;
+        }
+
+        /// <inheritdoc cref="object.ToString"/>>
+        public override string ToString()
+        {
+            return "[Event ID: " + EventId + ", active: " + Active + "]";
+        }
     }
 }

@@ -86,7 +86,7 @@ namespace Pokaiju.Carafassi.GameMaps
             IMonster m = new MonsterBuilder().Species(species).Wild(true)
                 .Exp(0).Level(monsterLevel)
                 .MovesList(GetRandomListMoves(species)).Build();
-            return Option.Some<>(m);
+            return Option.Some<IMonster>(m);
         }
 
         /// <inheritdoc cref="IGameMap.ChangeMap"/>>
@@ -95,7 +95,7 @@ namespace Pokaiju.Carafassi.GameMaps
             if (CanChangeMap(playerPosition) && _mapData.GetNextMap(playerPosition).HasValue)
             {
                 Tuple<IGameMapData, Tuple<int, int>> p = _mapData.GetNextMap(playerPosition).ValueOrFailure();
-                _enteringStartPosition = Option.Some<>(p.Item2);
+                _enteringStartPosition = Option.Some<Tuple<int, int>>(p.Item2);
                 _mapData = p.Item1;
             }
             else

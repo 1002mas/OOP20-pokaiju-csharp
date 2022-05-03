@@ -79,7 +79,7 @@ namespace Pokaiju.Carafassi.GameMaps
         public Option<INpcSimple> GetNpc(Tuple<int, int> block)
         {
             return _npcs.Any((npc) => npc.GetPosition().Equals(block))
-                ? Option.Some<>(_npcs.First((npc) => npc.GetPosition().Equals(block)))
+                ? Option.Some<INpcSimple>(_npcs.First((npc) => npc.GetPosition().Equals(block)))
                 : Option.None<INpcSimple>();
         }
 
@@ -87,7 +87,7 @@ namespace Pokaiju.Carafassi.GameMaps
         public Option<IGameEvent> GetEvent(Tuple<int, int> block)
         {
             return _eventLocation.ContainsKey(block)
-                ? Option.Some<>(_eventLocation[block])
+                ? Option.Some<IGameEvent>(_eventLocation[block])
                 : Option.None<IGameEvent>();
         }
 
@@ -96,7 +96,7 @@ namespace Pokaiju.Carafassi.GameMaps
         {
             return _linkedMaps.ContainsKey(playerPosition) &&
                    _linkedMapsStartingPosition.ContainsKey(_linkedMaps[playerPosition])
-                ? Option.Some<>(
+                ? Option.Some<Tuple<IGameMapData, Tuple<int, int>>>(
                     new Tuple<IGameMapData, Tuple<int, int>>(_linkedMaps[playerPosition],
                         _linkedMapsStartingPosition[_linkedMaps[playerPosition]]))
                 : Option.None<Tuple<IGameMapData, Tuple<int, int>>>();

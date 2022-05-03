@@ -5,6 +5,7 @@ using Pokaiju.Carafassi.GameMaps;
 using Pokaiju.Castorina.Npc;
 using Pokaiju.Castorina.Storage;
 using Pokaiju.Guo.GameItem;
+using Pokaiju.Pierantoni;
 
 namespace Pokaiju.Guo.Player;
 

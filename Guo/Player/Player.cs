@@ -1,16 +1,19 @@
 using Guo.Player;
 using Optional;
+using Optional.Unsafe;
 using Pokaiju.Barattini;
 using Pokaiju.Carafassi.GameMaps;
+using Pokaiju.Castorina;
 using Pokaiju.Castorina.Npc;
 using Pokaiju.Castorina.Storage;
 using Pokaiju.Guo.GameItem;
+using Pokaiju.Pierantoni;
 
 namespace Pokaiju.Guo.Player;
 
 public class Player : IPlayer
 {
-    private static readonly int START_MONEY = 1000;
+    private const int StartMoney = 1000;
     private const int TeamSize = 6;
     private const int Step = 1;
     private readonly Dictionary<IGameItem, int> _gameItems;
@@ -32,13 +35,13 @@ public class Player : IPlayer
         _gameItems = new Dictionary<IGameItem, int>();
         _map = map;
         _gender = gender;
-        _money = START_MONEY;
+        _money = StartMoney;
         _name = name;
         _position = position;
         _team = new List<IMonster>();
         _trainerNumber = trainerNumber;
         _monsterBattle = Option.None<IMonsterBattle>();
-        _npc = Option.None<INpcSimple>();;
+        _npc = Option.None<INpcSimple>();
         _storage = new MonsterStorage(this);
     }
 
@@ -181,8 +184,18 @@ public class Player : IPlayer
 
     public bool InteractAt(Tuple<int, int> pos)
     {
-        _monsterBattle = Option.None<MonsterBattle>();
+        _monsterBattle = Option.None<IMonsterBattle>();
         _npc = _map.GetNpcAt(pos);
+        if (_npc.HasValue && _npc.ValueOrFailure().GetTypeOfNpc() == TypeOfNpc.TRAINER)
+        {
+            var trainer = (INpcTrainer) _npc.ValueOrFailure();
+            if (!trainer.IsDefeated())
+            {
+                _monsterBattle = Option.Some(mons);
+            }
+        }
+
+        return _npc.HasValue;
     }
 
     public Option<INpcSimple> GetLastInteractionWithNpc() => _npc;

@@ -8,7 +8,7 @@ public class CaptureItem : AbstractGameItem
     {
     }
 
-    public override bool Use(Monster? m)
+    public override bool Use(IMonster? m)
     {
         return true;
     }

@@ -1,13 +1,12 @@
-﻿using Microsoft.VisualBasic;
+﻿using System.Collections.ObjectModel;
 using Optional;
 using Optional.Unsafe;
 using Pokaiju.Carafassi.GameEvents;
-using Pokaiju.Castorina.Npc;
 
 namespace Pokaiju.Castorina.Npc
 {
 
-    public class NpcSimpleImpl : INpcSimple
+    public class NpcSimple : INpcSimple
     {
         private readonly string _name;
         private TypeOfNpc _typeOfNpc;
@@ -19,7 +18,7 @@ namespace Pokaiju.Castorina.Npc
         private bool _isVisible;
         private bool _isEnabled;
 
-        protected NpcSimpleImpl(string name, TypeOfNpc typeOfNpc, IList<string> sentences,
+        protected NpcSimple(string name, TypeOfNpc typeOfNpc, IList<string> sentences,
             Tuple<int, int> position, bool isVisible, bool isEnabled)
         {
             this._name = name;
@@ -33,11 +32,12 @@ namespace Pokaiju.Castorina.Npc
             this._triggeredEvent = Option.None<IGameEvent>();
         }
 
-        public NpcSimpleImpl(string name, IList<string> sentences, Tuple<int, int> position,
-            bool isVisible, bool isEnabled)
+        public NpcSimple(string name, IList<string> sentences, Tuple<int, int> position,
+            bool isVisible, bool isEnabled) : this(name, TypeOfNpc.SIMPLE, sentences, position, isVisible, isEnabled)
         {
-            this(name, TypeOfNpc.SIMPLE, sentences, position, isVisible, isEnabled);
+            throw new NotImplementedException();
         }
+
 
         public string GetName()
         {
@@ -45,17 +45,25 @@ namespace Pokaiju.Castorina.Npc
         }
 
 
-        public Option<string> InteractWith()
+        public virtual Option<string> InteractWith()
         {
             //TODO complete
             if (_isEnabled)
             {
                 Option<string> result = Option.Some(_sentences.ElementAt(_currentSentence));
-                Option<IGameEvent> activeEvent = _events.stream().filter(ge->ge.isActive()).findFirst();
+                Option<IGameEvent> activeEvent = Option.None<IGameEvent>();
+                foreach (var firstEvent in this._events)
+                {
+                    if (firstEvent.Active)
+                    {
+                        activeEvent = Option.Some(firstEvent);
+                        break;
+                    }
+                }
                 if (activeEvent.HasValue)
                 {
                     this._triggeredEvent = activeEvent;
-                    activeEvent.ValueOr(Option.None<IGameEvent>()).Active();
+                    activeEvent.ValueOrFailure().Activate();
                 }
                 else
                 {
@@ -128,7 +136,7 @@ namespace Pokaiju.Castorina.Npc
 
         public IList<IGameEvent> GetGameEvents()
         {
-            //TODO comlpete
+             return new ReadOnlyCollection<IGameEvent>( new List<IGameEvent>(this._events));
         }
 
         public int GetCurrentSetence()

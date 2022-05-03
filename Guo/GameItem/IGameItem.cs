@@ -23,5 +23,5 @@ public interface IGameItem
     ///     This function returns if GameItem is used.
     ///     <param name="m">The monster which you want to use Item for</param>
     /// </summary>
-    bool Use(Monster? m);
+    bool Use(IMonster? m);
 }

@@ -1,11 +1,11 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=147314e1_002D58e0_002D4945_002D80de_002D2bbd52b1d7ff/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestMonster" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;NUnit3x::7F3EC473-9F64-0C0F-061A-5CE895EFF40B::net6.0::Pokaiju.Barattini.TestMonster&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=147314e1_002D58e0_002D4945_002D80de_002D2bbd52b1d7ff/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestMonster" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::7F3EC473-9F64-0C0F-061A-5CE895EFF40B::net6.0::Pokaiju.Barattini.TestMonster&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b6c30dc6_002Dbda8_002D4d56_002D80ca_002D329eb2d2d54c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="EvolvingByLevel" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;NUnit3x::7F3EC473-9F64-0C0F-061A-5CE895EFF40B::net6.0::Pokaiju.Barattini.TestMonster.EvolvingByLevel&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b6c30dc6_002Dbda8_002D4d56_002D80ca_002D329eb2d2d54c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="EvolvingByLevel" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::7F3EC473-9F64-0C0F-061A-5CE895EFF40B::net6.0::Pokaiju.Barattini.TestMonster.EvolvingByLevel&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

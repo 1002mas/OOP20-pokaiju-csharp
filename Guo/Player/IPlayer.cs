@@ -5,6 +5,7 @@ using Pokaiju.Carafassi.GameMaps;
 using Pokaiju.Castorina.Npc;
 using Pokaiju.Castorina.Storage;
 using Pokaiju.Guo.GameItem;
+using Pokaiju.Pierantoni;
 
 namespace Pokaiju.Guo.Player;
 
@@ -30,7 +31,7 @@ public interface IPlayer
     /// <summary>
     ///     This function returns all player's monsters.
     /// </summary>
-    List<Monster> GetAllMonsters();
+    List<IMonster> GetAllMonsters();
 
 
     /// <summary>
@@ -100,19 +101,19 @@ public interface IPlayer
     ///     <param name="gameItem">The GameItem which want to use</param>
     ///     <param name="m">The Monster which want to apply a GameItem</param>
     /// </summary>
-    void useItemOnMonster(IGameItem gameItem, Monster m);
+    void useItemOnMonster(IGameItem gameItem, IMonster m);
 
     /// <summary>
     ///     This function returns if add Monster is successful or not.
     ///     <param name="m">The Monster which will be added to player</param>
     /// </summary>
-    bool AddMonster(Monster m);
+    bool AddMonster(IMonster m);
 
     /// <summary>
     ///     This function returns if remove Monster is successful or not.
     ///     <param name="m">The Monster which will be removed from player</param>
     /// </summary>
-    bool RemoveMonster(Monster m);
+    bool RemoveMonster(IMonster m);
 
     /// <summary>
     ///     This function sets Player's Money.
@@ -136,7 +137,7 @@ public interface IPlayer
     ///     <param name="monster">Monster to be evolved </param>
     ///     <param name="gameItem">Evolution Item to be used</param>
     /// </summary>
-    void EvolveMonster(Monster monster, IGameItem gameItem);
+    void EvolveMonster(IMonster monster, IGameItem gameItem);
 
     /// <summary>
     ///     Moves Player up.
@@ -179,7 +180,7 @@ public interface IPlayer
     ///     This function returns a battle if a wild monster attacked while player was
     ///     moving or the Player talked with a Npc.
     /// </summary>
-    Option<MonsterBattle> GetPlayerBattle();
+    Option<IMonsterBattle> GetPlayerBattle();
 
     /// <summary>
     ///     This function updates storage.
@@ -207,13 +208,13 @@ public interface IPlayer
     /// <summary>
     ///     This function gets a list of Monsters.
     /// </summary>
-    List<Monster> GetMonster();
+    List<IMonster> GetMonster();
 
     /// <summary>
     ///     This function sets a list of Monsters.
     ///     <param name="monster">  List of monster to set</param>
     /// </summary>
-    void SetMonster(List<Monster> monster);
+    void SetMonster(List<IMonster> monster);
 
     /// <summary>
     ///     This function gets a list of GameItems.

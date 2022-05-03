@@ -1,18 +1,21 @@
 using Guo.Player;
 using Optional;
+using Optional.Unsafe;
 using Pokaiju.Barattini;
 using Pokaiju.Carafassi.GameMaps;
+using Pokaiju.Castorina;
 using Pokaiju.Castorina.Npc;
 using Pokaiju.Castorina.Storage;
 using Pokaiju.Guo.GameItem;
+using Pokaiju.Pierantoni;
 
 namespace Pokaiju.Guo.Player;
 
 public class Player : IPlayer
 {
-    private static readonly int START_MONEY = 1000;
+    private const int StartMoney = 1000;
     private const int TeamSize = 6;
-    private const int Step = 1;s
+    private const int Step = 1;
     private readonly Dictionary<IGameItem, int> _gameItems;
     private readonly IGameMap _map;
     private Gender _gender;
@@ -20,25 +23,25 @@ public class Player : IPlayer
     private int _money;
     private string _name;
     private Tuple<int, int> _position;
-    private List<Monster> _team;
-    private readonly int _trainerNumber;
-    private Option<MonsterBattle> _monsterBattle;
+    private List<IMonster> _team;
+    private int _trainerNumber;
+    private Option<IMonsterBattle> _monsterBattle;
     private Option<INpcSimple> _npc;
     private MonsterStorage _storage;
     private bool _triggeredEvent = false;
 
-    public Player(IGameMap map, Gender gender,  string name, Tuple<int, int> position, int trainerNumber, Option<MonsterBattle> monsterBattle, Option<INpcSimple> npc)
+    public Player(IGameMap map, Gender gender,  string name, Tuple<int, int> position, int trainerNumber, Option<IMonsterBattle> monsterBattle, Option<INpcSimple> npc)
     {
         _gameItems = new Dictionary<IGameItem, int>();
         _map = map;
         _gender = gender;
-        _money = START_MONEY;
+        _money = StartMoney;
         _name = name;
         _position = position;
-        _team = new List<Monster>();
+        _team = new List<IMonster>();
         _trainerNumber = trainerNumber;
-        _monsterBattle = Option.None<MonsterBattle>();
-        _npc = Option.None<INpcSimple>();;
+        _monsterBattle = Option.None<IMonsterBattle>();
+        _npc = Option.None<INpcSimple>();
         _storage = new MonsterStorage(this);
     }
 
@@ -54,9 +57,9 @@ public class Player : IPlayer
         return _triggeredEvent;
     }
 
-    public List<Monster> GetAllMonsters() => new List<Monster>(_team);
+    public List<IMonster> GetAllMonsters() => new(_team);
     
-    public Dictionary<IGameItem, int> GetAllItems() => new Dictionary<IGameItem, int>(_gameItems);
+    public Dictionary<IGameItem, int> GetAllItems() => new(_gameItems);
     
     public string GetName() => _name;
     
@@ -103,14 +106,14 @@ public class Player : IPlayer
         }
     }
 
-    public void useItemOnMonster(IGameItem gameItem, Monster m)
+    public void useItemOnMonster(IGameItem gameItem, IMonster m)
     {
         if (GetAllItems().ContainsKey(gameItem) && gameItem.Use(m)) {
             RemoveItem(gameItem);
         }
     }
 
-    public bool AddMonster(Monster m)
+    public bool AddMonster(IMonster m)
     {
         if (IsTeamFull) {
             _storage.AddMonster(m);
@@ -122,7 +125,7 @@ public class Player : IPlayer
         }
     }
 
-    public bool RemoveMonster(Monster m)
+    public bool RemoveMonster(IMonster m)
     {
         return GetAllMonsters().Contains(m) && _team.Remove(m);
     }
@@ -145,7 +148,7 @@ public class Player : IPlayer
         }
     }
 
-    public void EvolveMonster(Monster monster, IGameItem gameItem)
+    public void EvolveMonster(IMonster monster, IGameItem gameItem)
     {
         if (!monster.CanEvolveByItem(gameItem)) return;
         useItemOnMonster(gameItem, monster);
@@ -181,16 +184,23 @@ public class Player : IPlayer
 
     public bool InteractAt(Tuple<int, int> pos)
     {
-        _monsterBattle = Option.None<MonsterBattle>();
+        _monsterBattle = Option.None<IMonsterBattle>();
         _npc = _map.GetNpcAt(pos);
+        if (_npc.HasValue && _npc.ValueOrFailure().GetTypeOfNpc() == TypeOfNpc.TRAINER)
+        {
+            var trainer = (INpcTrainer) _npc.ValueOrFailure();
+            if (!trainer.IsDefeated())
+            {
+                _monsterBattle = Option.Some(new MonsterBattle(this,trainer));
+            }
+        }
+
+        return _npc.HasValue;
     }
 
     public Option<INpcSimple> GetLastInteractionWithNpc() => _npc;
 
-    public Option<MonsterBattle> GetPlayerBattle()
-    {
-        throw new NotImplementedException();
-    }
+    public Option<IMonsterBattle> GetPlayerBattle() => _monsterBattle;
 
     public void SetStorage(MonsterStorage storage) => _storage = storage;
     
@@ -201,18 +211,15 @@ public class Player : IPlayer
     public void SetGender(Gender gender) => _gender = gender;
 
 
-    public void SetTrainerNumber(int trainerNumber)
-    {
-        throw new NotImplementedException();
-    }
+    public void SetTrainerNumber(int trainerNumber) => _trainerNumber = trainerNumber;
 
-    public List<Monster> GetMonster() => _team;
+    public List<IMonster> GetMonster() => _team;
 
 
-    public void SetMonster(List<Monster> monster) => _team = monster;
+    public void SetMonster(List<IMonster> monster) => _team = monster;
 
 
-    public List<IGameItem> GetItems() => new List<IGameItem>(_gameItems.Keys);
+    public List<IGameItem> GetItems() => new (_gameItems.Keys);
 
 
     public void SetName(string name) => _name = name;

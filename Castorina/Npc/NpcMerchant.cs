@@ -3,10 +3,10 @@ using Pokaiju.Guo.Player;
 
 namespace Pokaiju.Castorina.Npc;
 
-public class NpcMerchantImpl : NpcSimpleImpl, INpcMerchant
+public class NpcMerchant : NpcSimple, INpcMerchant
 {
     private readonly Dictionary<IGameItem, int> _inventory;
-    public NpcMerchantImpl(string name, IList<string> sentences, Tuple<int, int> position,
+    public NpcMerchant(string name, IList<string> sentences, Tuple<int, int> position,
         bool isVisible, bool isEnabled, Dictionary<IGameItem, int> inventory) : base(name, sentences, position, isVisible, isEnabled)
     {
         this._inventory = inventory;

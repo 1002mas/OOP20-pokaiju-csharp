@@ -8,11 +8,11 @@ public abstract class AbstractGameItem : IGameItem
     private readonly string _nameItem;
     private readonly GameItemTypes _type;
 
-    /**
-     * @param nameItem
-     * @param description
-     * @param type
-     */
+    /// <summary>
+    ///     <param name="nameItem">Name of gameItem</param>
+    ///     <param name="description">Description of gameItem</param>
+    ///     <param name="type">Type of gameItem</param>
+    /// </summary>
     protected AbstractGameItem(string nameItem, string description, GameItemTypes type)
     {
         _nameItem = nameItem;
@@ -39,7 +39,7 @@ public abstract class AbstractGameItem : IGameItem
     }
 
 
-    public abstract bool Use(IMonster m);
+    public abstract bool Use(IMonster? m);
 
 
     protected bool Equals(AbstractGameItem other)
@@ -51,7 +51,7 @@ public abstract class AbstractGameItem : IGameItem
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != this.GetType()) return false;
+        if (obj.GetType() != GetType()) return false;
         return Equals((AbstractGameItem) obj);
     }
 

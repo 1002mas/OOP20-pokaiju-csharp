@@ -4,7 +4,7 @@ namespace Pokaiju.Guo.GameItem;
 
  class ItemAttr : Attribute
 {
-    public string Name { get; }
+    private string Name { get; }
     public bool UseBattle { get; }
     public bool UseBag { get; }
     internal ItemAttr(string name, bool useBattle, bool useBag)
@@ -44,12 +44,12 @@ public static class GameItemType
 
     public static bool IsConsumableInBag(GameItemTypes p)
     {
-        ItemAttr att = GetAttr(p);
+        var att = GetAttr(p);
         return att.UseBag;
     }
 
     public static bool IsConsumableInBattle(GameItemTypes p) {
-        ItemAttr att = GetAttr(p);
+        var att = GetAttr(p);
         return att.UseBattle;
     }
 }

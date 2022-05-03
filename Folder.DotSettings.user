@@ -8,4 +8,9 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::7F3EC473-9F64-0C0F-061A-5CE895EFF40B::net6.0::Pokaiju.Barattini.TestMonster.EvolvingByLevel&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e700b959_002Dd817_002D4226_002D940a_002Da8e8ef4c03ca/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="SimpleBattle" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;NUnit3x::7F3EC473-9F64-0C0F-061A-5CE895EFF40B::net6.0::Pokaiju.Pierantoni.TestBattle.SimpleBattle&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

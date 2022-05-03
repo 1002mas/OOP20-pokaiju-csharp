@@ -24,7 +24,7 @@ public class Player : IPlayer
     private string _name;
     private Tuple<int, int> _position;
     private List<IMonster> _team;
-    private readonly int _trainerNumber;
+    private int _trainerNumber;
     private Option<IMonsterBattle> _monsterBattle;
     private Option<INpcSimple> _npc;
     private MonsterStorage _storage;
@@ -191,7 +191,7 @@ public class Player : IPlayer
             var trainer = (INpcTrainer) _npc.ValueOrFailure();
             if (!trainer.IsDefeated())
             {
-                _monsterBattle = Option.Some(mons);
+                _monsterBattle = Option.Some(new MonsterBattle(this,trainer));
             }
         }
 
@@ -200,10 +200,7 @@ public class Player : IPlayer
 
     public Option<INpcSimple> GetLastInteractionWithNpc() => _npc;
 
-    public Option<IMonsterBattle> GetPlayerBattle()
-    {
-        throw new NotImplementedException();
-    }
+    public Option<IMonsterBattle> GetPlayerBattle() => _monsterBattle;
 
     public void SetStorage(MonsterStorage storage) => _storage = storage;
     
@@ -214,10 +211,7 @@ public class Player : IPlayer
     public void SetGender(Gender gender) => _gender = gender;
 
 
-    public void SetTrainerNumber(int trainerNumber)
-    {
-        throw new NotImplementedException();
-    }
+    public void SetTrainerNumber(int trainerNumber) => _trainerNumber = trainerNumber;
 
     public List<IMonster> GetMonster() => _team;
 

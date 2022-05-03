@@ -3,7 +3,7 @@ namespace Pokaiju.Pierantoni;
 public class Moves : IMoves
 {
     private readonly string _name;
-    private int _base;
+    private readonly int _base;
     private readonly MonsterType _type;
     private readonly int _maxPp;
 
@@ -15,43 +15,33 @@ public class Moves : IMoves
 
     }
 
-    /***
-     * {@inheritDoc}.
-     */
-    public String GetName() {
+    /// <inheritdoc cref="IMoves.GetName"/>
+    public string GetName() {
         return _name;
     }
 
-    /***
-     * {@inheritDoc}.
-     */
+    /// <inheritdoc cref="IMoves.GetBase"/>
     public int GetBase() {
         return _base;
     }
 
-    /***
-     * {@inheritDoc}.
-     */
+    /// <inheritdoc cref="IMoves.GetMonsterType"/>
     public  MonsterType GetMonsterType() {
         return _type;
     }
 
-    /***
-     * {@inheritDoc}.
-     */
+    /// <inheritdoc cref="IMoves.GetPp"/>
     public int GetPp() {
         return _maxPp;
     }
 
    
-    /***
-     * {@inheritDoc}.
-     */
+    /// <inheritdoc cref="IMoves.GetDamage"/>
     public int GetDamage(MonsterType type) {
         return (int) this._type.DamageTo(type);
     }
 
-    protected bool Equals(Moves other)
+    private bool Equals(Moves other)
     {
         return _name == other._name;
     }

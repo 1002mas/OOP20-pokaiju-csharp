@@ -1,5 +1,4 @@
 using Optional;
-using Optional.Unsafe;
 using Pokaiju.Barattini;
 using Pokaiju.Castorina.Npc;
 using Pokaiju.Guo.GameItem;
@@ -7,7 +6,7 @@ using Pokaiju.Guo.Player;
 
 namespace Pokaiju.Pierantoni;
 
-public class MonsterBattle
+public class MonsterBattle : IMonsterBattle
 {
     private static readonly int ExpMultipler = 100;
     private static readonly int CaptureRange = 10;
@@ -26,16 +25,16 @@ public class MonsterBattle
     private readonly IList<IMonster> _enemyTeam;
     private readonly IPlayer _trainer;
 
-    private Option<INpcTrainer> _enemyTrainer;
+    private INpcTrainer? _enemyTrainer;
 
     private readonly Moves _extraMoves;
 
-    protected MonsterBattle( IPlayer trainer, IList<IMonster> enemyTeam) {
+    private MonsterBattle( IPlayer trainer, IList<IMonster> enemyTeam) {
         
         _trainer = trainer;
         _battleStatus = true;
         _playerLose = false;
-        _enemyTrainer = Option.None<INpcTrainer>();
+        _enemyTrainer = null;
         _playerTeam = _trainer.GetAllMonsters();
         _playerCurrentMonster = ChooseStartingMonster();
         _enemyTeam = new List<IMonster>(enemyTeam);
@@ -44,11 +43,11 @@ public class MonsterBattle
         _areEndPp = false;
     }
 
-    public MonsterBattle(IPlayer trainer,  Option<INpcTrainer> enemyTrainer)
+    public MonsterBattle(IPlayer trainer,  INpcTrainer enemyTrainer)
 
-        : this(trainer, enemyTrainer.ValueOrFailure().GetMonstersOwned())
+        : this(trainer, enemyTrainer.GetMonstersOwned())
     {
-        this._enemyTrainer = enemyTrainer;
+        _enemyTrainer = enemyTrainer;
     }
 
     public MonsterBattle( IPlayer trainer, IMonster wildMonster) 
@@ -56,11 +55,8 @@ public class MonsterBattle
     {
     }
 
-    /***
-     * {@inheritDoc}.
-     */
-
-    private IMoves EnemyAttack()
+    /// <inheritdoc cref="IMonsterBattle.EnemyAttack"/>
+    public IMoves EnemyAttack()
     {
         int x = new Random().Next(_enemy.GetNumberOfMoves());
         while (_enemy.IsOutOfPp(_enemy.GetMoves(x))) {
@@ -68,11 +64,8 @@ public class MonsterBattle
         }
         return _enemy.GetMoves(x);
     }
-
-    /***
-     * {@inheritDoc}.
-     */
     
+    /// <inheritdoc cref="IMonsterBattle.Capture"/>
     public bool Capture() {
         ThrowExceptionIfItIsOver();
         if (!_enemy.IsWild()) {
@@ -88,11 +81,8 @@ public class MonsterBattle
         return false;
 
     }
-
-    /***
-     * {@inheritDoc}.
-     */
     
+    /// <inheritdoc cref="IMonsterBattle.Escape"/>
     public bool Escape() {
         ThrowExceptionIfItIsOver();
         if (!_enemy.IsWild()) {
@@ -104,10 +94,8 @@ public class MonsterBattle
         }
 
     }
-
-    /***
-     * {@inheritDoc}.
-     */
+    
+    /// <inheritdoc cref="IMonsterBattle.PlayerChangeMonster"/>
     public bool PlayerChangeMonster(int index) {
         ThrowExceptionIfItIsOver();
         IMonster? changingMonster = null;
@@ -135,10 +123,8 @@ public class MonsterBattle
         }
 
     }
-
-    /***
-     * {@inheritDoc}.
-     */
+    
+    /// <inheritdoc cref="IMonsterBattle.MovesSelection"/>
     public bool MovesSelection(int moveIndex) {
 
         if (!_playerCurrentMonster.IsOutOfPp(_playerCurrentMonster.GetMoves(moveIndex)) && this._battleStatus
@@ -175,8 +161,8 @@ public class MonsterBattle
         if (!AreThereEnemies()) {
             // ending battle
 
-            if (_enemyTrainer.HasValue) {
-                _enemyTrainer.ValueOrFailure().SetDefeated(true); 
+            if (_enemyTrainer is not null ){
+                _enemyTrainer.SetDefeated(true); 
             }
             this._battleStatus = false;
         } else {
@@ -218,10 +204,8 @@ public class MonsterBattle
         }
         
     }
-
-    /***
-     * {@inheritDoc}.
-     */
+    
+    /// <inheritdoc cref="IMonsterBattle.IsCurrentMonsterAlive"/>
     public bool IsCurrentMonsterAlive() {
         return this._playerCurrentMonster.IsAlive();
     }
@@ -230,10 +214,8 @@ public class MonsterBattle
         return _playerTeam.Any(m => m.IsAlive());
 
     }
-
-    /***
-     * {@inheritDoc}.
-     */
+    
+    /// <inheritdoc cref="IMonsterBattle.IsOver"/>
     public bool IsOver() {
 
         return !_battleStatus;
@@ -244,47 +226,40 @@ public class MonsterBattle
            throw  new InvalidOperationException(); 
         }
     }
-
-    /***
-     * {@inheritDoc}.
-     */
+    
+    /// <inheritdoc cref="IMonsterBattle.UseItem"/>
     public bool UseItem(IGameItem item) {
         return item.Use(_playerCurrentMonster);
     }
-
-    /***
-     * {@inheritDoc}.
-     */
+    
+    /// <inheritdoc cref="IMonsterBattle.GetCurrentPlayerMonster"/>
     public IMonster GetCurrentPlayerMonster() {
 
         return _playerCurrentMonster;
     }
-
-    /***
-     * {@inheritDoc}.
-     */
+    
+    /// <inheritdoc cref="IMonsterBattle.GetCurrentEnemyMonster"/>
     public IMonster GetCurrentEnemyMonster() {
 
         return _enemy;
     }
-
-    /***
-     * {@inheritDoc}.
-     */
+    
+    /// <inheritdoc cref="IMonsterBattle.GetPlayer"/>
     public IPlayer GetPlayer() {
         return _trainer;
     }
-
-    /***
-     * {@inheritDoc}.
-     */
+    
+    /// <inheritdoc cref="IMonsterBattle.GetNpcEnemy"/>
     public Option<INpcTrainer> GetNpcEnemy() {
-        return _enemyTrainer;
-    }
+        if (_enemyTrainer is not null)
+        {
+            return Option.Some(_enemyTrainer);
+        }
 
-    /***
-     * {@inheritDoc}.
-     */
+        return Option.None<INpcTrainer>();
+    }
+    
+    /// <inheritdoc cref="IMonsterBattle.IsOverOfPp"/>
     public bool IsOverOfPp() {
         this._areEndPp = true;
         for (int c = 0; c < this._playerCurrentMonster.GetNumberOfMoves(); c++) {
@@ -294,10 +269,8 @@ public class MonsterBattle
         }
         return this._areEndPp;
     }
-
-    /***
-     * {@inheritDoc}.
-     */
+    
+    /// <inheritdoc cref="IMonsterBattle.AttackWithExtraMove"/>
     public bool AttackWithExtraMove() {
 
         if (this._battleStatus && this._playerCurrentMonster.IsAlive()) {
@@ -310,17 +283,13 @@ public class MonsterBattle
         return false;
 
     }
-
-    /***
-     * {@inheritDoc}.
-     */
-    private bool HasPlayerLost() {
+    
+    /// <inheritdoc cref="IMonsterBattle.HasPlayerLost"/>
+    public bool HasPlayerLost() {
         return this._playerLose;
     }
-
-    /***
-     * {@inheritDoc}.
-     */
+    
+    /// <inheritdoc cref="IMonsterBattle.EndingBattle"/>
     public void EndingBattle() {
         if (HasPlayerLost()) {
             this._trainer.SetMoney(_trainer.GetMoney() - MoneyLost);

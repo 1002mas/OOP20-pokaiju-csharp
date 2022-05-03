@@ -2,13 +2,13 @@
 
 namespace Pokaiju.Castorina.Npc;
 
-public class NpcTrainerImpl : NpcSimpleImpl, INpcTrainer
+public class NpcTrainer : NpcSimple, INpcTrainer
 {
     private const int DefeatedTextId = 1;
     private readonly  IList<IMonster> _monstersOwned;
     private bool _isDefeated;
     
-    public NpcTrainerImpl(string name, IList<string> sentences, Tuple<int, int> position, bool isVisible, 
+    public NpcTrainer(string name, IList<string> sentences, Tuple<int, int> position, bool isVisible, 
         bool isEnabled, IList<IMonster> monsterOwned, bool isDefeated) : base(name, sentences, position, isVisible, isEnabled)
     {
         this._monstersOwned = monsterOwned;

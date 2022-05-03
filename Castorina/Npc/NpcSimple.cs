@@ -6,7 +6,7 @@ using Pokaiju.Carafassi.GameEvents;
 namespace Pokaiju.Castorina.Npc
 {
 
-    public class NpcSimpleImpl : INpcSimple
+    public class NpcSimple : INpcSimple
     {
         private readonly string _name;
         private TypeOfNpc _typeOfNpc;
@@ -18,7 +18,7 @@ namespace Pokaiju.Castorina.Npc
         private bool _isVisible;
         private bool _isEnabled;
 
-        protected NpcSimpleImpl(string name, TypeOfNpc typeOfNpc, IList<string> sentences,
+        protected NpcSimple(string name, TypeOfNpc typeOfNpc, IList<string> sentences,
             Tuple<int, int> position, bool isVisible, bool isEnabled)
         {
             this._name = name;
@@ -32,7 +32,7 @@ namespace Pokaiju.Castorina.Npc
             this._triggeredEvent = Option.None<IGameEvent>();
         }
 
-        public NpcSimpleImpl(string name, IList<string> sentences, Tuple<int, int> position,
+        public NpcSimple(string name, IList<string> sentences, Tuple<int, int> position,
             bool isVisible, bool isEnabled) : this(name, TypeOfNpc.SIMPLE, sentences, position, isVisible, isEnabled)
         {
             throw new NotImplementedException();

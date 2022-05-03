@@ -22,7 +22,9 @@ namespace Pokaiju.Castorina.Storage
             this._currentMonsterBoxIndex = 0;
             if (this._monsterBoxes.Count > MaxNumberOfBox)
             {
-                this._monsterBoxes = this._monsterBoxes.subList(0, MaxNumberOfBox);
+                List<IMonsterBox> temp = new List<IMonsterBox>(_monsterBoxes);
+                this._monsterBoxes = temp.GetRange(0, MaxNumberOfBox);
+                //GetRange(0, MaxNumberOfBox);
             }
             else
             {

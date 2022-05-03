@@ -4,11 +4,11 @@ using Pokaiju.Guo.Player;
 
 namespace Pokaiju.Castorina.Npc;
 
-public class NpcHealerImpl : NpcSimpleImpl
+public class NpcHealer : NpcSimple
 {
     private readonly IPlayer _player;
     
-    public NpcHealerImpl(string name, IList<string> sentences, Tuple<int, int> position, bool isVisible, bool isEnabled, IPlayer player) : base(name, sentences, position, isVisible, isEnabled)
+    public NpcHealer(string name, IList<string> sentences, Tuple<int, int> position, bool isVisible, bool isEnabled, IPlayer player) : base(name, sentences, position, isVisible, isEnabled)
     {
         this._player = player;
     }

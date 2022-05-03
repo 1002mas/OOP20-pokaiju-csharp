@@ -1,3 +1,5 @@
+using Pokaiju.Castorina.Npc;
+
 namespace Pokaiju.Carafassi.GameEvents
 {
     /// <summary>
@@ -5,7 +7,7 @@ namespace Pokaiju.Carafassi.GameEvents
     /// </summary>
     public class NpcVisibilityChanger : AbstractGameEvent
     {
-        private readonly string _npc;
+        private readonly INpcSimple _npc;
         private readonly bool _isVisible;
 
         /// <summary>
@@ -20,7 +22,7 @@ namespace Pokaiju.Carafassi.GameEvents
         /// another event is triggered.</param>
         /// <param name="npc">The npc you want to hide/show.</param>
         /// <param name="isVisible">False if you want to hide it.</param>
-        public NpcVisibilityChanger(int id, bool isActive, bool isReactivable, bool isToActiveImmediately, string npc,
+        public NpcVisibilityChanger(int id, bool isActive, bool isReactivable, bool isToActiveImmediately, INpcSimple npc,
             bool isVisible) : base(id, isActive, isReactivable, isToActiveImmediately)
         {
             _npc = npc;
@@ -30,8 +32,7 @@ namespace Pokaiju.Carafassi.GameEvents
         /// <inheritdoc cref="AbstractGameEvent.ActivateEvent" />
         protected override void ActivateEvent()
         {
-            //TODO _npc.setvisible = isVisile;
-            throw new NotImplementedException();
+            _npc.SetVisible(_isVisible);
         }
     }
 }

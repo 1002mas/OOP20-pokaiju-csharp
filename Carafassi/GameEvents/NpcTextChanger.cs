@@ -1,3 +1,5 @@
+using Pokaiju.Castorina.Npc;
+
 namespace Pokaiju.Carafassi.GameEvents
 {
     /// <summary>
@@ -5,8 +7,7 @@ namespace Pokaiju.Carafassi.GameEvents
     /// </summary>
     public class NpcTextChanger : AbstractGameEvent
     {
-        // TODO use NpcSimple
-        private readonly string _npc;
+        private readonly INpcSimple _npc;
         private readonly int _textId;
 
         /// <summary>
@@ -22,7 +23,7 @@ namespace Pokaiju.Carafassi.GameEvents
         /// <param name="npc">The npc that changes sentence.</param>
         /// <param name="textId">Sentence ID. Be careful, there is no check about the id. Giving a wrong ID
         /// will result in an error later.</param>
-        public NpcTextChanger(int id, bool isActive, bool isReactivable, bool isToActiveImmediately, string npc,
+        public NpcTextChanger(int id, bool isActive, bool isReactivable, bool isToActiveImmediately, INpcSimple npc,
             int textId) : base(id, isActive, isReactivable, isToActiveImmediately)
         {
             _npc = npc;
@@ -32,8 +33,7 @@ namespace Pokaiju.Carafassi.GameEvents
         /// <inheritdoc cref="AbstractGameEvent.ActivateEvent" />
         protected override void ActivateEvent()
         {
-            //TODO _npc.settextid = _textIs;
-            throw new NotImplementedException();
+            _npc.SetDialogueText(_textId);
         }
     }
 }

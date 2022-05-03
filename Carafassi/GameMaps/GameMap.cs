@@ -2,6 +2,8 @@ using Optional;
 using Optional.Unsafe;
 using Pokaiju.Barattini;
 using Pokaiju.Carafassi.GameEvents;
+using Pokaiju.Castorina.Npc;
+using Pokaiju.Pierantoni;
 
 namespace Pokaiju.Carafassi.GameMaps
 {
@@ -31,35 +33,39 @@ namespace Pokaiju.Carafassi.GameMaps
         /// <inheritdoc cref="IGameMap.CanPassThrough"/>>
         public bool CanPassThrough(Tuple<int, int> block)
         {
-            return _mapData.GetBlockType(block).CanPassThrough();
+            Option<INpcSimple> npc = _mapData.GetNpc(block);
+            return _mapData.GetBlockType(block).CanPassThrough() &&
+                   (!npc.HasValue || npc.HasValue && !npc.ValueOrFailure().IsEnabled());
         }
 
         //TODO use Moves instead of string
-        /*   private IList<Tuple<string, int>> GetRandomListMoves(IMonsterSpecies species)
-           {
-               int maxProb = 10;
-               int prob = 5;
-               IList<Tuple<string, int>> movesList = new List<Tuple<string, int>>();
-               IList<string> learnableMoves = species.GetAllLearnableMoves();
-               for (final Moves m :
-               learnableMoves) {
-                   if (movesList.size() < MonsterImpl.NUM_MAX_MOVES && ThreadLocalRandom.current().nextInt(maxProb) < prob)
-                   {
-                       movesList.add(new Pair<>(m, m.getPP()));
-                   }
-                   else
-                   {
-                       break;
-                   }
-               }
-               if (movesList.isEmpty() && !learnableMoves.isEmpty())
-               {
-                   movesList.add(new Pair<>(learnableMoves.get(0), learnableMoves.get(0).getPP()));
-               }
-   
-               return movesList;
-           }
-   */
+        private IList<Tuple<IMoves, int>> GetRandomListMoves(IMonsterSpecies species)
+        {
+            int maxProb = 10;
+            int prob = 5;
+            IList<Tuple<IMoves, int>> movesList = new List<Tuple<IMoves, int>>();
+            IList<IMoves> learnableMoves = species.GetAllLearnableMoves();
+            Random rnd = new Random();
+            foreach (IMoves m in learnableMoves)
+            {
+                if (movesList.Count < Monster.NumMaxMoves && rnd.Next(maxProb) < prob)
+                {
+                    movesList.Add(new Tuple<IMoves, int>(m, m.GetPp()));
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if (!movesList.Any() && learnableMoves.Any())
+            {
+                movesList.Add(new Tuple<IMoves, int>(learnableMoves[0], learnableMoves[0].GetPp()));
+            }
+
+            return movesList;
+        }
+
         /// <inheritdoc cref="IGameMap.GetWildMonster"/>>
         public Option<IMonster> GetWildMonster(Tuple<int, int> pos)
         {
@@ -67,7 +73,7 @@ namespace Pokaiju.Carafassi.GameMaps
             Random rnd = new Random();
 
 
-            if (!_mapData.GetBlockType(pos).CanMonstersSpawn() || monsters.Count > 0
+            if (!_mapData.GetBlockType(pos).CanMonstersSpawn() || monsters.Any()
                                                                || rnd.Next(MaximumMonsterSpawnRate) >
                                                                MonsterSpawnRate)
             {
@@ -78,8 +84,8 @@ namespace Pokaiju.Carafassi.GameMaps
             int monsterLevel = rnd.Next(_mapData.GetWildMonsterLevelRange().Item1,
                 _mapData.GetWildMonsterLevelRange().Item2);
             IMonster m = new MonsterBuilder().Species(species).Wild(true)
-                .Exp(0).Level(monsterLevel).Build();
-            /*  .MovesList(GetRandomListMoves(species))*/
+                .Exp(0).Level(monsterLevel)
+                .MovesList(GetRandomListMoves(species)).Build();
             return Option.Some<>(m);
         }
 
@@ -101,7 +107,7 @@ namespace Pokaiju.Carafassi.GameMaps
         /// <inheritdoc cref="IGameMap.CanChangeMap"/>>
         public bool CanChangeMap(Tuple<int, int> playerPosition)
         {
-            return _mapData.GetNextMap(playerPosition).HasValue;
+            return _mapData.GetBlockType(playerPosition).Equals(MapBlockType.MapChange);
         }
 
         /// <inheritdoc cref="IGameMap.GetPlayerMapPosition"/>>
@@ -113,13 +119,12 @@ namespace Pokaiju.Carafassi.GameMaps
         }
 
         /// <inheritdoc cref="IGameMap.GetNpcAt"/>>
-        public Option<string> GetNpcAt(Tuple<int, int> position)
+        public Option<INpcSimple> GetNpcAt(Tuple<int, int> position)
         {
-            Option<string> npc = _mapData.GetNpc(position);
-            //TODO npc.isEnabled
-            if (npc.ValueOrFailure() is null)
+            Option<INpcSimple> npc = _mapData.GetNpc(position);
+            if (!npc.HasValue || !npc.ValueOrFailure().IsEnabled())
             {
-                return Option.None<string>();
+                return Option.None<INpcSimple>();
             }
 
             return npc;
@@ -133,7 +138,7 @@ namespace Pokaiju.Carafassi.GameMaps
         }
 
         /// <inheritdoc cref="IGameMap.GetAllNpcsInCurrentMap"/>>
-        public IList<string> GetAllNpcsInCurrentMap()
+        public IList<INpcSimple> GetAllNpcsInCurrentMap()
         {
             return _mapData.GetAllNpcs();
         }

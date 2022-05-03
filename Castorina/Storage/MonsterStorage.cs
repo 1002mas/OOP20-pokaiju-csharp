@@ -1,4 +1,5 @@
 ﻿using Optional;
+using Optional.Unsafe;
 using Pokaiju.Barattini;
 using Pokaiju.Guo.Player;
 
@@ -101,7 +102,7 @@ namespace Pokaiju.Castorina.Storage
         {
             if (IsInBox(monsterId) && !this._player.IsTeamFull)
             {
-                this._player.AddMonster(GetCurrentBox().GetMonster(monsterId).get());
+                this._player.AddMonster(GetCurrentBox().GetMonster(monsterId).ValueOrFailure());
                 GetCurrentBox().RemoveMonster(monsterId);
                 return true;
 
@@ -114,7 +115,7 @@ namespace Pokaiju.Castorina.Storage
         {
             foreach (IMonster monster in GetCurrentBox().GetAllMonsters()) 
             {
-                if (monster.GetId() == monsterId)
+                if (monster.Id == monsterId)
                 {
                     return true;
                 }
@@ -133,7 +134,7 @@ namespace Pokaiju.Castorina.Storage
                 Option<IMonster> m = GetCurrentBox().Exchange(monster, monsterId);
                 if (m.HasValue)
                 {
-                    this._player.AddMonster(m.get());
+                    this._player.AddMonster(m.ValueOrFailure());
                     this._player.RemoveMonster(monster);
                     return true;
                 }

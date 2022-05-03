@@ -1,4 +1,4 @@
-﻿using System.Runtime.ConstrainedExecution;
+﻿using Optional;
 using Pokaiju.Barattini;
 using Pokaiju.Guo.Player;
 
@@ -18,9 +18,19 @@ public class NpcHealerImpl : NpcSimpleImpl
         foreach ( IMonster monster in this._player.GetAllMonsters()) 
         {
             monster.SetHealth(monster.GetMaxHealth());
-            monster.RestoreAllMovesPP();
+            monster.RestoreAllMovesPp();
         }
 
+    }
+    
+    public override Option<string> InteractWith() 
+    {
+        Option<string> result = base.InteractWith();
+        if (IsEnabled()) 
+        {
+            Heal();
+        }
+        return result;
     }
 
 }

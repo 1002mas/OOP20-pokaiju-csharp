@@ -1,4 +1,3 @@
-using Guo.Player;
 using NUnit.Framework;
 using Pokaiju.Barattini;
 using Pokaiju.Castorina.Npc;
@@ -62,7 +61,7 @@ public class TestBattle
             .Speed(Speed).Exp(ExpBase).Level(FirstLevel).Wild(true).Species(species).MovesList(secondListOfMoves)
             .Build();
 
-        _player = new Player("Paolo", Gender.Male, 0, new Tuple<int, int>(0, 0), null);
+        _player = new Player("Paolo", Gender.Man, 0, new Tuple<int, int>(0, 0), null);
         this._player.AddMonster(playerMonster1);
         this._player.AddMonster(_playerMonster2);
         this._enemyTrainer = new NpcTrainerImpl("Luca", new List<string> { "test"}, null, true, true, new List<IMonster>{enemyTrainerMonster}, false);

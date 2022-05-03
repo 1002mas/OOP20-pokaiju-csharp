@@ -1,3 +1,5 @@
+using Pokaiju.Castorina.Npc;
+
 namespace Pokaiju.Carafassi.GameEvents
 {
     /// <summary>
@@ -6,8 +8,7 @@ namespace Pokaiju.Carafassi.GameEvents
     /// </summary>
     public class NpcActivityChanger : AbstractGameEvent
     {
-        // TODO use NpcSimple
-        private readonly string _npc;
+        private readonly INpcSimple _npc;
         private readonly bool _isEnabled;
 
         /// <summary>
@@ -24,7 +25,7 @@ namespace Pokaiju.Carafassi.GameEvents
         /// <param name="npc">The npc you want to disable/enable.</param>
         /// <param name="isEnabled">False if you want to deactivate the interaction with the npc.</param>
         public NpcActivityChanger(int id, bool isActive, bool isReactivable, bool isToActiveImmediately,
-            string npc, bool isEnabled) : base(id, isActive, isReactivable, isToActiveImmediately)
+            INpcSimple npc, bool isEnabled) : base(id, isActive, isReactivable, isToActiveImmediately)
         {
             _npc = npc;
             _isEnabled = isEnabled;
@@ -33,8 +34,7 @@ namespace Pokaiju.Carafassi.GameEvents
         /// <inheritdoc cref="AbstractGameEvent.ActivateEvent" />
         protected override void ActivateEvent()
         {
-            //TODO _npc.setEnabled = true;
-            throw new NotImplementedException();
+            _npc.SetEnabled(_isEnabled);
         }
     }
 }

@@ -1,3 +1,5 @@
+using Pokaiju.Castorina.Npc;
+
 namespace Pokaiju.Carafassi.GameEvents
 {
     /// <summary>
@@ -6,8 +8,7 @@ namespace Pokaiju.Carafassi.GameEvents
     /// </summary>
     public class NpcPositionChanger : AbstractGameEvent
     {
-        // TODO use NpcSimple
-        private readonly string _npc;
+        private readonly INpcSimple _npc;
         private readonly Tuple<int, int> _position;
 
         /// <summary>
@@ -22,7 +23,7 @@ namespace Pokaiju.Carafassi.GameEvents
         /// another event is triggered.</param>
         /// <param name="npc">The npc you want to move.</param>
         /// <param name="position">The position you want to move it to.</param>
-        public NpcPositionChanger(int id, bool isActive, bool isReactivable, bool isToActiveImmediately, string npc,
+        public NpcPositionChanger(int id, bool isActive, bool isReactivable, bool isToActiveImmediately, INpcSimple npc,
             Tuple<int, int> position) : base(id, isActive, isReactivable, isToActiveImmediately)
         {
             _npc = npc;
@@ -32,8 +33,7 @@ namespace Pokaiju.Carafassi.GameEvents
         /// <inheritdoc cref="AbstractGameEvent.ActivateEvent" />
         protected override void ActivateEvent()
         {
-            //TODO _npc.setpos = pos;
-            throw new NotImplementedException();
+            _npc.ChangeNpcPosition(_position);
         }
     }
 }

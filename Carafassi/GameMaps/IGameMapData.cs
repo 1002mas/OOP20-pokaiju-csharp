@@ -1,6 +1,7 @@
 using Optional;
 using Pokaiju.Barattini;
 using Pokaiju.Carafassi.GameEvents;
+using Pokaiju.Castorina.Npc;
 
 namespace Pokaiju.Carafassi.GameMaps
 {
@@ -32,8 +33,7 @@ namespace Pokaiju.Carafassi.GameMaps
         /// It adds the npc in the map.
         /// </summary>
         /// <param name="npc">The npc you want to add to the map</param>
-        //TODO use NpcSimple
-        void AddNpc(String npc);
+        void AddNpc(INpcSimple npc);
 
         /// <summary>
         /// A tuple containing the minimum and maximum level for monsters in the area.
@@ -56,7 +56,7 @@ namespace Pokaiju.Carafassi.GameMaps
         /// </summary>
         /// <param name="block">The position in the map.</param>
         // TODO use NpcSimple
-        Option<string> GetNpc(Tuple<int, int> block);
+        Option<INpcSimple> GetNpc(Tuple<int, int> block);
 
         /// <summary>
         /// It returns an event if it is present in the given position.
@@ -74,8 +74,7 @@ namespace Pokaiju.Carafassi.GameMaps
         /// <summary>
         /// A list containing all npcs in the map
         /// </summary>
-        // TODO use NpcSimple
-        IList<string> GetAllNpcs();
+        IList<INpcSimple> GetAllNpcs();
 
         /// <summary>
         /// It adds an event to the given position.

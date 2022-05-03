@@ -72,7 +72,7 @@ namespace Pokaiju.Carafassi.GameMaps
                 Attribute.GetCustomAttribute(ForValue(block), typeof(MapBlockAttr));
             if (mapBlockAttr is null)
             {
-                throw new ArgumentNullException();
+                throw new InvalidOperationException();
             }
 
             return mapBlockAttr;
@@ -83,13 +83,13 @@ namespace Pokaiju.Carafassi.GameMaps
             string? name = Enum.GetName(typeof(MapBlockType), block);
             if (name is null)
             {
-                throw new ArgumentException();
+                throw new InvalidOperationException();
             }
 
             MemberInfo? memberInfo = typeof(MapBlockType).GetField(name);
             if (memberInfo is null)
             {
-                throw new ArgumentException();
+                throw new MissingMemberException();
             }
 
             return memberInfo;

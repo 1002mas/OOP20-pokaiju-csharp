@@ -27,117 +27,84 @@ public interface IMonsterBattle
     /// </summary>
     /// <returns>true if the enemy has been captured, false otherwise</returns>
     bool Capture();
-
-    /***
-     * 
-     * this function return if the battle is over.
-     * 
-     * @return true if the battle is over, false otherwise
-     */
+    
     /// <summary>
     /// this function return if the battle is over.
     /// </summary>
-    /// <returns>true if the enemy has been captured, false otherwise</returns>
+    /// <returns>true if the battle is over, false otherwise</returns>
     bool IsOver();
-
-    /***
-     * 
-     * this function changes the monster that is fighting with another available.
-     * 
-     * @param index the position in the list of the player's monster
-     * 
-     * @return true if the change has been made, false otherwise
-     */
+ 
+    /// <summary>
+    /// this function changes the monster that is fighting with another available.
+    /// </summary>
+    /// <param name="index">the position in the list of the player's monster</param>
+    /// <returns>true if the change has been made, false otherwise</returns>
     bool PlayerChangeMonster(int index);
-
-    /***
-     * 
-     * this function tries to use a move of the monster that is fighting.
-     * 
-     * @param moveIndex the position in the list of the monster's moves
-     * 
-     * @return true if the move can be made, false otherwise
-     */
+    
+    /// <summary>
+    /// this function tries to use a move of the monster that is fighting.
+    /// </summary>
+    /// <param name="moveIndex">the position in the list of the monster's moves</param>
+    /// <returns>true if the move can be made, false otherwise</returns>
     bool MovesSelection(int moveIndex);
-
-    /***
-     * 
-     * this function return if the monster that is fighting is alive.
-     * 
-     * @return true if the monster is alive, false otherwise
-     */
+    
+    /// <summary>
+    /// this function return if the monster that is fighting is alive.
+    /// </summary>
+    /// <returns>true if the monster is alive, false otherwise</returns>
     bool IsCurrentMonsterAlive();
-
-    /***
-     * 
-     * this function tries to use an item on a player's monster.
-     * 
-     * @param item the item that the player wants to use
-     * 
-     * @return true if the item has been used, false otherwise
-     */
+    
+    /// <summary>
+    /// this function tries to use an item on a player's monster.
+    /// </summary>
+    /// <param name="item">the item that the player wants to use</param>
+    /// <returns>true if the item has been used, false otherwise</returns>
     bool UseItem(IGameItem item);
-
-    /***
-     * 
-     * the function return the player's monster that is fighting.
-     * 
-     * @return the player's monster that is fighting
-     */
+    
+    /// <summary>
+    /// the function return the player's monster that is fighting.
+    /// </summary>
+    /// <returns>the player's monster that is fighting</returns>
     IMonster GetCurrentPlayerMonster();
-
-    /***
-     * 
-     * the function return the enemy's monster that is fighting.
-     * 
-     * @return the enemy's monster that is fighting
-     */
+    
+    /// <summary>
+    /// the function return the enemy's monster that is fighting.
+    /// </summary>
+    /// <returns>the enemy's monster that is fighting</returns>
     IMonster GetCurrentEnemyMonster();
-
-    /***
-     * 
-     * the function return the player who is playing.
-     * 
-     * @return the player who is playing
-     */
+    
+    /// <summary>
+    /// the function return the player who is playing.
+    /// </summary>
+    /// <returns>the player who is playing</returns>
     IPlayer GetPlayer();
-
-    /***
-     * 
-     * this function return the enemy trainer (Npc).
-     * 
-     * @return the enemy trainer
-     */
+    
+    /// <summary>
+    /// this function return the enemy trainer (Npc).
+    /// </summary>
+    /// <returns>the enemy trainer</returns>
     Option<INpcTrainer> GetNpcEnemy();
-
-    /***
-     * 
-     * the function return if the player's monster finished the PP in all moves.
-     * 
-     * @return true the PPs are over, false otherwise
-     */
+    
+    /// <summary>
+    /// the function return if the player's monster finished the PP in all moves.
+    /// </summary>
+    /// <returns>true the PPs are over, false otherwise</returns>
     bool IsOverOfPp();
-
-    /***
-     * 
-     * the function tries to attack the enemy monster with the extra move.
-     * 
-     * @return true the monster did it, false otherwise
-     */
+    
+    /// <summary>
+    /// the function tries to attack the enemy monster with the extra move.
+    /// </summary>
+    /// <returns>true the monster did it, false otherwise</returns>
     bool AttackWithExtraMove();
-
-    /***
-     * 
-     * the function return if all the player's monsters are death.
-     * 
-     * @return true the player has lost, false otherwise
-     */
+    
+    /// <summary>
+    /// the function return if all the player's monsters are death.
+    /// </summary>
+    /// <returns>true the player has lost, false otherwise</returns>
     bool HasPlayerLost();
-
-    /***
-     * 
-     * this function set the player data after the battle and restore the monsters.
-     * 
-     */
+    
+    /// <summary>
+    /// this function set the player data after the battle and restore the monsters.
+    /// </summary>
     void EndingBattle();
 }

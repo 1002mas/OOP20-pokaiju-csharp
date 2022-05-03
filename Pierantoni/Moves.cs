@@ -32,7 +32,7 @@ public class Moves : IMoves
     /***
      * {@inheritDoc}.
      */
-    public  MonsterType GetType() {
+    public  MonsterType GetMonsterType() {
         return _type;
     }
 
@@ -51,4 +51,21 @@ public class Moves : IMoves
         return (int) this._type.DamageTo(type);
     }
 
+    protected bool Equals(Moves other)
+    {
+        return _name == other._name;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((Moves) obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return _name.GetHashCode();
+    }
 }

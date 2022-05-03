@@ -1,6 +1,7 @@
 using Optional;
 using Pokaiju.Barattini;
 using Pokaiju.Carafassi.GameEvents;
+using Pokaiju.Castorina.Npc;
 
 namespace Pokaiju.Carafassi.GameMaps
 {
@@ -51,8 +52,7 @@ namespace Pokaiju.Carafassi.GameMaps
         /// It returns the npc at the given position in the current map if any is present.
         /// </summary>
         /// <param name="position">The position where the npc should be located.</param>
-        // TODO use NpcSimple
-        Option<string> GetNpcAt(Tuple<int, int> position);
+        Option<INpcSimple> GetNpcAt(Tuple<int, int> position);
 
         /// <summary>
         /// It returns the game event at the given position in the current map if any is present.
@@ -63,7 +63,6 @@ namespace Pokaiju.Carafassi.GameMaps
         /// <summary>
         /// It returns a list of all enabled npcs in the current map.
         /// </summary>
-        // TODO use NpcSimple
-        IList<string> GetAllNpcsInCurrentMap();
+        IList<INpcSimple> GetAllNpcsInCurrentMap();
     }
 }

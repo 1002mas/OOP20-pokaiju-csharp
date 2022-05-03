@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using Optional;
 using Pokaiju.Barattini;
 using Pokaiju.Carafassi.GameEvents;
+using Pokaiju.Castorina.Npc;
 
 namespace Pokaiju.Carafassi.GameMaps
 {
@@ -15,9 +16,7 @@ namespace Pokaiju.Carafassi.GameMaps
         private readonly IDictionary<IGameMapData, Tuple<int, int>> _linkedMapsStartingPosition;
 
         private readonly IDictionary<Tuple<int, int>, IGameEvent> _eventLocation;
-
-        // TODO use NpcSimple
-        private readonly ISet<string> _npcs;
+        private readonly ISet<INpcSimple> _npcs;
 
         public GameMapData(int mapId, string mapName, int minimumMonsterLevel, int maximumMonsterLevel,
             IDictionary<Tuple<int, int>, MapBlockType> blocks, IList<IMonsterSpecies> wildMonsters)
@@ -31,7 +30,7 @@ namespace Pokaiju.Carafassi.GameMaps
             _linkedMaps = new Dictionary<Tuple<int, int>, IGameMapData>();
             _linkedMapsStartingPosition = new Dictionary<IGameMapData, Tuple<int, int>>();
             _eventLocation = new Dictionary<Tuple<int, int>, IGameEvent>();
-            _npcs = new HashSet<string>();
+            _npcs = new HashSet<INpcSimple>();
         }
 
         /// <inheritdoc cref="IGameMapData.MapId"/>>
@@ -48,7 +47,7 @@ namespace Pokaiju.Carafassi.GameMaps
         }
 
         /// <inheritdoc cref="IGameMapData.AddNpc"/>>
-        public void AddNpc(string npc)
+        public void AddNpc(INpcSimple npc)
         {
             if (_npcs.Contains(npc))
             {
@@ -67,7 +66,7 @@ namespace Pokaiju.Carafassi.GameMaps
         /// <inheritdoc cref="IGameMapData.GetBlockType"/>>
         public MapBlockType GetBlockType(Tuple<int, int> block)
         {
-            return _blocks[block];
+            return _blocks.ContainsKey(block) ? _blocks[block] : MapBlockType.Obstacle;
         }
 
         /// <inheritdoc cref="IGameMapData.GetMonstersInArea"/>>
@@ -77,19 +76,11 @@ namespace Pokaiju.Carafassi.GameMaps
         }
 
         /// <inheritdoc cref="IGameMapData.GetNpc"/>>
-        public Option<string> GetNpc(Tuple<int, int> block)
+        public Option<INpcSimple> GetNpc(Tuple<int, int> block)
         {
-            string? npcFound = null;
-            foreach (string npc in _npcs)
-            {
-                if ( /*npc.position.equals(block)*/true)
-                {
-                    npcFound = npc;
-                    break;
-                }
-            }
-
-            return npcFound is null ? Option.None<string>() : Option.Some<>(npcFound);
+            return _npcs.Any((npc) => npc.GetPosition().Equals(block))
+                ? Option.Some<>(_npcs.First((npc) => npc.GetPosition().Equals(block)))
+                : Option.None<INpcSimple>();
         }
 
         /// <inheritdoc cref="IGameMapData.GetEvent"/>>
@@ -112,7 +103,7 @@ namespace Pokaiju.Carafassi.GameMaps
         }
 
         /// <inheritdoc cref="IGameMapData.GetAllNpcs"/>>
-        public IList<string> GetAllNpcs()
+        public IList<INpcSimple> GetAllNpcs()
         {
             return _npcs.ToImmutableList();
         }
@@ -120,6 +111,10 @@ namespace Pokaiju.Carafassi.GameMaps
         /// <inheritdoc cref="IGameMapData.AddEventAt"/>>
         public void AddEventAt(IGameEvent e, Tuple<int, int> block)
         {
+            if (_eventLocation.ContainsKey(block))
+            {
+                _eventLocation.Remove(block);
+            }
             _eventLocation.Add(block, e);
         }
 

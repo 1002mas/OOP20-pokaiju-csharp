@@ -1,6 +1,11 @@
 using Guo.Player;
+using Optional;
 using Pokaiju.Barattini;
+using Pokaiju.Carafassi.GameMaps;
+using Pokaiju.Castorina.Npc;
+using Pokaiju.Castorina.Storage;
 using Pokaiju.Guo.GameItem;
+using Pokaiju.Pierantoni;
 
 namespace Pokaiju.Guo.Player;
 
@@ -9,24 +14,24 @@ public interface IPlayer
     /// <summary>
     ///     This function returns if team is full or not.
     /// </summary>
-    bool IsTeamFull { get; }
+    bool IsTeamFull { get;}
 
     /// <summary>
     ///     This function returns if Player has changed Map after movement.
     /// </summary>
-    bool HasPlayerChangedMap { get; }
+    bool HasPlayerChangedMap();
 
     /**
      * This function returns if the player has triggered an event.
      * 
      * @return true if the player has triggered an event
      */
-    bool IsTriggeredEvent { get; }
+    bool IsTriggeredEvent();
 
     /// <summary>
     ///     This function returns all player's monsters.
     /// </summary>
-    List<Monster> GetAllMonsters();
+    List<IMonster> GetAllMonsters();
 
 
     /// <summary>
@@ -96,19 +101,19 @@ public interface IPlayer
     ///     <param name="gameItem">The GameItem which want to use</param>
     ///     <param name="m">The Monster which want to apply a GameItem</param>
     /// </summary>
-    void useItemOnMonster(IGameItem gameItem, Monster m);
+    void useItemOnMonster(IGameItem gameItem, IMonster m);
 
     /// <summary>
     ///     This function returns if add Monster is successful or not.
     ///     <param name="m">The Monster which will be added to player</param>
     /// </summary>
-    bool AddMonster(Monster m);
+    bool AddMonster(IMonster m);
 
     /// <summary>
     ///     This function returns if remove Monster is successful or not.
     ///     <param name="m">The Monster which will be removed from player</param>
     /// </summary>
-    bool RemoveMonster(Monster m);
+    bool RemoveMonster(IMonster m);
 
     /// <summary>
     ///     This function sets Player's Money.
@@ -120,7 +125,7 @@ public interface IPlayer
     ///     This function sets Player's position.
     ///     <param name="position">New position</param>
     /// </summary>
-    void SetPosition(KeyValuePair<int, int> position);
+    void SetPosition(Tuple<int, int> position);
 
     /// <summary>
     ///     This function evolves Monsters after a battle.
@@ -132,7 +137,7 @@ public interface IPlayer
     ///     <param name="monster">Monster to be evolved </param>
     ///     <param name="gameItem">Evolution Item to be used</param>
     /// </summary>
-    void EvolveMonster(Monster monster, IGameItem gameItem);
+    void EvolveMonster(IMonster monster, IGameItem gameItem);
 
     /// <summary>
     ///     Moves Player up.
@@ -160,74 +165,60 @@ public interface IPlayer
     IGameMap GetMap();
 
 
-     /// <summary>
-     /// This function returns if Player has interaction with Npc.
-     
-     /// <param name="pos">Interact in the position</param>
-     
-     /// </summary>
-    bool InteractAt(KeyValuePair<int, int> pos);
+    /// <summary>
+    ///     This function returns if Player has interaction with Npc.
+    ///     <param name="pos">Interact in the position</param>
+    /// </summary>
+    bool InteractAt(Tuple<int, int> pos);
 
-      /// <summary>
-     /// This function returns if there was a interaction with Npc. 
-      /// </summary>
-    Optional<NpcSimple> GetLastInteractionWithNpc();
+    /// <summary>
+    ///     This function returns if there was a interaction with Npc.
+    /// </summary>
+    Option<INpcSimple> GetLastInteractionWithNpc();
 
-    /**
-     * This function returns a battle if a wild monster attacked while player was
-     * moving or the Player talked with a Npc.
-     * 
-     * @return a battle if any is present
-     */
-    Optional<MonsterBattle> GetPlayerBattle();
+    /// <summary>
+    ///     This function returns a battle if a wild monster attacked while player was
+    ///     moving or the Player talked with a Npc.
+    /// </summary>
+    Option<IMonsterBattle> GetPlayerBattle();
 
-    /**
-     * This function updates storage.
-     * 
-     * @param storage
-     */
+    /// <summary>
+    ///     This function updates storage.
+    ///     <param name="storage">Storage to be updated</param>
+    /// </summary>
     void SetStorage(MonsterStorage storage);
 
-    /**
-     * This function gets storage.
-     * 
-     * @return storage
-     */
+    /// <summary>
+    ///     This function gets storage.
+    /// </summary>
     MonsterStorage GetStorage();
 
-    /**
-     * This function sets player's gender.
-     * 
-     * @param gender
-     */
+    /// <summary>
+    ///     This function sets player's gender.
+    ///     <param name="gender">Gender to be set</param>
+    /// </summary>
     void SetGender(Gender gender);
 
-    /**
-     * This function sets player's trainerNumber.
-     * 
-     * @param trainerNumber
-     */
+    /// <summary>
+    ///     This function sets player's trainerNumber.
+    ///     <param name="trainerNumber">TrainerNumber to be set</param>
+    /// </summary>
     void SetTrainerNumber(int trainerNumber);
 
-    /**
-     * This function gets a list of Monsters.
-     * 
-     * @return list of Monster
-     */
-    List<Monster> GetMonster();
+    /// <summary>
+    ///     This function gets a list of Monsters.
+    /// </summary>
+    List<IMonster> GetMonster();
 
-    /**
-     * This function sets a list of Monsters.
-     * 
-     * @param monster List of monster to set
-     */
-    void SetMonster(List<Monster> monster);
+    /// <summary>
+    ///     This function sets a list of Monsters.
+    ///     <param name="monster">  List of monster to set</param>
+    /// </summary>
+    void SetMonster(List<IMonster> monster);
 
-    /**
-     * This function sets a list of GameItems.
-     * 
-     * @return list of GameItems
-     */
+    /// <summary>
+    ///     This function gets a list of GameItems.
+    /// </summary>
     List<IGameItem> GetItems();
 
     /// <summary>

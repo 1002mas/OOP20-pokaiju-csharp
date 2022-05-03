@@ -18,7 +18,7 @@ public class HealingItem : AbstractGameItem
         _healedHp = healedHp;
     }
 
-    public override bool Use(Monster m)
+    public override bool Use(IMonster? m)
     {
         if (m.GetStats().Health== m.GetMaxHealth()) return false;
         m.SetHealth(_healedHp + m.GetStats().Health);

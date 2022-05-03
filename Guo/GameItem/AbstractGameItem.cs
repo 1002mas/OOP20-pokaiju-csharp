@@ -39,7 +39,7 @@ public abstract class AbstractGameItem : IGameItem
     }
 
 
-    public abstract bool Use(Monster m);
+    public abstract bool Use(IMonster m);
 
 
     protected bool Equals(AbstractGameItem other)

@@ -5,7 +5,7 @@ using Pokaiju.Guo.Player;
 
 namespace Pokaiju.Castorina.Storage
 {
-    public class MonsterStorage 
+    public class MonsterStorage : IMonsterStorage
     {
         private const int MaxNumberOfBox = 10;
         private const int MaxSizeOfBox = 10;
@@ -86,7 +86,7 @@ namespace Pokaiju.Castorina.Storage
             return false;
         }
         
-        public bool DdepositMonster(IMonster monster)
+        public bool DepositMonster(IMonster monster)
         {
             if (this._player.GetAllMonsters().Count > 1 && this._player.GetAllMonsters().Contains(monster)
                                                         && GetCurrentBox().AddMonster(monster))

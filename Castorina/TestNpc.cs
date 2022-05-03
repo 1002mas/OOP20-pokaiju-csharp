@@ -118,7 +118,7 @@ namespace Pokaiju.Castorina
             // enabled : true and event active
             _npcEvent.Active = true;
             _npc1?.InteractWith();
-            Assert.AreEqual(Option.Some(_npcEvent), this._npc1.GetTriggeredEvent());
+            Assert.AreEqual(Option.Some(_npcEvent), this._npc1?.GetTriggeredEvent());
         }
 
        [Test]
@@ -132,28 +132,35 @@ namespace Pokaiju.Castorina
         [Test]
         public void TestNpcTrainer() 
         {
-
-            Assert.AreEqual(_monsterList, _npc4?.GetMonstersOwned());
-            IMonsterBattle battle = new MonsterBattle(_player, _npc4);
-            battle.MovesSelection(0);
-            Assert.True(_npc4.IsDefeated());
+            if (this._player != null && this._npc4 != null && this._npc5 != null)
+            {
+                Assert.AreEqual(_monsterList, _npc4?.GetMonstersOwned());
+                IMonsterBattle battle = new MonsterBattle(_player, _npc4);
+                battle.MovesSelection(0);
+                Assert.True(_npc4.IsDefeated());
+                
+                IMonsterBattle battle2 = new MonsterBattle(_player, _npc5);
+                battle2.MovesSelection(0);
+                Assert.False(_npc5.IsDefeated());
+                battle2.EnemyAttack();
+                Assert.True(battle.IsOver());
+                Assert.False(_npc5.IsDefeated());
+            }
             
-            IMonsterBattle battle2 = new MonsterBattle(_player, _npc5);
-            battle2.MovesSelection(0);
-            Assert.False(_npc5.IsDefeated());
-            battle2.EnemyAttack();
-            Assert.True(battle.IsOver());
-            Assert.False(_npc5.IsDefeated());
 
         }
 
        [Test]
         public void TestNpcMerhant() 
         {
-            int money = this._player.GetMoney();
-            Assert.AreEqual(8, _npc3?.GetTotalPrice(_list));
-            Assert.True(_npc3?.BuyItem(_list, _player));
-            Assert.AreEqual(money - 8, this._player.GetMoney());
+            if (this._player!= null && this._list != null )
+            {
+                int money = this._player.GetMoney();
+                Assert.AreEqual(8, _npc3?.GetTotalPrice(_list));
+                Assert.True(_npc3?.BuyItem(_list, _player));
+                Assert.AreEqual(money - 8, this._player.GetMoney());
+            }
+            
         }
     }
 }

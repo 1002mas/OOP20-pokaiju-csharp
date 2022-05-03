@@ -1,4 +1,3 @@
-using Guo.Player;
 using Optional;
 using Pokaiju.Barattini;
 using Pokaiju.Carafassi.GameMaps;

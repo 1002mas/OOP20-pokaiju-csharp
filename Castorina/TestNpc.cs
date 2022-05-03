@@ -1,5 +1,4 @@
-﻿using Guo.Player;
-using Optional;
+﻿using Optional;
 using Pokaiju.Barattini;
 using Pokaiju.Carafassi.GameEvents;
 using Pokaiju.Castorina.Npc;

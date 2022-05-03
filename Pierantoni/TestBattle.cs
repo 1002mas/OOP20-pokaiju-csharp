@@ -1,6 +1,6 @@
-using Guo.Player;
 using NUnit.Framework;
 using Pokaiju.Barattini;
+using Pokaiju.Carafassi.GameMaps;
 using Pokaiju.Castorina.Npc;
 using Pokaiju.Guo.Player;
 
@@ -62,10 +62,12 @@ public class TestBattle
             .Speed(Speed).Exp(ExpBase).Level(FirstLevel).Wild(true).Species(species).MovesList(secondListOfMoves)
             .Build();
 
-        _player = new Player("Paolo", Gender.Male, 0, new Tuple<int, int>(0, 0), null);
+
+        _player = new Player("Paolo", Gender.Man, 0, new Tuple<int, int>(0, 0), new GameMap(null));
+
         this._player.AddMonster(playerMonster1);
         this._player.AddMonster(_playerMonster2);
-        this._enemyTrainer = new NpcTrainerImpl("Luca", new List<string> { "test"}, null, true, true, new List<IMonster>{enemyTrainerMonster}, false);
+        this._enemyTrainer = new NpcTrainer("Luca", new List<string> { "test"}, new Tuple<int, int>(0, 0), true, true, new List<IMonster>{enemyTrainerMonster}, false);
     }
 
     [Test]
@@ -108,8 +110,15 @@ public class TestBattle
 
     [Test]
     public void BattleWithEnemyTrainer() {
-        IMonsterBattle battle = new MonsterBattle(_player, _enemyTrainer);
-        battle.MovesSelection(0);
+        if (_enemyTrainer != null)
+        {
+            if (_player != null)
+            {
+                IMonsterBattle battle = new MonsterBattle(_player, _enemyTrainer);
+                battle.MovesSelection(0);
+            }
+        }
+
         Assert.IsFalse(_enemyTrainer != null && _enemyTrainer.IsDefeated());
     }
 

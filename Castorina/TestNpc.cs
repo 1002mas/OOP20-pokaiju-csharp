@@ -1,5 +1,5 @@
 ﻿using Guo.Player;
-using Microsoft.VisualBasic;
+using Optional;
 using Pokaiju.Barattini;
 using Pokaiju.Carafassi.GameEvents;
 using Pokaiju.Castorina.Npc;
@@ -22,18 +22,18 @@ namespace Pokaiju.Castorina
         private const int Monster3Attack = 70;
         private const int GenericValue = 32;
 
-        private INpcSimple _npc1;
-        private INpcSimple _npc2;
-        private INpcMerchant _npc3;
-        private INpcTrainer _npc4;
-        private INpcTrainer _npc5;
-        private Tuple<int, int> _position;
-        private IList<string> _sentences;
-        private IMonster _monster1;
-        private IPlayer _player;
-        private IList<IMonster> _monsterList;
-        private IList<Tuple<IGameItem, int>> _list;
-        private IGameEvent _npcEvent;
+        private INpcSimple? _npc1;
+        private INpcSimple? _npc2;
+        private INpcMerchant? _npc3;
+        private INpcTrainer? _npc4;
+        private INpcTrainer? _npc5;
+        private Tuple<int, int>? _position;
+        private IList<string>? _sentences;
+        private IMonster? _monster1;
+        private IPlayer? _player;
+        private IList<IMonster>? _monsterList;
+        private IList<Tuple<IGameItem, int>>? _list;
+        private IGameEvent? _npcEvent;
 
         [SetUp]
         public void SetUp()
@@ -99,6 +99,61 @@ namespace Pokaiju.Castorina
             this._npcEvent = new MonsterGift(8, true, true, false, npcEventList, _player);
             _npc1.AddGameEvent(this._npcEvent);
         }
+        
+        [Test]
+        public void CommonFields() 
+        {
+            Assert.AreEqual("nome1", this._npc1?.GetName());
+            Assert.AreEqual(0, this._npc1?.GetCurrentSetence());
+            Assert.AreEqual(this._position, this._npc1?.GetPosition());
+            // enabled : false
+            Assert.AreEqual(Option.None<string>(), this._npc1?.InteractWith());
+            // enabled : true
+            this._npc1?.SetEnabled(true);
+            Assert.AreEqual(Option.Some(this._sentences?.ElementAt(0)), this._npc1?.InteractWith());
+            // enabled : true and event not active
+            _npcEvent.Active = false;
+            _npc1?.InteractWith();
+            Assert.AreEqual(Option.None<IGameEvent>(), this._npc1?.GetTriggeredEvent());
+            // enabled : true and event active
+            _npcEvent.Active = true;
+            _npc1?.InteractWith();
+            Assert.AreEqual(Option.Some(_npcEvent), this._npc1.GetTriggeredEvent());
+        }
 
+       [Test]
+        public void TestNpcHealer() 
+        {
+            _npc2?.InteractWith();
+           Assert.AreEqual(_monster1?.GetMaxHealth(), this._player?.GetAllMonsters().
+               ElementAt(0).GetStats().Health);
+        }
+
+        [Test]
+        public void TestNpcTrainer() 
+        {
+
+            Assert.AreEqual(_monsterList, _npc4?.GetMonstersOwned());
+            IMonsterBattle battle = new MonsterBattle(_player, _npc4);
+            battle.MovesSelection(0);
+            Assert.True(_npc4.IsDefeated());
+            
+            IMonsterBattle battle2 = new MonsterBattle(_player, _npc5);
+            battle2.MovesSelection(0);
+            Assert.False(_npc5.IsDefeated());
+            battle2.EnemyAttack();
+            Assert.True(battle.IsOver());
+            Assert.False(_npc5.IsDefeated());
+
+        }
+
+       [Test]
+        public void TestNpcMerhant() 
+        {
+            int money = this._player.GetMoney();
+            Assert.AreEqual(8, _npc3?.GetTotalPrice(_list));
+            Assert.True(_npc3?.BuyItem(_list, _player));
+            Assert.AreEqual(money - 8, this._player.GetMoney());
+        }
     }
 }

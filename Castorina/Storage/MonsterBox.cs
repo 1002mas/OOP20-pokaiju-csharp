@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using Optional;
+﻿using Optional;
+using Optional.Unsafe;
 using Pokaiju.Barattini;
 
 namespace Pokaiju.Castorina.Storage
@@ -17,7 +17,6 @@ namespace Pokaiju.Castorina.Storage
         /// <param name="boxSize"></param>
         public MonsterBox(string name, int boxSize)
         {
-            IList<IMonster> l = new ArraySegment<IMonster>();
             this._name = name;
             this._boxSize = boxSize;
             this._monsterList = new List<IMonster>();
@@ -61,9 +60,9 @@ namespace Pokaiju.Castorina.Storage
         {
             foreach (IMonster monster in this._monsterList) 
             {
-                if (monster.GetId() == monsterId)
+                if (monster.Id == monsterId)
                 {
-                    return Optional.of(monster);
+                    return Option.Some<IMonster>(monster);
                 }
             }
             return Option.None<IMonster>();
@@ -79,7 +78,7 @@ namespace Pokaiju.Castorina.Storage
             Option<IMonster> monsterInBox = GetMonster(monsterId);
             if (monsterInBox.HasValue)
             {
-                this._monsterList.Remove(monsterInBox.);
+                this._monsterList.Remove(monsterInBox.ValueOrFailure());
                 AddMonster(toBox);
             }
             return monsterInBox;

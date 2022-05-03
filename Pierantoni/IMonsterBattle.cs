@@ -8,27 +8,24 @@ namespace Pokaiju.Pierantoni;
 
 public interface IMonsterBattle
 {
-    /***
-     * this function return a move that the enemy can do.
-     * 
-     * @return an enemy's move
-     */
-    Moves EnemyAttack();
+    
+    /// <summary>
+    /// this function return a move that the enemy can do.
+    /// </summary>
+    /// <returns>an enemy's move</returns>
+    IMoves EnemyAttack();
 
-    /***
-     * 
-     * this function tries to finish the battle.
-     * 
-     * @return true if the player escaped, false otherwise
-     */
+    
+    /// <summary>
+    /// this function tries to finish the battle.
+    /// </summary>
+    /// <returns>true if the player escaped, false otherwise</returns>
     bool Escape();
-
-    /***
-     * 
-     * this function tries to capture the enemy.
-     * 
-     * @return true if the enemy has been captured, false otherwise
-     */
+ 
+    /// <summary>
+    /// this function tries to capture the enemy.
+    /// </summary>
+    /// <returns>true if the enemy has been captured, false otherwise</returns>
     bool Capture();
 
     /***
@@ -37,6 +34,10 @@ public interface IMonsterBattle
      * 
      * @return true if the battle is over, false otherwise
      */
+    /// <summary>
+    /// this function return if the battle is over.
+    /// </summary>
+    /// <returns>true if the enemy has been captured, false otherwise</returns>
     bool IsOver();
 
     /***
@@ -83,7 +84,7 @@ public interface IMonsterBattle
      * 
      * @return the player's monster that is fighting
      */
-    Monster GetCurrentPlayerMonster();
+    IMonster GetCurrentPlayerMonster();
 
     /***
      * 
@@ -91,7 +92,7 @@ public interface IMonsterBattle
      * 
      * @return the enemy's monster that is fighting
      */
-    Monster GetCurrentEnemyMonster();
+    IMonster GetCurrentEnemyMonster();
 
     /***
      * 

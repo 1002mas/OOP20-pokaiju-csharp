@@ -2,44 +2,35 @@ namespace Pokaiju.Pierantoni;
 
 public interface IMoves
 {
-    /**
-     * 
-     * this function returns the name of the move.
-     * 
-     * @return Move's name
-     */
+    
+    /// <summary>
+    /// this function returns the name of the move.
+    /// </summary>
+    /// <returns>Move's name</returns>
     string GetName();
-
-    /**
-     * 
-     * this function returns the basic attack of the move.
-     * 
-     * @return Move's basic attack
-     */
+    
+    /// <summary>
+    /// this function returns the basic attack of the move.
+    /// </summary>
+    /// <returns>Move's basic attack</returns>
     int GetBase();
-
-    /**
-     * 
-     * this function returns the type of the move.
-     * 
-     * @return Move's type
-     */
+    
+    /// <summary>
+    /// this function returns the type of the move.
+    /// </summary>
+    /// <returns>Move's type</returns>
     MonsterType GetMonsterType();
-
-    /**
-     * 
-     * this function returns the max value of PP of the move.
-     * 
-     * @return Move's max PP
-     */
+    
+    /// <summary>
+    /// this function returns the max value of PP of the move.
+    /// </summary>
+    /// <returns>Move's max PP</returns>
     int GetPp();
-    /**
-     * 
-     *  this function returns additional damage based on enemy's type and move's type.
-     * 
-     * @param type enemy's type
-     * 
-     * @return additional damage
-     */
+    
+    /// <summary>
+    /// this function returns additional damage based on enemy's type and move's type.
+    /// </summary>
+    /// <param name="type">type enemy's type</param>
+    /// <returns>additional damage</returns>
     int GetDamage(MonsterType type);
 }

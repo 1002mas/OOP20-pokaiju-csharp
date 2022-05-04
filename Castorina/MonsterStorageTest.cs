@@ -1,5 +1,4 @@
-﻿using Guo.Player;
-using Optional;
+﻿using Optional;
 using Pokaiju.Barattini;
 using Pokaiju.Castorina.Storage;
 using Pokaiju.Guo.Player;
@@ -41,7 +40,7 @@ namespace Pokaiju.Castorina
         {
             int posCoord = 1;
             Tuple<int,int> position = new Tuple<int, int>(posCoord, posCoord);
-            this._player = new Player("player", Gender.Female, 0, position, null);
+            this._player = new Player("player", Gender.Woman, 0, position, null);
             // monster
             IMoves m1 = new Moves("mossa1", GenericValue, MonsterType.Grass, GenericValue);
             IMoves m2 = new Moves("mossa2", GenericValue, MonsterType.Fire, GenericValue);
@@ -126,35 +125,43 @@ namespace Pokaiju.Castorina
             this._monsterStorage?.NextBox();
             Assert.AreEqual("BOX1", this._monsterStorage?.GetCurrentBoxName());
 
-            AddMonsterList(this._monsterStorage, this._monsterStorage.GetMaxSizeOfBox(), this._monster1);
-            this._monsterStorage.NextBox();
+            if (this._monsterStorage != null)
+            {
+                AddMonsterList(this._monsterStorage, this._monsterStorage.GetMaxSizeOfBox(), this._monster1);
+                this._monsterStorage.NextBox();
 
-            Assert.True(this._monsterStorage.GetCurrentBoxMonsters().Contains(this._monster1));
-            Assert.AreEqual(1, this._monsterStorage.GetCurrentBoxMonsters().Count());
-            // exchange player _monster2 with box this._monster1
-            Assert.True(this._monsterStorage.Exchange(this._monster2, this._monster1.Id));
-            Assert.True(this._monsterStorage.GetCurrentBoxMonsters().Contains(this._monster2));
-            Assert.True(this._player?.GetAllMonsters().Contains(this._monster1));
+                Assert.True(this._monsterStorage.GetCurrentBoxMonsters().Contains(this._monster1));
+                Assert.AreEqual(1, this._monsterStorage.GetCurrentBoxMonsters().Count());
+                // exchange player _monster2 with box this._monster1
+                Assert.True(this._monsterStorage.Exchange(this._monster2, this._monster1.Id));
+                Assert.True(this._monsterStorage.GetCurrentBoxMonsters().Contains(this._monster2));
+                Assert.True(this._player?.GetAllMonsters().Contains(this._monster1));
 
-            this._player?.AddMonster(this._monster3); // player team: _monster3, this._monster1
-            Assert.True(this._monsterStorage.DepositMonster(this._monster3));
-            Assert.False(this._player.GetAllMonsters().Contains(this._monster3));
-            Assert.True(this._monsterStorage.GetCurrentBoxMonsters().Contains(this._monster3));
+                this._player?.AddMonster(this._monster3); // player team: _monster3, this._monster1
+                if (this._player != null)
+                {
+                    Assert.True(this._monsterStorage.DepositMonster(this._monster3));
+                    Assert.False(this._player.GetAllMonsters().Contains(this._monster3));
+                    Assert.True(this._monsterStorage.GetCurrentBoxMonsters().Contains(this._monster3));
 
-            // player team: this._monster1
-            // withDrawMonster
-            Assert.True(this._monsterStorage.WithdrawMonster(_monster3.Id));
-            Assert.False(this._monsterStorage.WithdrawMonster(_monster3.Id));
+                    // player team: this._monster1
+                    // withDrawMonster
+                    Assert.True(this._monsterStorage.WithdrawMonster(_monster3.Id));
+                    Assert.False(this._monsterStorage.WithdrawMonster(_monster3.Id));
 
-            // player team: this._monster1, _monster3
-            this._player.AddMonster(this._monster4);
-            this._player.AddMonster(this._monster5);
-            this._player.AddMonster(this._monster6);
-            this._player.AddMonster(this._monster7);
-            // player team full
+                    // player team: this._monster1, _monster3
+                    this._player.AddMonster(this._monster4);
+                    this._player.AddMonster(this._monster5);
+                    this._player.AddMonster(this._monster6);
+                    this._player.AddMonster(this._monster7);
+                    // player team full
 
-            // withDrawMonster
-            Assert.False(this._monsterStorage.WithdrawMonster(this._monster2.Id));
+                    // withDrawMonster
+                    Assert.False(this._monsterStorage.WithdrawMonster(this._monster2.Id));
+                }
+
+            }
+            
             }
             
         }

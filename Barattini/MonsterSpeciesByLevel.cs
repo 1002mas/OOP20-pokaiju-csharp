@@ -20,7 +20,7 @@ namespace Pokaiju.Barattini
         /// <param name="movesList">movesList</param>
         public MonsterSpeciesByLevel(string name, string info, MonsterType type, IMonsterStats stats,
             IMonsterSpecies evolution, int evolutionLevel, IList<IMoves> movesList) 
-            : base(name, info, type, stats, Option.Some<>(evolution), EvolutionType.Level, movesList)
+            : base(name, info, type, stats, Option.Some(evolution), EvolutionType.Level, movesList)
         {
             this._evolutionLevel = evolutionLevel;
         }

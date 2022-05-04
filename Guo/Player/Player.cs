@@ -1,7 +1,6 @@
 using Optional;
 using Optional.Unsafe;
 using Pokaiju.Barattini;
-using Pokaiju.Carafassi.GameEvents;
 using Pokaiju.Carafassi.GameMaps;
 using Pokaiju.Castorina;
 using Pokaiju.Castorina.Npc;
@@ -189,9 +188,9 @@ public class Player : IPlayer
 
         if (canMove) {
             _position = nextPosition; 
-            Option<IGameEvent> gameEvent = _map.GetEventAt(_position);
+            var gameEvent = _map.GetEventAt(_position);
             if (gameEvent.HasValue && gameEvent.ValueOrFailure().IsBattle()) {
-                _monsterBattle = Option.Some<>(new MonsterBattle(this, gameEvent.ValueOrFailure().GetMonster()[0]));
+                _monsterBattle = Option.Some<IMonsterBattle>(new MonsterBattle(this, gameEvent.ValueOrFailure().GetMonster()[0]));
                 gameEvent.ValueOrFailure().Activate();
             }
             if (_map.CanChangeMap(nextPosition)) {
@@ -202,7 +201,7 @@ public class Player : IPlayer
         }
         var monster = _map.GetWildMonster(_position);
         if (monster.HasValue) {
-            _monsterBattle = Option.Some<>(new MonsterBattle(this, monster.ValueOrFailure()));
+            _monsterBattle = Option.Some<IMonsterBattle>(new MonsterBattle(this, monster.ValueOrFailure()));
         }
         _triggeredEvent = _map.GetEventAt(_position).HasValue;
         return canMove;
@@ -245,7 +244,7 @@ public class Player : IPlayer
             var trainer = (INpcTrainer) _npc.ValueOrFailure();
             if (!trainer.IsDefeated())
             {
-                _monsterBattle = Option.Some<>(new MonsterBattle(this,trainer));
+                _monsterBattle = Option.Some<IMonsterBattle>(new MonsterBattle(this,trainer));
             }
         }
         return _npc.HasValue;

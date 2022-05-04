@@ -16,17 +16,13 @@ namespace Pokaiju.Castorina.Npc
         /// This function returns npc statement if it is a talking one.
         /// </summary>
         /// <returns>a string Option containing a sentence if is a talking one, an
-        /// Option.empty otherwise</returns>        
+        /// Option.None otherwise</returns>        
         Option<string> InteractWith();
-        
-        
-        //TODO {@ #interactWith() 
+
         /// <summary>
-        ///After calling the function {@ #interactWith() interactWith} an event may have 
-        ///been triggered.This function returns the triggered event.
+        ///This function returns a triggered event.
         /// </summary>
-        ///<returns>the event if any is triggered, Optional.empty otherwise</returns>
-       
+        ///<returns>the event if any is triggered, Option.None otherwise</returns>
         Option<IGameEvent> GetTriggeredEvent();
         
 
@@ -36,12 +32,11 @@ namespace Pokaiju.Castorina.Npc
         /// </summary>
         /// <param name="textId"></param>
         void SetDialogueText(int textId);
-
-        //TODO {@ #interactWith() 
+        
         ///<summary>
         /// This function returns the type of npc.
         /// </summary>
-        /// <returns> @return npc type (for more info look at @{TypeOfNpc}) </returns>        
+        /// <returns>npc type</returns>        
         TypeOfNpc GetTypeOfNpc();
         
         
@@ -56,7 +51,6 @@ namespace Pokaiju.Castorina.Npc
         /// This function changes the npc position in the map.
         ///</summary>
         ///<param name="newPosition"></param>
-       
         void ChangeNpcPosition( Tuple<int,int> newPosition);
         
         
@@ -88,13 +82,11 @@ namespace Pokaiju.Castorina.Npc
         ///This function adds an event that may trigger interacting with the player.
         /// </summary>
         /// <param name="gameEvent"></param>
-       
         void AddGameEvent(IGameEvent gameEvent);
        
         
         ///<summary>
-        ///This function returns a list of game events triggered by interacting with the
-        ///npc
+        ///This function returns a list of game events triggered by interacting with the npc.
         ///</summary>
         ///<returns>npc game events</returns>
         

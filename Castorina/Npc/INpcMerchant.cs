@@ -1,15 +1,15 @@
 ﻿using Pokaiju.Guo.GameItem;
 using Pokaiju.Guo.Player;
 
-namespace Pokaiju.Castorina
+namespace Pokaiju.Castorina.Npc
 {
     public interface INpcMerchant
     {
        
         /// <summary>
-        /// This function returns a map of items and relatives prices.
+        /// This function returns a dictionary of items and relatives prices.
         /// </summary>
-        /// <returns>map of game items and price</returns>
+        /// <returns>dictionary of game items and price</returns>
         Dictionary<IGameItem, int> GetInventory();
         
         /// <summary>

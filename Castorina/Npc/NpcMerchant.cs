@@ -6,17 +6,28 @@ namespace Pokaiju.Castorina.Npc;
 public class NpcMerchant : NpcSimple, INpcMerchant
 {
     private readonly Dictionary<IGameItem, int> _inventory;
+    
+    /// <summary>
+    /// Constructor of NpcMerchant 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="sentences"></param>
+    /// <param name="position"></param>
+    /// <param name="isVisible"></param>
+    /// <param name="isEnabled"></param>
+    /// <param name="inventory"></param>
     public NpcMerchant(string name, IList<string> sentences, Tuple<int, int> position,
-        bool isVisible, bool isEnabled, Dictionary<IGameItem, int> inventory) : base(name, sentences, position, isVisible, isEnabled)
+        bool isVisible, bool isEnabled, Dictionary<IGameItem, int> inventory) : base(name, TypeOfNpc.Merchant, sentences, position, isVisible, isEnabled)
     {
         this._inventory = inventory;
     }
-
+    
+    /// <inheritdoc cref="INpcMerchant.GetInventory"/>
     public Dictionary<IGameItem, int> GetInventory()
     {
         return this._inventory;
     }
-
+    /// <inheritdoc cref="INpcMerchant.GetPrice"/>
     public int GetPrice(IGameItem item)
     {
         if (!this._inventory.ContainsKey(item)) return 0;
@@ -24,6 +35,7 @@ public class NpcMerchant : NpcSimple, INpcMerchant
         return hasValue ? value : 0;
     }
 
+    /// <inheritdoc cref="INpcMerchant.GetTotalPrice"/>
     public int GetTotalPrice(IList<Tuple<IGameItem, int>> itemList)
     {
         int sum = 0;
@@ -33,6 +45,7 @@ public class NpcMerchant : NpcSimple, INpcMerchant
         }
         return sum;
     }
+    
     
     private void AddItems( IList<Tuple<IGameItem, int>> list, IPlayer player) 
     {
@@ -46,6 +59,7 @@ public class NpcMerchant : NpcSimple, INpcMerchant
         }
     }
     
+    /// <inheritdoc cref="INpcMerchant.BuyItem"/>
     public bool BuyItem(IList<Tuple<IGameItem, int>> itemList, IPlayer player)
     {
         if ((player.GetMoney() - GetTotalPrice(itemList)) < 0) return false;

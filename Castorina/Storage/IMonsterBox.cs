@@ -24,14 +24,14 @@ namespace Pokaiju.Castorina.Storage
         /// </summary>
         /// <param name="toBox"></param>
         /// <param name="monsterId"></param>
-        /// <returns>an optional of monster if exchange has been done, an empty optional otherwise</returns>
+        /// <returns>an Option of monster if exchange has been done, an Option.None otherwise</returns>
         Option<IMonster> Exchange(IMonster toBox, int monsterId);
 
         /// <summary>
         /// This function returns a monster if it is in the box.
         /// </summary>
         /// <param name="monsterId"></param>
-        /// <returns>optional of a monster if it is in box, an empty optional otherwise</returns>
+        /// <returns> an Option of a monster if it is in box, an Option.None otherwise</returns>
         Option<IMonster> GetMonster(int monsterId);
 
         /// <summary>

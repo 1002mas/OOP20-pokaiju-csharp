@@ -11,7 +11,7 @@ public class EvolutionItem : AbstractGameItem
 
     public override bool Use(IMonster? m)
     {
-        if (m.GetSpecies().GetEvolutionType() == EvolutionType.Item && m.CanEvolveByItem(this))
+        if (m?.GetSpecies().GetEvolutionType() == EvolutionType.Item && m.CanEvolveByItem(this))
         {
             m.Evolve();
             return true;

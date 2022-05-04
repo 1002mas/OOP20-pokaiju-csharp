@@ -28,7 +28,15 @@ public class Player : IPlayer
     private Option<INpcSimple> _npc;
     private MonsterStorage _storage;
     private bool _triggeredEvent;
-
+    
+    
+    /// <summary>
+    /// <param name="name">Player's Name</param>
+    /// <param name="gender">Player's gender</param>
+    /// <param name="trainerNumber">Player's number</param>
+    /// <param name="position">Start position</param>
+    /// <param name="map">Start Map</param>
+    /// </summary>
     public Player(string name, Gender gender, int trainerNumber, Tuple<int, int> position, IGameMap map )
     {
         _gameItems = new Dictionary<IGameItem, int>();

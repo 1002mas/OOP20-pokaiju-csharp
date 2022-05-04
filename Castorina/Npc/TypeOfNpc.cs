@@ -1,26 +1,26 @@
-﻿namespace Pokaiju.Castorina
+﻿namespace Pokaiju.Castorina.Npc
 {
     public enum TypeOfNpc
     {
         /// <summary>
         /// Type Simple.
         /// </summary>
-        SIMPLE,
+        Simple,
 
         /// <summary>
         /// Type Trainer.
         /// </summary>
-        TRAINER,
+        Trainer,
 
         /// <summary>
         /// Type Merchant.
         /// </summary>
-        MERCHANT,
+        Merchant,
 
         /// <summary>
         /// Type Haler.
         /// </summary>
-        HEALER
+        Healer
     }
 }
 

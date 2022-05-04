@@ -7,14 +7,28 @@ namespace Pokaiju.Castorina.Storage
 {
     public class MonsterStorage : IMonsterStorage
     {
+        /// <summary>
+        /// Max number of monster box
+        /// </summary>
         private const int MaxNumberOfBox = 10;
+        /// <summary>
+        /// max size of a monster box
+        /// </summary>
         private const int MaxSizeOfBox = 10;
+        /// <summary>
+        /// initial box name
+        /// </summary>
         private const string InitialBoxName = "BOX";
 
-        private IList<IMonsterBox> _monsterBoxes;
+        private readonly IList<IMonsterBox> _monsterBoxes;
         private int _currentMonsterBoxIndex;
-        private IPlayer _player;
-
+        private readonly IPlayer _player;
+        
+        /// <summary>
+        /// Constructor of MonsterStorage
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="boxes"></param>
         public MonsterStorage(IPlayer player, IList<IMonsterBox> boxes) 
         {
             this._player = player;
@@ -22,28 +36,31 @@ namespace Pokaiju.Castorina.Storage
             this._currentMonsterBoxIndex = 0;
             if (this._monsterBoxes.Count > MaxNumberOfBox)
             {
-                List<IMonsterBox> temp = new List<IMonsterBox>(_monsterBoxes);
+                var temp = new List<IMonsterBox>(_monsterBoxes);
                 this._monsterBoxes = temp.GetRange(0, MaxNumberOfBox);
-                //GetRange(0, MaxNumberOfBox);
             }
             else
             {
                 GenerateBoxs(this._monsterBoxes.Count);
             }
         }
-
+        
+        /// <summary>
+        /// Constructor of MonsterStorage 
+        /// </summary>
+        /// <param name="player"></param>
+        /// <exception cref="NotImplementedException"></exception>
         public MonsterStorage(IPlayer player) : this(player, new List<IMonsterBox>())
         {
-            throw new NotImplementedException();
+          
         }
 
 
         private void GenerateBoxs(int n)
         {
-            IMonsterBox box;
             for (int i = n; i < MaxNumberOfBox; i++)
             {
-                box = new MonsterBox(InitialBoxName + (i + 1), MaxSizeOfBox);
+                IMonsterBox box = new MonsterBox(InitialBoxName + (i + 1), MaxSizeOfBox);
                 this._monsterBoxes.Add(box);
             }
         }
@@ -54,9 +71,9 @@ namespace Pokaiju.Castorina.Storage
                                             MaxSizeOfBox) % MaxSizeOfBox;
         }
 
-        private IMonsterBox GetFirstBoxFree()
+        private IMonsterBox? GetFirstBoxFree()
         {
-            for (int i = 0; i < MaxNumberOfBox; i++)
+            for (var i = 0; i < MaxNumberOfBox; i++)
             {
                 if (!this._monsterBoxes.ElementAt(i).IsFull())
                 {
@@ -67,7 +84,7 @@ namespace Pokaiju.Castorina.Storage
             return null;
         }
 
-        
+        /// <inheritdoc cref="IMonsterStorage.AddMonster"/>
         public bool AddMonster(IMonster monster)
         {
             if (this.GetCurrentBox().AddMonster(monster))
@@ -76,7 +93,7 @@ namespace Pokaiju.Castorina.Storage
             }
             else
             {
-                IMonsterBox monsterBox = GetFirstBoxFree();
+                IMonsterBox? monsterBox = GetFirstBoxFree();
                 if (monsterBox != null)
                 {
                     return monsterBox.AddMonster(monster);
@@ -85,7 +102,7 @@ namespace Pokaiju.Castorina.Storage
 
             return false;
         }
-        
+        /// <inheritdoc cref="IMonsterStorage.DepositMonster"/>
         public bool DepositMonster(IMonster monster)
         {
             if (this._player.GetAllMonsters().Count > 1 && this._player.GetAllMonsters().Contains(monster)
@@ -99,7 +116,7 @@ namespace Pokaiju.Castorina.Storage
 
             return false;
         }
-
+        /// <inheritdoc cref="IMonsterStorage.WithdrawMonster"/>
         public bool WithdrawMonster(int monsterId)
         {
             if (IsInBox(monsterId) && !this._player.IsTeamFull)
@@ -112,7 +129,7 @@ namespace Pokaiju.Castorina.Storage
 
             return false;
         }
-
+        
         private bool IsInBox(int monsterId)
         {
             foreach (IMonster monster in GetCurrentBox().GetAllMonsters()) 
@@ -129,7 +146,7 @@ namespace Pokaiju.Castorina.Storage
         {
             return this._monsterBoxes.ElementAt(_currentMonsterBoxIndex);
         }
-
+        /// <inheritdoc cref="IMonsterStorage.Exchange"/>
         public bool Exchange(IMonster monster, int monsterId) {
             if (IsInBox(monsterId))
             {
@@ -144,37 +161,38 @@ namespace Pokaiju.Castorina.Storage
 
             return false;
         }
-
+        /// <inheritdoc cref="IMonsterStorage.NextBox"/>
         public void NextBox()
         {
             CalculateNewIndex(1);
         }
-
+        /// <inheritdoc cref="IMonsterStorage.PreviousBox"/>
         public void PreviousBox()
         {
             CalculateNewIndex(-1);
         }
-
+        /// <inheritdoc cref="IMonsterStorage.GetCurrentBoxName"/>
         public string GetCurrentBoxName()
         {
             return GetCurrentBox().GetName();
         }
+        /// <inheritdoc cref="IMonsterStorage.GetCurrentBoxMonsters"/>
         public IList<IMonster> GetCurrentBoxMonsters()
         {
             return GetCurrentBox().GetAllMonsters();
         }
-
+        /// <inheritdoc cref="IMonsterStorage.GetMaxSizeOfBox"/>
         public int GetMaxSizeOfBox()
         {
             return MaxSizeOfBox;
         }
-
+        /// <inheritdoc cref="IMonsterStorage.GetMaxNumberOfBox"/>
         public int GetMaxNumberOfBox()
         {
             return MaxNumberOfBox;
         }
 
-     
+        /// <inheritdoc cref="IMonsterStorage.GetCurrentBoxSize"/>
         public int GetCurrentBoxSize()
         {
             return this.GetCurrentBoxMonsters().Count();

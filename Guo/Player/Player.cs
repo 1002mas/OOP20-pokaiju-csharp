@@ -240,7 +240,7 @@ public class Player : IPlayer
     {
         _monsterBattle = Option.None<IMonsterBattle>();
         _npc = _map.GetNpcAt(pos);
-        if (_npc.HasValue && _npc.ValueOrFailure().GetTypeOfNpc() == TypeOfNpc.TRAINER)
+        if (_npc.HasValue && _npc.ValueOrFailure().GetTypeOfNpc() == TypeOfNpc.Trainer)
         {
             var trainer = (INpcTrainer) _npc.ValueOrFailure();
             if (!trainer.IsDefeated())

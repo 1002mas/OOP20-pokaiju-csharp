@@ -55,7 +55,16 @@ public static class GameItemType
 
 public enum GameItemTypes
 {
+    /// <summary>
+    /// Healing item
+    /// </summary>
     [ItemAttr("Heal",true, true)] Heal,
+    /// <summary>
+    /// Evolution item
+    /// </summary>
     [ItemAttr("EvolutionTool",false, true)] EvolutionTool,
+    /// <summary>
+    /// Capture item
+    /// </summary>
     [ItemAttr("MonsterBall",true, false)] MonsterBall
 }

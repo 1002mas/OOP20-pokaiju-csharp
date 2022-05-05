@@ -63,7 +63,7 @@ public class TestBattle
             .Build();
 
 
-        _player = new Player("Paolo", Gender.Man, 0, new Tuple<int, int>(0, 0), new GameMap(null));
+        _player = new Player("Paolo", Gender.Man, 0, new Tuple<int, int>(0, 0), new GameMap(new GameMapData(0," ",0,100,new Dictionary<Tuple<int, int>, MapBlockType>(), new List<IMonsterSpecies>())));
 
         this._player.AddMonster(playerMonster1);
         this._player.AddMonster(_playerMonster2);

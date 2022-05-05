@@ -172,7 +172,7 @@ namespace Pokaiju.Castorina
         }
 
        [Test]
-        public void TestNpcMerhant() 
+        public void TestNpcMerchant() 
         {
             if (this._player!= null && this._list != null )
             {

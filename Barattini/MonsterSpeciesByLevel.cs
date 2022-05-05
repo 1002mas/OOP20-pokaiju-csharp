@@ -1,35 +1,31 @@
-﻿using Pokaiju.Pierantoni;
+﻿namespace Pokaiju.Barattini;
 
-namespace Pokaiju.Barattini
+using Pierantoni;
+using Optional;
+
+public class MonsterSpeciesByLevel : MonsterSpeciesSimple
 {
-    using Optional;
+    private readonly int _evolutionLevel;
 
-    public class MonsterSpeciesByLevel : MonsterSpeciesSimple
+    /// <summary>
+    /// MonsterSpeciesByLevel constructor
+    /// </summary>
+    /// <param name="name">name</param>
+    /// <param name="info">info</param>
+    /// <param name="type">type</param>
+    /// <param name="stats">stats</param>
+    /// <param name="evolution">evolution</param>
+    /// <param name="evolutionLevel">evolutionLevel</param>
+    /// <param name="movesList">movesList</param>
+    public MonsterSpeciesByLevel(string name, string info, MonsterType type, IMonsterStats stats,
+        IMonsterSpecies evolution, int evolutionLevel, IList<IMoves> movesList)
+        : base(name, info, type, stats, Option.Some(evolution), EvolutionType.Level, movesList)
     {
-        private readonly int _evolutionLevel;
+        _evolutionLevel = evolutionLevel;
+    }
 
-        /// <summary>
-        /// MonsterSpeciesByLevel constructor
-        /// </summary>
-        /// <param name="name">name</param>
-        /// <param name="info">info</param>
-        /// <param name="type">type</param>
-        /// <param name="stats">stats</param>
-        /// <param name="evolution">evolution</param>
-        /// <param name="evolutionLevel">evolutionLevel</param>
-        /// <param name="movesList">movesList</param>
-        public MonsterSpeciesByLevel(string name, string info, MonsterType type, IMonsterStats stats,
-            IMonsterSpecies evolution, int evolutionLevel, IList<IMoves> movesList) 
-            : base(name, info, type, stats, Option.Some(evolution), EvolutionType.Level, movesList)
-        {
-            this._evolutionLevel = evolutionLevel;
-        }
-        
-        public int GetEvolutionLevel()
-        {
-            return this._evolutionLevel;
-        }
+    public int GetEvolutionLevel()
+    {
+        return _evolutionLevel;
     }
 }
-
-

@@ -72,14 +72,12 @@ namespace Pokaiju.Carafassi.GameMaps
             IList<IMonsterSpecies> monsters = _mapData.GetMonstersInArea();
             Random rnd = new Random();
 
-
-            if (!_mapData.GetBlockType(pos).CanMonstersSpawn() || monsters.Any()
-                                                               || rnd.Next(MaximumMonsterSpawnRate) >
-                                                               MonsterSpawnRate)
+            if (!_mapData.GetBlockType(pos).CanMonstersSpawn() || !monsters.Any()
+                                                              || rnd.Next(MaximumMonsterSpawnRate) >
+                                                              MonsterSpawnRate)
             {
                 return Option.None<IMonster>();
             }
-
             IMonsterSpecies species = monsters[rnd.Next(monsters.Count)];
             int monsterLevel = rnd.Next(_mapData.GetWildMonsterLevelRange().Item1,
                 _mapData.GetWildMonsterLevelRange().Item2);

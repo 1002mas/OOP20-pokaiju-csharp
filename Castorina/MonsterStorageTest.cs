@@ -1,5 +1,6 @@
 ﻿using Optional;
 using Pokaiju.Barattini;
+using Pokaiju.Carafassi.GameMaps;
 using Pokaiju.Castorina.Storage;
 using Pokaiju.Guo.Player;
 using Pokaiju.Pierantoni;
@@ -15,6 +16,8 @@ namespace Pokaiju.Castorina
         private const int GenericValue = 3;
         private const int MaxBoxInStorage = 10;
         private const int MaxBoxSize = 10;
+        private const int Rows = 21;
+        private const int Columns = 21;
 
         private IMonsterStorage? _monsterStorage;
         private IMonsterBox? _monsterBox;
@@ -38,12 +41,23 @@ namespace Pokaiju.Castorina
         [SetUp]
         public void InitFactory()
         {
-            int posCoord = 1;
-            Tuple<int,int> position = new Tuple<int, int>(posCoord, posCoord);
-            this._player = new Player("player", Gender.Woman, 0, position, null);
+            Tuple<int,int> position = new Tuple<int,int>(1, 1);
+            IDictionary<Tuple<int, int>, MapBlockType> map = new Dictionary<Tuple<int, int>, MapBlockType>();
+            for (var r = 0; r < Rows; r++)
+            {
+                for (var c = 0; c < Columns; c++)
+                {
+                    map.Add(new Tuple<int, int>(r, c), MapBlockType.Walk);
+                }
+            }
+            
+            IGameMapData firstMap = new GameMapData(1, "MAP1", 1, 10, map, new List<IMonsterSpecies>());
+
+            
+            this._player = new Player("player", Gender.Woman, 0, position, new GameMap(firstMap));
             // monster
-            IMoves m1 = new Moves("mossa1", GenericValue, MonsterType.Grass, GenericValue);
-            IMoves m2 = new Moves("mossa2", GenericValue, MonsterType.Fire, GenericValue);
+            IMoves m1 = new Moves("move1", GenericValue, MonsterType.Grass, GenericValue);
+            IMoves m2 = new Moves("move2", GenericValue, MonsterType.Fire, GenericValue);
             IList<Tuple<IMoves, int>> listOfMoves = new List<Tuple<IMoves, int>>();
             listOfMoves.Add(new Tuple<IMoves, int>(m1, GenericValue));
             IList<IMoves> listMoves = new List<IMoves>();
@@ -171,11 +185,10 @@ namespace Pokaiju.Castorina
         {
             if (this._player != null)
             {
-                IMonsterStorage monsterStorage2;
                 IMonsterBox box2 = new MonsterBox("NEWBOX1", MaxBoxSize);
                 IList<IMonsterBox> boxList = new List<IMonsterBox>();
                 boxList.Add(box2);
-                monsterStorage2 = new MonsterStorage(this._player, boxList);
+                IMonsterStorage monsterStorage2 = new MonsterStorage(this._player, boxList);
                 Assert.AreEqual("NEWBOX1", monsterStorage2.GetCurrentBoxName());   
             }
         }
@@ -186,13 +199,12 @@ namespace Pokaiju.Castorina
             
             if (this._player != null)
             {
-                IMonsterStorage monsterStorage3;
                 IList<IMonsterBox> boxList = new List<IMonsterBox>();
                 for (int i = 0; i < MaxBoxInStorage + 1; i++)
                 {
                     boxList.Add(new MonsterBox("BOX" + (i + 1), MaxBoxSize));
                 }
-                monsterStorage3 = new MonsterStorage(_player, boxList);
+                IMonsterStorage monsterStorage3 = new MonsterStorage(_player, boxList);
                 monsterStorage3.PreviousBox();
                 Assert.AreEqual("BOX10", monsterStorage3.GetCurrentBoxName());
             }

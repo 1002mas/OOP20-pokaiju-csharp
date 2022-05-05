@@ -1,27 +1,18 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=147314e1_002D58e0_002D4945_002D80de_002D2bbd52b1d7ff/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestMonster" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::7F3EC473-9F64-0C0F-061A-5CE895EFF40B::net6.0::Pokaiju.Barattini.TestMonster&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	
+	
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=74ddd320_002D13f5_002D44fd_002D9ef1_002D00e86672a09a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from TestNpc.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Castorina/f:TestNpc.cs&lt;/ProjectFile&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1bb5eb19_002D775a_002D448a_002Da462_002Ddf13aae069a0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from TestMonster.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Barattini/f:TestMonster.cs&lt;/ProjectFile&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7572cf11_002Db2a1_002D42d1_002Db3bd_002D64ef3414ac77/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from MonsterStorageTest.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Castorina/f:MonsterStorageTest.cs&lt;/ProjectFile&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b551d0e5_002D45a2_002D48e2_002Db350_002Df17438bd67ac/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from TestPlayer.cs #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Guo/f:TestPlayer.cs&lt;/ProjectFile&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=771217ae_002Dd30e_002D49bd_002Db588_002D1345411ee386/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from TestNpc.cs #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Castorina/f:TestNpc.cs&lt;/ProjectFile&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b6c30dc6_002Dbda8_002D4d56_002D80ca_002D329eb2d2d54c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="EvolvingByLevel" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::7F3EC473-9F64-0C0F-061A-5CE895EFF40B::net6.0::Pokaiju.Barattini.TestMonster.EvolvingByLevel&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d349e816_002D9e59_002D41bd_002Db552_002D046225170a0d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from TestNpc.cs #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Castorina/f:TestNpc.cs&lt;/ProjectFile&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-<<<<<<< HEAD
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e700b959_002Dd817_002D4226_002D940a_002Da8e8ef4c03ca/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="SimpleBattle" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;NUnit3x::7F3EC473-9F64-0C0F-061A-5CE895EFF40B::net6.0::Pokaiju.Pierantoni.TestBattle.SimpleBattle&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
-=======
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b7137284_002Dc919_002D4271_002Da68c_002D13be4675df38/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from TestPlayer.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Guo/f:TestPlayer.cs&lt;/ProjectFile&gt;
->>>>>>> a7537efaf41db8385c0139c0cd0cc66aa38d5937
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+	
+	
+</wpf:ResourceDictionary>

@@ -1,0 +1,204 @@
+﻿<CorruptedSettingsDescription>
+  <Exception Message="Un nome non può iniziare con il carattere '&lt;', valore esadecimale 0x3C. Riga 18, posizione 2." Kind="Error">Un nome non può iniziare con il carattere '&lt;', valore esadecimale 0x3C. Riga 18, posizione 2.
+
+--- EXCEPTION #1/2 [XmlException]
+Message = “Un nome non può iniziare con il carattere '&lt;', valore esadecimale 0x3C. Riga 18, posizione 2.”
+ExceptionPath = Root.InnerException
+ClassName = System.Xml.XmlException
+Data.ThreadLocalDebugInfo = ShutdownRequested
+HResult = Xml=80131940
+Source = System.Xml
+res = Xml_BadStartNameChar
+args.#0 = &lt;
+args.#1 = 0x3C
+lineNumber = 18
+linePosition = 2
+version = 2.0
+StackTraceString = “
+  in System.Xml.XmlTextReaderImpl.Throw(Exception e)
+     in System.Xml.XmlTextReaderImpl.ParseQName(Boolean isQName, Int32 startOffset, Int32&amp; colonPos)
+     in System.Xml.XmlTextReaderImpl.ParseElement()
+     in System.Xml.XmlTextReaderImpl.ParseElementContent()
+     in JetBrains.Application.Settings.Storage.Persistence.EntriesReader.Step_GenericRead_SkipToElement()
+”
+
+--- Outer ---
+
+--- EXCEPTION #2/2 [LoggerException]
+Message = “Un nome non può iniziare con il carattere '&lt;', valore esadecimale 0x3C. Riga 18, posizione 2.”
+ExceptionPath = Root
+ClassName = JetBrains.Util.LoggerException
+InnerException = “Exception #1 at Root.InnerException”
+HResult = COR_E_APPLICATION=80131600
+StackTraceString = “
+  in JetBrains.Util.ILoggerEx.LogException(ILogger this, LoggingLevel level, Exception exception, ExceptionOrigin exceptionOrigin, String comment)
+     in JetBrains.Util.ILoggerEx.LogOuterDataException(ILogger thіs, Exception ex, String comment)
+     in JetBrains.Application.Settings.Storage.Persistence.EntriesReader.Step_GenericRead_SkipToElement()
+     in JetBrains.Application.Settings.Storage.Persistence.EntriesReader.Step_GenericRead()
+     in JetBrains.Application.Settings.Storage.Persistence.EntriesReader.Step()
+     in JetBrains.Application.Settings.Storage.Persistence.EntriesReader.Run(XmlReader reader, EntryPositionsFlag entryPositionsFlag)
+     in JetBrains.Util.XmlReaderEx.ReadXml(Stream stream, Action`1 FRead)
+     in JetBrains.Util.FileSystemPathOpenEx.ReadStream[T,TFile,TDir](FileSystemPathBase`3 path, Action`1 λRead)
+     in JetBrains.Application.Settings.Storage.Persistence.SettingsStoreSerializationToXmlDiskFile.&lt;&gt;c__DisplayClass34_1.&lt;Save_WriteFile_BackupOldCorruptedFile&gt;b__2()
+     in JetBrains.Util.Logging.Logger.Catch(Action action)
+     in JetBrains.Util.XmlWriterEx.InElement(XmlWriter writer, String name, Action nested, Boolean writeFullEndElement)
+     in JetBrains.Util.XmlWriterEx.WriteXml(Stream stream, Action`1 FWrite)
+     in JetBrains.Util.FileSystemPathOpenEx.WriteStream[T,TFile,TDir](FileSystemPathBase`3 path, Action`1 λWrite)
+     in JetBrains.Application.Settings.Storage.Persistence.SettingsStoreSerializationToXmlDiskFile.Save_WriteFile_BackupOldCorruptedFile(FileSystemPath path)
+     in JetBrains.Util.ILoggerEx.Catch(ILogger thіs, Action F, ExceptionOrigin origin, LoggingLevel loggingLevel)
+     in JetBrains.Application.Settings.Storage.Persistence.SettingsStoreSerializationToXmlDiskFile.Save_WriteFile(SaveDiffFlags flagsDiff, SaveForcedFlags flagsForced)
+     in JetBrains.DataFlow.IPropertySignalEx.&lt;&gt;c__DisplayClass0_0`1.&lt;Advise_FallingFront&gt;b__0(PropertyChangedEventArgs`1 args)
+     in JetBrains.DataFlow.Property`1.PropertyChangeSignal.Acknowledge(Action`1 handler, AddRemove addremove)
+     in JetBrains.DataFlow.Property`1.PropertyChangeSignal.OnAfterUnadvise(Action`1 handler)
+     in JetBrains.DataFlow.Signal`1.&lt;&gt;c__DisplayClass19_0.&lt;AdviseCore&gt;b__1()
+     in JetBrains.Lifetimes.LifetimeDefinition.Destruct()
+     in JetBrains.Lifetimes.LifetimeDefinition.Terminate()
+     in JetBrains.Application.Components.SingletonDescriptorBindings`1.Dispose()
+     in JetBrains.Application.Components.SingletonDescriptor`1.DisposeInternalResources()
+     in JetBrains.Application.Components.AsyncDescriptorBase.DoDisposeSafe(Object instance)
+     in JetBrains.Application.Components.AsyncDescriptorBase.Dispose()
+     in JetBrains.Application.Components.ComponentStorage.DisposeDescriptor(IComponentDescriptor descriptor)
+     in JetBrains.Application.Components.ComponentStorage.Terminate()
+     in JetBrains.Lifetimes.LifetimeDefinition.Destruct()
+     in JetBrains.Lifetimes.LifetimeDefinition.Terminate()
+     in JetBrains.ProjectModel.SolutionInstance.CloseSolutionInstance()
+     in JetBrains.ProjectModel.SolutionManagerBase.CloseSolutionInstance(SolutionInstance instance)
+     in JetBrains.ProjectModel.ProjectsHost.SolutionHost.Impl.SolutionHostManager.CloseSolution()
+     in JetBrains.RdBackend.Common.Features.ProjectModel.RiderSolutionManager.CloseSolution()
+     in JetBrains.Rider.Backend.Features.ProjectModel.RiderSolutionWatcher.&lt;&gt;c__DisplayClass3_0.&lt;.ctor&gt;b__1()
+     in JetBrains.Lifetimes.LifetimeDefinition.Destruct()
+     in JetBrains.Lifetimes.LifetimeDefinition.Terminate()
+     in JetBrains.Lifetimes.LifetimeDefinition.Destruct()
+     in JetBrains.Lifetimes.LifetimeDefinition.Terminate()
+     in JetBrains.Application.Components.SingletonDescriptorBindings`1.Dispose()
+     in JetBrains.Application.Components.SingletonDescriptor`1.DisposeInternalResources()
+     in JetBrains.Application.Components.AsyncDescriptorBase.DoDisposeSafe(Object instance)
+     in JetBrains.Application.Components.AsyncDescriptorBase.Dispose()
+     in JetBrains.Application.Components.ComponentStorage.DisposeDescriptor(IComponentDescriptor descriptor)
+     in JetBrains.Application.Components.ComponentStorage.Terminate()
+     in JetBrains.Lifetimes.LifetimeDefinition.Destruct()
+     in JetBrains.Lifetimes.LifetimeDefinition.Terminate()
+     in JetBrains.Lifetimes.SequentialLifetimes.TrySetNewAndTerminateOld(LifetimeDefinition newLifetimeDefinition, Action`1 actionWithNewLifetime)
+     in JetBrains.DataFlow.IPropertyEx.&lt;&gt;c__DisplayClass37_0.&lt;WhenTrue&gt;b__0(PropertyChangedEventArgs`1 args)
+     in JetBrains.DataFlow.Signal`1.NotifySinks(TValue payload)
+     in JetBrains.DataFlow.Signal`1.Fire(TValue value, Object cookie)
+     in JetBrains.DataFlow.Property`1.FireChange(TValue old, TValue new, Object cookie)
+     in JetBrains.DataFlow.Property`1.SetValue(TValue value, Object cookie)
+     in JetBrains.DataFlow.IPropertySignalEx.&lt;&gt;c__DisplayClass1_0`1.&lt;Advise_FallingFront&gt;b__0(PropertyChangedEventArgs`1 args)
+     in JetBrains.DataFlow.Signal`1.NotifySinks(TValue payload)
+     in JetBrains.DataFlow.Signal`1.Fire(TValue value, Object cookie)
+     in JetBrains.DataFlow.Property`1.FireChange(TValue old, TValue new, Object cookie)
+     in JetBrains.DataFlow.Property`1.SetValue(TValue value, Object cookie)
+     in JetBrains.DataFlow.IPropertyEx.&lt;&gt;c__DisplayClass9_0`2.&lt;FlowInto&gt;b__0(PropertyChangedEventArgs`1 args)
+     in JetBrains.DataFlow.Signal`1.NotifySinks(TValue payload)
+     in JetBrains.DataFlow.Signal`1.Fire(TValue value, Object cookie)
+     in JetBrains.DataFlow.Property`1.FireChange(TValue old, TValue new, Object cookie)
+     in JetBrains.DataFlow.Property`1.SetValue(TValue value, Object cookie)
+     in JetBrains.Application.ComposeVerdictWithPriority.UpdateActiveTellers[TVerdict](Lifetime lifetimeComponent, List`1 tellers, IProperty`1 propComposite)
+     in JetBrains.DataFlow.IPropertySignalEx.&lt;&gt;c__DisplayClass10_0`1.&lt;Advise_NoAcknowledgement&gt;b__0(PropertyChangedEventArgs`1 args)
+     in JetBrains.DataFlow.Signal`1.NotifySinks(TValue payload)
+     in JetBrains.DataFlow.Signal`1.Fire(TValue value, Object cookie)
+     in JetBrains.DataFlow.Property`1.FireChange(TValue old, TValue new, Object cookie)
+     in JetBrains.DataFlow.Property`1.SetValue(TValue value, Object cookie)
+     in JetBrains.Threading.ReentrancyGuardEx.&lt;&gt;c__DisplayClass0_1.&lt;Queue&gt;b__3()
+     in JetBrains.Util.Concurrency.ExecutionContextEx.&lt;&gt;c__DisplayClass0_0.&lt;Run&gt;b__0(Object _)
+     in System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+     in System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+     in System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+     in JetBrains.Util.Concurrency.ExecutionContextEx.Run(ExecutionContext context, ContextCallback callback, Object state)
+     in JetBrains.Threading.ReentrancyGuard.Execute(String name, Action action)
+     in JetBrains.Threading.ReentrancyGuard.ExecutePendingActions()
+     in JetBrains.Util.Concurrency.ExecutionContextEx.&lt;&gt;c__DisplayClass0_0.&lt;Run&gt;b__0(Object _)
+     in System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+     in System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+     in System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+     in JetBrains.Util.Concurrency.ExecutionContextEx.Run(ExecutionContext context, ContextCallback callback, Object state)
+     in JetBrains.Threading.JetDispatcher.Closure.Execute()
+     in JetBrains.Util.Concurrency.WinJetDispatcher.ProcessQueue(Int32 nMinBucket)
+     in System.Windows.Threading.DispatcherOperation.InvokeDelegateCore()
+     in System.Windows.Threading.DispatcherOperation.InvokeImpl()
+     in MS.Internal.CulturePreservingExecutionContext.CallbackWrapper(Object obj)
+     in System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+     in System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+     in System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+     in MS.Internal.CulturePreservingExecutionContext.Run(CulturePreservingExecutionContext executionContext, ContextCallback callback, Object state)
+     in System.Windows.Threading.DispatcherOperation.Invoke()
+     in System.Windows.Threading.Dispatcher.ProcessQueue()
+     in System.Windows.Threading.Dispatcher.WndProcHook(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean&amp; handled)
+     in MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean&amp; handled)
+     in MS.Win32.HwndSubclass.DispatcherCallbackOperation(Object o)
+     in System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+     in System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+     in System.Windows.Threading.Dispatcher.LegacyInvokeImpl(DispatcherPriority priority, TimeSpan timeout, Delegate method, Object args, Int32 numArgs)
+     in MS.Win32.HwndSubclass.SubclassWndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam)
+     in JetBrains.Interop.WinApi.User32Dll.DispatchMessageW(MSG* lpmsg)
+     in JetBrains.Interop.WinApi.User32Dll.DispatchMessageW(MSG* lpmsg)
+     in JetBrains.Util.Concurrency.WinJetDispatcher.WinJetDispatcherStaticMethods.InternalPumpMessagesOnce()
+     in JetBrains.Util.Concurrency.WinJetDispatcher.WinJetDispatcherStaticMethods.JetBrains.Util.Concurrency.IJetDispatcherStaticMethods.Run()
+     in JetBrains.Rider.Backend.Product.RiderMain.Main(Lifetime lifetime, IRiderSettings settings, ILogger logger, ProtocolComponent protocol, RdShellModel shellModel, ApplicationShutdownRequests shutdownRequests)
+     in System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
+     in System.Reflection.RuntimeMethodInfo.UnsafeInvokeInternal(Object obj, Object[] parameters, Object[] arguments)
+     in System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+     in JetBrains.Application.Environment.RunsPublicStaticIntMain.&lt;&gt;c__DisplayClass0_0.&lt;.ctor&gt;b__0()
+     in JetBrains.Util.Logging.Logger.Catch(Action action)
+     in JetBrains.Util.Concurrency.ExecutionContextEx.&lt;&gt;c__DisplayClass0_0.&lt;Run&gt;b__0(Object _)
+     in System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+     in System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+     in System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+     in JetBrains.Util.Concurrency.ExecutionContextEx.Run(ExecutionContext context, ContextCallback callback, Object state)
+     in JetBrains.Threading.JetDispatcher.Closure.Execute()
+     in JetBrains.Util.Concurrency.WinJetDispatcher.ProcessQueue(Int32 nMinBucket)
+     in System.Windows.Threading.DispatcherOperation.InvokeDelegateCore()
+     in System.Windows.Threading.DispatcherOperation.InvokeImpl()
+     in MS.Internal.CulturePreservingExecutionContext.CallbackWrapper(Object obj)
+     in System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+     in System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+     in System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+     in MS.Internal.CulturePreservingExecutionContext.Run(CulturePreservingExecutionContext executionContext, ContextCallback callback, Object state)
+     in System.Windows.Threading.DispatcherOperation.Invoke()
+     in System.Windows.Threading.Dispatcher.ProcessQueue()
+     in System.Windows.Threading.Dispatcher.WndProcHook(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean&amp; handled)
+     in MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean&amp; handled)
+     in MS.Win32.HwndSubclass.DispatcherCallbackOperation(Object o)
+     in System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+     in System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+     in System.Windows.Threading.Dispatcher.LegacyInvokeImpl(DispatcherPriority priority, TimeSpan timeout, Delegate method, Object args, Int32 numArgs)
+     in MS.Win32.HwndSubclass.SubclassWndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam)
+     in MS.Win32.UnsafeNativeMethods.DispatchMessage(MSG&amp; msg)
+     in MS.Win32.UnsafeNativeMethods.DispatchMessage(MSG&amp; msg)
+     in System.Windows.Threading.Dispatcher.PushFrameImpl(DispatcherFrame frame)
+     in JetBrains.Application.Environment.IJetHostEx.&lt;&gt;c__DisplayClass2_0.&lt;RunHostMessageLoop&gt;b__0(Lifetime lifetime)
+     in JetBrains.Lifetimes.Lifetime.Using(Action`1 action)
+     in JetBrains.Application.Environment.IJetHostEx.RunHostMessageLoop(IComponentContainer containerEnv)
+     in JetBrains.Application.Environment.HostParameters.JetHostParametersCaller.RunMainLoop(ComponentContainer containerEnv)
+     in JetBrains.Application.Environment.JetEnvironment.InternalRun(JetHostParametersCaller host, ComponentContainer containerEnv)
+     in JetBrains.Application.Environment.JetEnvironment.CreateAndRun(Full hostparams)
+     in JetBrains.Rider.Backend.Product.RiderBackendProgram.MainX(Assembly assembly, HostInfo hostInfo, String[] args)
+     in JetBrains.Rider.Backend.Product.RiderBackendProgram.&lt;&gt;c.&lt;Main&gt;b__3_0(Lifetime lifetime)
+     in JetBrains.Lifetimes.Lifetime.Using[T](Func`2 action)
+     in JetBrains.Rider.Backend.Product.RiderBackendProgram.Main()
+     in System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
+     in System.Reflection.RuntimeMethodInfo.UnsafeInvokeInternal(Object obj, Object[] parameters, Object[] arguments)
+     in System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+     in JetBrains.Launcher.Msil.LauncherManagedCore.JetBrains.Launcher.Msil.ILauncherManagedCore.InvokeManagedMethod(String sAssemblyName, String sAssemblyFile, String sClassName, String sMethodName, Int32&amp; phrExitCode, String&amp; bsFailureMessageShort, String&amp; bsFailureMessageLong)
+”
+</Exception>
+  <!--The backup file has been created before writing in-memory changes to the settings file. As the existing settings file is corrupted, many settings might get lost when writing the new content. If you'd like to restore the settings from the previous version, here're the changes against the backed-up version (note: subsequent changes are not reflected here).-->
+  <InMemoryChanges>
+    <SetValue>
+      <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xml:space="preserve"><s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7572cf11_002Db2a1_002D42d1_002Db3bd_002D64ef3414ac77/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from MonsterStorageTest.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Castorina/f:MonsterStorageTest.cs&lt;/ProjectFile&gt;
+&lt;/SessionState&gt;</s:String><s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=74ddd320_002D13f5_002D44fd_002D9ef1_002D00e86672a09a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from TestNpc.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Castorina/f:TestNpc.cs&lt;/ProjectFile&gt;
+&lt;/SessionState&gt;</s:String></ResourceDictionary>
+    </SetValue>
+    <ClearValue>
+      <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=147314e1_002D58e0_002D4945_002D80de_002D2bbd52b1d7ff/@EntryIndexedValue">—</s:String>
+        <s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b551d0e5_002D45a2_002D48e2_002Db350_002Df17438bd67ac/@EntryIndexedValue">—</s:String>
+        <s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1bb5eb19_002D775a_002D448a_002Da462_002Ddf13aae069a0/@EntryIndexedValue">—</s:String>
+        <s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b6c30dc6_002Dbda8_002D4d56_002D80ca_002D329eb2d2d54c/@EntryIndexedValue">—</s:String>
+      </ResourceDictionary>
+    </ClearValue>
+  </InMemoryChanges>
+</CorruptedSettingsDescription>

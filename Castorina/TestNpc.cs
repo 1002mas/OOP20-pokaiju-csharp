@@ -1,6 +1,7 @@
 ﻿using Optional;
 using Pokaiju.Barattini;
 using Pokaiju.Carafassi.GameEvents;
+using Pokaiju.Carafassi.GameMaps;
 using Pokaiju.Castorina.Npc;
 using Pokaiju.Guo.GameItem;
 using Pokaiju.Guo.Player;
@@ -20,6 +21,8 @@ namespace Pokaiju.Castorina
         private const int Monster2Attack = 5;
         private const int Monster3Attack = 70;
         private const int GenericValue = 32;
+        private const int Rows = 21;
+        private const int Columns = 21;
 
         private INpcSimple? _npc1;
         private INpcSimple? _npc2;
@@ -39,13 +42,23 @@ namespace Pokaiju.Castorina
         {
             IList<IMonster> monsterListNpc5;
             IGameItem item1;
-             IGameItem item2;
+            IGameItem item2;
             this._sentences = new List<string>();
             this._sentences.Add("Frase 1");
             this._sentences.Add("Frase 2");
             this._sentences.Add("Frase 3");
             this._position = new Tuple<int,int>(1, 1);
-            this._player = new Player("player", Gender.Woman, 0, _position,  null);
+            IDictionary<Tuple<int, int>, MapBlockType> map = new Dictionary<Tuple<int, int>, MapBlockType>();
+            for (var r = 0; r < Rows; r++)
+            {
+                for (var c = 0; c < Columns; c++)
+                {
+                    map.Add(new Tuple<int, int>(r, c), MapBlockType.Walk);
+                }
+            }
+            
+            IGameMapData firstMap = new GameMapData(1, "MAP1", 1, 10, map, new List<IMonsterSpecies>());
+            this._player = new Player("player", Gender.Woman, 0, _position,  new GameMap(firstMap));
             IMonster monster2;
             IMonster monster3;
 
@@ -95,8 +108,7 @@ namespace Pokaiju.Castorina
             this._npc5 = new NpcTrainer("nome5", _sentences, _position, false, false, monsterListNpc5, false);
             IList<IMonster> npcEventList = new List<IMonster>();
             npcEventList.Add(this._monster1);
-            //TODO use _player
-            this._npcEvent = new MonsterGift(8, true, true, false, npcEventList, "");
+            this._npcEvent = new MonsterGift(8, true, true, false, npcEventList, _player);
             _npc1.AddGameEvent(this._npcEvent);
         }
         

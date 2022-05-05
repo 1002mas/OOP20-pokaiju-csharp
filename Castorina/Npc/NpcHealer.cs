@@ -1,5 +1,4 @@
 ﻿using Optional;
-using Pokaiju.Barattini;
 using Pokaiju.Guo.Player;
 
 namespace Pokaiju.Castorina.Npc;
@@ -20,12 +19,12 @@ public class NpcHealer : NpcSimple
     public NpcHealer(string name, IList<string> sentences, Tuple<int, int> position, bool isVisible,
         bool isEnabled, IPlayer player) : base(name, TypeOfNpc.Healer, sentences, position, isVisible, isEnabled)
     {
-        this._player = player;
+        _player = player;
     }
 
     private void Heal()
     {
-        foreach (IMonster monster in this._player.GetAllMonsters())
+        foreach (var monster in _player.GetAllMonsters())
         {
             monster.SetHealth(monster.GetMaxHealth());
             monster.RestoreAllMovesPp();
@@ -39,7 +38,7 @@ public class NpcHealer : NpcSimple
     /// <returns>Option of string </returns>
     public override Option<string> InteractWith()
     {
-        Option<string> result = base.InteractWith();
+        var result = base.InteractWith();
         if (IsEnabled())
         {
             Heal();

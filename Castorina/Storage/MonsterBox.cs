@@ -18,9 +18,9 @@ public class MonsterBox : IMonsterBox
     /// <param name="boxSize"></param>
     public MonsterBox(string name, int boxSize)
     {
-        this._name = name;
-        this._boxSize = boxSize;
-        this._monsterList = new List<IMonster>();
+        _name = name;
+        _boxSize = boxSize;
+        _monsterList = new List<IMonster>();
     }
 
     /// <summary>
@@ -31,7 +31,7 @@ public class MonsterBox : IMonsterBox
     /// <param name="boxSize"></param>
     public MonsterBox(string name, IList<IMonster> monsters, int boxSize) : this(name, boxSize)
     {
-        foreach (IMonster monster in monsters)
+        foreach (var monster in monsters)
         {
             AddMonster(monster);
         }
@@ -40,31 +40,22 @@ public class MonsterBox : IMonsterBox
     /// <inheritdoc cref="IMonsterBox.GetAllMonsters"/>
     public IList<IMonster> GetAllMonsters()
     {
-        IList<IMonster> monsterList = new List<IMonster>();
-        foreach (IMonster monster in this._monsterList)
-        {
-            monsterList.Add(monster);
-        }
-
-        return monsterList;
+        return _monsterList.ToList();
     }
 
     /// <inheritdoc cref="IMonsterBox.AddMonster"/>
     public bool AddMonster(IMonster monster)
     {
-        if (!IsFull())
-        {
-            this._monsterList.Add(monster);
-            return true;
-        }
+        if (IsFull()) return false;
+        _monsterList.Add(monster);
+        return true;
 
-        return false;
     }
 
     /// <inheritdoc cref="IMonsterBox.GetMonster"/>
     public Option<IMonster> GetMonster(int monsterId)
     {
-        foreach (IMonster monster in this._monsterList)
+        foreach (var monster in _monsterList)
         {
             if (monster.Id == monsterId)
             {
@@ -78,18 +69,16 @@ public class MonsterBox : IMonsterBox
     /// <inheritdoc cref="IMonsterBox.IsFull"/>
     public bool IsFull()
     {
-        return this._monsterList.Count >= this._boxSize;
+        return _monsterList.Count >= _boxSize;
     }
 
     /// <inheritdoc cref="IMonsterBox.Exchange"/>
     public Option<IMonster> Exchange(IMonster toBox, int monsterId)
     {
-        Option<IMonster> monsterInBox = GetMonster(monsterId);
-        if (monsterInBox.HasValue)
-        {
-            this._monsterList.Remove(monsterInBox.ValueOrFailure());
-            AddMonster(toBox);
-        }
+        var monsterInBox = GetMonster(monsterId);
+        if (!monsterInBox.HasValue) return monsterInBox;
+        _monsterList.Remove(monsterInBox.ValueOrFailure());
+        AddMonster(toBox);
 
         return monsterInBox;
     }
@@ -97,16 +86,16 @@ public class MonsterBox : IMonsterBox
     /// <inheritdoc cref="IMonsterBox.GetName"/>
     public string GetName()
     {
-        return this._name;
+        return _name;
     }
 
     /// <inheritdoc cref="IMonsterBox.RemoveMonster"/>
     public void RemoveMonster(int monsterId)
     {
-        Option<IMonster> monsterInBox = GetMonster(monsterId);
+        var monsterInBox = GetMonster(monsterId);
         if (monsterInBox.HasValue)
         {
-            this._monsterList.Remove(monsterInBox.ValueOrFailure());
+            _monsterList.Remove(monsterInBox.ValueOrFailure());
         }
 
     }

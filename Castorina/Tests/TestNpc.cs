@@ -7,7 +7,7 @@ using Pokaiju.Guo.GameItem;
 using Pokaiju.Guo.Player;
 using Pokaiju.Pierantoni;
 
-namespace Pokaiju.Castorina;
+namespace Pokaiju.Castorina.Tests;
 using NUnit.Framework;
 
 [TestFixture]
@@ -39,11 +39,11 @@ public class TestNpc
     [SetUp]
     public void SetUp()
     {
-        this._sentences = new List<string>();
-        this._sentences.Add("Frase 1");
-        this._sentences.Add("Frase 2");
-        this._sentences.Add("Frase 3");
-        this._position = new Tuple<int, int>(1, 1);
+        _sentences = new List<string>();
+        _sentences.Add("Frase 1");
+        _sentences.Add("Frase 2");
+        _sentences.Add("Frase 3");
+        _position = new Tuple<int, int>(1, 1);
         IDictionary<Tuple<int, int>, MapBlockType> map = new Dictionary<Tuple<int, int>, MapBlockType>();
         for (var r = 0; r < Rows; r++)
         {
@@ -54,7 +54,7 @@ public class TestNpc
         }
 
         IGameMapData firstMap = new GameMapData(1, "MAP1", 1, 10, map, new List<IMonsterSpecies>());
-        this._player = new Player("player", Gender.Woman, 0, _position, new GameMap(firstMap));
+        _player = new Player("player", Gender.Woman, 0, _position, new GameMap(firstMap));
 
         // item
         IGameItem item1 = new CaptureItem("pietra", "description");
@@ -76,7 +76,7 @@ public class TestNpc
 
         var species = new MonsterSpeciesBuilder().Name("nome1").Info("Info1")
             .MonsterType(MonsterType.Fire).MovesList(listMoves).Build();
-        this._monster1 = new MonsterBuilder().Health(Monster1Health).Attack(Monster1Attack)
+        _monster1 = new MonsterBuilder().Health(Monster1Health).Attack(Monster1Attack)
             .Defense(GenericValue)
             .Speed(GenericValue).Exp(GenericValue).Level(GenericValue).Wild(false).Species(species)
             .MovesList(listOfMoves).Build();
@@ -93,44 +93,42 @@ public class TestNpc
         _monsterList.Add(monster2);
         IList<IMonster> monsterListNpc5 = new List<IMonster>();
         monsterListNpc5.Add(monster3);
-        this._player.AddMonster(_monster1);
+        _player.AddMonster(_monster1);
         // npc
-        this._npc1 = new NpcSimple("nome1", _sentences, _position, false, false);
-        this._npc2 = new NpcHealer("nome2", _sentences, _position, false, false, _player);
-        this._npc3 = new NpcMerchant("nome3", _sentences, _position, false, false, inventory);
+        _npc1 = new NpcSimple("nome1", _sentences, _position, false, false);
+        _npc2 = new NpcHealer("nome2", _sentences, _position, false, false, _player);
+        _npc3 = new NpcMerchant("nome3", _sentences, _position, false, false, inventory);
         _list = new List<Tuple<IGameItem, int>>();
         _list.Add(new Tuple<IGameItem, int>(item1, 2));
-        this._npc4 = new NpcTrainer("nome4", _sentences, _position, false, false, _monsterList, false);
-        this._npc5 = new NpcTrainer("nome5", _sentences, _position, false, false, monsterListNpc5, false);
+        _npc4 = new NpcTrainer("nome4", _sentences, _position, false, false, _monsterList, false);
+        _npc5 = new NpcTrainer("nome5", _sentences, _position, false, false, monsterListNpc5, false);
         IList<IMonster> npcEventList = new List<IMonster>();
-        npcEventList.Add(this._monster1);
-        this._npcEvent = new MonsterGift(8, true, true, false, npcEventList, _player);
-        _npc1.AddGameEvent(this._npcEvent);
+        npcEventList.Add(_monster1);
+        _npcEvent = new MonsterGift(8, true, true, false, npcEventList, _player);
+        _npc1.AddGameEvent(_npcEvent);
     }
 
     [Test]
     public void CommonFields()
     {
 
-        Assert.AreEqual("nome1", this._npc1?.GetName());
-        Assert.AreEqual(0, this._npc1?.GetCurrentSetence());
-        Assert.AreEqual(this._position, this._npc1?.GetPosition());
+        Assert.AreEqual("nome1", _npc1?.GetName());
+        Assert.AreEqual(0, _npc1?.GetCurrentSetence());
+        Assert.AreEqual(_position, _npc1?.GetPosition());
         // enabled : false
-        Assert.AreEqual(Option.None<string>(), this._npc1?.InteractWith());
+        Assert.AreEqual(Option.None<string>(), _npc1?.InteractWith());
         // enabled : true
-        this._npc1?.SetEnabled(true);
-        Assert.AreEqual(Option.Some(this._sentences?.ElementAt(0)), this._npc1?.InteractWith());
+        _npc1?.SetEnabled(true);
+        Assert.AreEqual(Option.Some(_sentences?.ElementAt(0)), _npc1?.InteractWith());
         // enabled : true and event not active
-        if (this._npcEvent != null)
-        {
-            _npcEvent.Active = false;
-            _npc1?.InteractWith();
-            Assert.AreEqual(Option.None<IGameEvent>(), this._npc1?.GetTriggeredEvent());
-            // enabled : true and event active
-            _npcEvent.Active = true;
-            _npc1?.InteractWith();
-            Assert.AreEqual(Option.Some(_npcEvent), this._npc1?.GetTriggeredEvent());
-        }
+        if (_npcEvent == null) return;
+        _npcEvent.Active = false;
+        _npc1?.InteractWith();
+        Assert.AreEqual(Option.None<IGameEvent>(), _npc1?.GetTriggeredEvent());
+        // enabled : true and event active
+        _npcEvent.Active = true;
+        _npc1?.InteractWith();
+        Assert.AreEqual(Option.Some(_npcEvent), _npc1?.GetTriggeredEvent());
 
     }
 
@@ -138,30 +136,25 @@ public class TestNpc
     public void TestNpcHealer()
     {
         _npc2?.InteractWith();
-        Assert.AreEqual(_monster1?.GetMaxHealth(), this._player?.GetAllMonsters().ElementAt(0).GetStats().Health);
+        Assert.AreEqual(_monster1?.GetMaxHealth(), _player?.GetAllMonsters().ElementAt(0).GetStats().Health);
     }
 
     [Test]
     public void TestNpcTrainer()
     {
-        if (this._player != null && this._npc4 != null && this._npc5 != null)
-        {
-            Assert.AreEqual(_monsterList, _npc4?.GetMonstersOwned());
-            if (this._npc4 != null)
-            {
-                IMonsterBattle battle = new MonsterBattle(_player, _npc4);
-                battle.MovesSelection(0);
-                Assert.True(_npc4.IsDefeated());
+        if (_player == null || _npc4 == null || _npc5 == null) return;
+        Assert.AreEqual(_monsterList, _npc4?.GetMonstersOwned());
+        if (_npc4 == null) return;
+        IMonsterBattle battle = new MonsterBattle(_player, _npc4);
+        battle.MovesSelection(0);
+        Assert.True(_npc4.IsDefeated());
 
-                IMonsterBattle battle2 = new MonsterBattle(_player, _npc5);
-                battle2.MovesSelection(0);
-                Assert.False(_npc5.IsDefeated());
-                battle2.EnemyAttack();
-                Assert.True(battle.IsOver());
-                Assert.False(_npc5.IsDefeated());
-            }
-
-        }
+        IMonsterBattle battle2 = new MonsterBattle(_player, _npc5);
+        battle2.MovesSelection(0);
+        Assert.False(_npc5.IsDefeated());
+        battle2.EnemyAttack();
+        Assert.True(battle.IsOver());
+        Assert.False(_npc5.IsDefeated());
 
 
     }
@@ -169,13 +162,11 @@ public class TestNpc
     [Test]
     public void TestNpcMerchant()
     {
-        if (_player != null && this._list != null)
-        {
-            int money = _player.GetMoney();
-            Assert.AreEqual(8, _npc3?.GetTotalPrice(_list));
-            Assert.True(_npc3?.BuyItem(_list, _player));
-            Assert.AreEqual(money - 8, _player.GetMoney());
-        }
+        if (_player == null || _list == null) return;
+        var money = _player.GetMoney();
+        Assert.AreEqual(8, _npc3?.GetTotalPrice(_list));
+        Assert.True(_npc3?.BuyItem(_list, _player));
+        Assert.AreEqual(money - 8, _player.GetMoney());
 
     }
 }

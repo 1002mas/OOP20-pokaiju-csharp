@@ -12,10 +12,11 @@ namespace Pokaiju.Carafassi.Tests
     [TestFixture]
     public class TestGameEvents
     {
-        private IPlayer? _player;
-        private IMonster? _monsterA;
-        private IMonster? _monsterB;
-        private IMonster? _monsterC;
+        // used default! to to turn off non-null not initialized warning. They are initialized in SetUp()
+        private IPlayer _player = default!;
+        private IMonster _monsterA = default!;
+        private IMonster _monsterB = default!;
+        private IMonster _monsterC = default!;
 
         [SetUp]
         public void SetUp()

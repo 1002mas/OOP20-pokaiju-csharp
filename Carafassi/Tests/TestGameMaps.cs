@@ -17,10 +17,11 @@ namespace Pokaiju.Carafassi.Tests
         private readonly Tuple<int, int> _mapChangePosition = new Tuple<int, int>(8, 3);
         private readonly Tuple<int, int> _charSpawn = new Tuple<int, int>(0, 0);
 
-        private IGameMap? _map;
-        private INpcSimple? _npc;
-        private INpcSimple? _npcHidden;
-        private INpcSimple? _npcDisabled;
+        // used default! to to turn off non-null not initialized warning. They are initialized in SetUp()
+        private IGameMap _map = default!;
+        private INpcSimple _npc = default!;
+        private INpcSimple _npcHidden = default!;
+        private INpcSimple _npcDisabled = default!;
 
         [SetUp]
         public void SetUp()

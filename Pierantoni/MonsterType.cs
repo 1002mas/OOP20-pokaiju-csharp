@@ -7,12 +7,14 @@ class MonsterTypeAttribute : Attribute
     internal MonsterTypeAttribute(string name)
     {
         Name = name;
-        string path = "data/weakness/" + Name + ".dat";
+        string path = "res/data/" + Name + ".dat";
+        Console.Out.WriteLine(File.ReadLines(path));
         try {
             foreach (string line in File.ReadLines(path))
             {
                 string[] splittedLine;
                 splittedLine = line.Split(" ");
+                Console.Out.WriteLine(line);
                 DamageMultiplier.Add(splittedLine[0], Double.Parse(splittedLine[1]));
             }
         } catch (FileNotFoundException e) {

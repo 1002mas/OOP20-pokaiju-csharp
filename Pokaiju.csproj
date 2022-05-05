@@ -24,4 +24,23 @@
       </None>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="res\data\fire.dat" />
+      <Resource Include="res\data\fire.dat">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="res\data\grass.dat" />
+      <Resource Include="res\data\grass.dat">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="res\data\none.dat" />
+      <Resource Include="res\data\none.dat">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="res\data\water.dat" />
+      <Resource Include="res\data\water.dat">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
+    </ItemGroup>
+
 </Project>

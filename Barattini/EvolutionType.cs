@@ -1,23 +1,22 @@
-﻿namespace Pokaiju.Barattini
+﻿namespace Pokaiju.Barattini;
+
+/// <summary>
+/// Type of evolution of the monster.
+/// </summary>
+public enum EvolutionType
 {
     /// <summary>
-    /// Type of evolution of the monster.
+    /// Can not evolve.
     /// </summary>
-    public enum EvolutionType
-    {
-        /// <summary>
-        /// Can not evolve.
-        /// </summary>
-        None,
+    None,
 
-        /// <summary>
-        /// Evolve by level.
-        /// </summary>
-        Level,
+    /// <summary>
+    /// Evolve by level.
+    /// </summary>
+    Level,
 
-        /// <summary>
-        /// Evolve by item.
-        /// </summary>
-        Item
-    }
+    /// <summary>
+    /// Evolve by item.
+    /// </summary>
+    Item
 }

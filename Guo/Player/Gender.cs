@@ -1,6 +1,5 @@
-using System.Reflection;
-
 namespace Pokaiju.Guo.Player;
+using System.Reflection;
 
 class GenderAttr : Attribute
 {

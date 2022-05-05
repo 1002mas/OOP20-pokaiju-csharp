@@ -1,14 +1,12 @@
+namespace Pokaiju.Guo.Player;
 using Optional;
 using Optional.Unsafe;
-using Pokaiju.Barattini;
-using Pokaiju.Carafassi.GameMaps;
-using Pokaiju.Castorina;
-using Pokaiju.Castorina.Npc;
-using Pokaiju.Castorina.Storage;
-using Pokaiju.Guo.GameItem;
-using Pokaiju.Pierantoni;
-
-namespace Pokaiju.Guo.Player;
+using Barattini;
+using Carafassi.GameMaps;
+using Castorina.Npc;
+using Castorina.Storage;
+using GameItem;
+using Pierantoni;
 
 public class Player : IPlayer
 {
@@ -93,14 +91,14 @@ public class Player : IPlayer
         {
             _gameItems.Add(i,0);
         }
-        _gameItems.Add(i,_gameItems[i]+1);
+        _gameItems[i]++;
     }
 
     /// <inheritdoc cref="IPlayer.AddItem(Pokaiju.Guo.GameItem.IGameItem)"/>
     public void AddItem(IGameItem i, int quantity)
     {
         if (quantity > 0) {
-            _gameItems.Add(i, quantity);
+            _gameItems[i]+=quantity;
         }
     }
 
@@ -111,7 +109,7 @@ public class Player : IPlayer
     public void RemoveItem(IGameItem gameItem)
     {
         if (!_gameItems.ContainsKey(gameItem)) return;
-        _gameItems.Add(gameItem, _gameItems[gameItem] - 1);
+        _gameItems[gameItem]--;
         if (_gameItems[gameItem] < 1) {
             _gameItems.Remove(gameItem);
         }
@@ -136,15 +134,14 @@ public class Player : IPlayer
     /// <inheritdoc cref="IPlayer.AddMonster"/>
     public bool AddMonster(IMonster m)
     {
-        if (IsTeamFull) {
+        if (IsTeamFull)
+        {
             _storage.AddMonster(m);
             return false;
-        } else
-        {
-            _team.Add(m);
-            return true;
         }
-    }
+        _team.Add(m);
+        return true;
+        }
 
     /// <inheritdoc cref="IPlayer.RemoveMonster"/>
     public bool RemoveMonster(IMonster m)
@@ -247,13 +244,11 @@ public class Player : IPlayer
     {
         _monsterBattle = Option.None<IMonsterBattle>();
         _npc = _map.GetNpcAt(pos);
-        if (_npc.HasValue && _npc.ValueOrFailure().GetTypeOfNpc() == TypeOfNpc.Trainer)
+        if (!_npc.HasValue || _npc.ValueOrFailure().GetTypeOfNpc() != TypeOfNpc.Trainer) return _npc.HasValue;
+        var trainer = (INpcTrainer) _npc.ValueOrFailure();
+        if (!trainer.IsDefeated())
         {
-            var trainer = (INpcTrainer) _npc.ValueOrFailure();
-            if (!trainer.IsDefeated())
-            {
-                _monsterBattle = Option.Some<IMonsterBattle>(new MonsterBattle(this,trainer));
-            }
+            _monsterBattle = Option.Some<IMonsterBattle>(new MonsterBattle(this,trainer));
         }
         return _npc.HasValue;
     }

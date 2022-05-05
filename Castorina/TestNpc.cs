@@ -40,9 +40,6 @@ namespace Pokaiju.Castorina
         [SetUp]
         public void SetUp()
         {
-            IList<IMonster> monsterListNpc5;
-            IGameItem item1;
-            IGameItem item2;
             this._sentences = new List<string>();
             this._sentences.Add("Frase 1");
             this._sentences.Add("Frase 2");
@@ -59,18 +56,18 @@ namespace Pokaiju.Castorina
             
             IGameMapData firstMap = new GameMapData(1, "MAP1", 1, 10, map, new List<IMonsterSpecies>());
             this._player = new Player("player", Gender.Woman, 0, _position,  new GameMap(firstMap));
-            IMonster monster2;
-            IMonster monster3;
 
             // item
-            item1 = new CaptureItem("pietra", "descrizione");
-            item2 = new CaptureItem("carta", "descrizione");
-            Dictionary<IGameItem, int> inventory = new Dictionary<IGameItem, int>();
-            inventory.Add(item1, 4);  
-            inventory.Add(item2, 3);
+            IGameItem item1 = new CaptureItem("pietra", "description");
+            IGameItem item2 = new CaptureItem("carta", "description");
+            var inventory = new Dictionary<IGameItem, int>
+            {
+                { item1, 4 },
+                { item2, 3 }
+            };
             // monster
-             IMoves m1 = new Moves("mossa1", 3, MonsterType.Grass, 9);
-             IMoves m2 = new Moves("mossa2", 3, MonsterType.Fire, 3);
+             IMoves m1 = new Moves("move1", 3, MonsterType.Grass, 9);
+             IMoves m2 = new Moves("move2", 3, MonsterType.Fire, 3);
              IList<Tuple<IMoves, int>> listOfMoves = new List<Tuple<IMoves, int>>();
              listOfMoves.Add(new Tuple<IMoves, int>(m1, 5));
              listOfMoves.Add(new Tuple<IMoves, int>(m2, 6));
@@ -78,24 +75,24 @@ namespace Pokaiju.Castorina
              listMoves.Add(m1);
              listMoves.Add(m2);
              
-             IMonsterSpecies species = new MonsterSpeciesBuilder().Name("nome1").Info("Info1")
+             var species = new MonsterSpeciesBuilder().Name("nome1").Info("Info1")
                 .MonsterType(MonsterType.Fire).MovesList(listMoves).Build();
             this._monster1 = new MonsterBuilder().Health(Monster1Health).Attack(Monster1Attack)
                 .Defense(GenericValue)
                 .Speed(GenericValue).Exp(GenericValue).Level(GenericValue).Wild(false).Species(species)
                 .MovesList(listOfMoves).Build();
 
-            monster2 = new MonsterBuilder().Health(Monster2Health).Attack(Monster2Attack).Defense(GenericValue)
+            var monster2 = new MonsterBuilder().Health(Monster2Health).Attack(Monster2Attack).Defense(GenericValue)
                 .Speed(GenericValue).Exp(GenericValue).Level(GenericValue).Wild(false).Species(species)
                 .MovesList(listOfMoves).Build();
 
-            monster3 = new MonsterBuilder().Health(Monster3Health).Attack(Monster3Attack).Defense(GenericValue)
+            var monster3 = new MonsterBuilder().Health(Monster3Health).Attack(Monster3Attack).Defense(GenericValue)
                 .Speed(GenericValue).Exp(GenericValue).Level(GenericValue).Wild(false).Species(species)
                 .MovesList(listOfMoves).Build();
 
             _monsterList = new List<IMonster>();
             _monsterList.Add(monster2);
-            monsterListNpc5 = new List<IMonster>();
+            IList<IMonster> monsterListNpc5 = new List<IMonster>();
             monsterListNpc5.Add(monster3);
             this._player.AddMonster(_monster1);
             // npc

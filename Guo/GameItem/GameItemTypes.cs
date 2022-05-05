@@ -57,5 +57,5 @@ public enum GameItemTypes
 {
     [ItemAttr("Heal",true, true)] Heal,
     [ItemAttr("EvolutionTool",false, true)] EvolutionTool,
-    [ItemAttr("MonsterBall",true, false)] MonsterBall,
+    [ItemAttr("MonsterBall",true, false)] MonsterBall
 }

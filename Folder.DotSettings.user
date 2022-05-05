@@ -3,5 +3,7 @@
   &lt;Or&gt;
     &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Barattini/f:TestMonster.cs&lt;/ProjectFile&gt;
     &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Guo/f:TestPlayer.cs&lt;/ProjectFile&gt;
+    &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Castorina/f:MonsterStorageTest.cs&lt;/ProjectFile&gt;
+    &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Castorina/f:TestNpc.cs&lt;/ProjectFile&gt;
   &lt;/Or&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

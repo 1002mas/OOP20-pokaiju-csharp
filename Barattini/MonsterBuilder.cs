@@ -6,7 +6,7 @@ namespace Pokaiju.Barattini
 
     public class MonsterBuilder : IMonsterBuilder
     {
-        private const string LastIdPath = "data/generatedId.dat";
+        private const string LastIdPath = "res/data/generatedId.dat";
         private const int MinLevel = 1;
         private static int _id;
         private int _exp;

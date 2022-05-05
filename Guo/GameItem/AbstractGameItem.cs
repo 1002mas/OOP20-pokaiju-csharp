@@ -20,22 +20,13 @@ public abstract class AbstractGameItem : IGameItem
     }
 
     /// <inheritdoc cref="IGameItem.GetNameItem" />
-    public string GetNameItem()
-    {
-        return _nameItem;
-    }
+    public string GetNameItem() => _nameItem;
 
     /// <inheritdoc cref="IGameItem.GetDescription" />
-    public string GetDescription()
-    {
-        return _description;
-    }
+    public string GetDescription() => _description;
 
     /// <inheritdoc cref="IGameItem.GetGameType" />
-    public GameItemTypes GetGameType()
-    {
-        return _type;
-    }
+    public GameItemTypes GetGameType() => _type;
 
     /// <inheritdoc cref="IGameItem.Use" />
     public abstract bool Use(IMonster? m);

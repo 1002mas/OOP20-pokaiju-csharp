@@ -1,11 +1,11 @@
-using NUnit.Framework;
-using Pokaiju.Barattini;
-using Pokaiju.Carafassi.GameMaps;
-using Pokaiju.Guo.GameItem;
-using Pokaiju.Guo.Player;
-using Pokaiju.Pierantoni;
-
 namespace Pokaiju.Guo;
+
+using NUnit.Framework;
+using Barattini;
+using Carafassi.GameMaps;
+using GameItem;
+using Player;
+using Pierantoni;
 
 public class TestPlayer
 {

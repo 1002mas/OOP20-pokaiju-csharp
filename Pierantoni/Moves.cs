@@ -38,7 +38,7 @@ public class Moves : IMoves
    
     /// <inheritdoc cref="IMoves.GetDamage"/>
     public int GetDamage(MonsterType type) {
-        return (int) this._type.DamageTo(type);
+        return (int) _type.DamageTo(type);
     }
 
     private bool Equals(Moves other)
@@ -50,8 +50,7 @@ public class Moves : IMoves
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != this.GetType()) return false;
-        return Equals((Moves) obj);
+        return obj.GetType() == GetType() && Equals((Moves) obj);
     }
 
     public override int GetHashCode()

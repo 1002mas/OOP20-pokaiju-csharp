@@ -8,13 +8,13 @@ namespace Pokaiju.Pierantoni;
 
 public class MonsterBattle : IMonsterBattle
 {
-    private static readonly int ExpMultipler = 100;
-    private static readonly int CaptureRange = 10;
-    private static readonly int CaptureDifficult = 3;
-    private static readonly int MoneyWon = 70;
-    private static readonly int MoneyLost = 50;
-    private static readonly int ExtraMoveAttack = 30;
-    private static readonly int ExtraMovePp = 999;
+    private const int ExpMultipler = 100;
+    private const int CaptureRange = 10;
+    private const int CaptureDifficult = 3;
+    private const int MoneyWon = 70;
+    private const int MoneyLost = 50;
+    private const int ExtraMoveAttack = 30;
+    private const int ExtraMovePp = 999;
 
     private bool _battleStatus; // true if the battle enemy/player team is defeat, false otherwise
     private bool _areEndPp;
@@ -25,11 +25,11 @@ public class MonsterBattle : IMonsterBattle
     private readonly IList<IMonster> _enemyTeam;
     private readonly IPlayer _trainer;
 
-    private INpcTrainer? _enemyTrainer;
+    private readonly INpcTrainer? _enemyTrainer;
 
     private readonly Moves _extraMoves;
 
-    private MonsterBattle( IPlayer trainer, IList<IMonster> enemyTeam) {
+    private MonsterBattle( IPlayer trainer, IEnumerable<IMonster> enemyTeam) {
         
         _trainer = trainer;
         _battleStatus = true;
@@ -58,9 +58,9 @@ public class MonsterBattle : IMonsterBattle
     /// <inheritdoc cref="IMonsterBattle.EnemyAttack"/>
     public IMoves EnemyAttack()
     {
-        int x = new Random().Next(_enemy.GetNumberOfMoves());
+        var x = new Random().Next(_enemy.GetNumberOfMoves());
         while (_enemy.IsOutOfPp(_enemy.GetMoves(x))) {
-            x = (x + 1) % this._enemy.GetNumberOfMoves();
+            x = (x + 1) % _enemy.GetNumberOfMoves();
         }
         return _enemy.GetMoves(x);
     }
@@ -72,13 +72,11 @@ public class MonsterBattle : IMonsterBattle
             return false;
         }
 
-        int attempt = new Random().Next(CaptureRange);
-        if (attempt <= CaptureDifficult) {
-            this._trainer.AddMonster(_enemy);
-            this._battleStatus = false;
-            return true;
-        }
-        return false;
+        var attempt = new Random().Next(CaptureRange);
+        if (attempt > CaptureDifficult) return false;
+        _trainer.AddMonster(_enemy);
+        _battleStatus = false;
+        return true;
 
     }
     
@@ -88,10 +86,10 @@ public class MonsterBattle : IMonsterBattle
         if (!_enemy.IsWild()) {
 
             return false;
-        } else {
-            this._battleStatus = false;
-            return true;
         }
+
+        _battleStatus = false;
+        return true;
 
     }
     
@@ -101,35 +99,28 @@ public class MonsterBattle : IMonsterBattle
         IMonster? changingMonster = null;
         if (index == _playerCurrentMonster.Id) {
             return false;
-        } else {
-            foreach( var monster in _playerTeam) {
-                if (monster.Id == index) {
-                    changingMonster = monster;
-                }
-            }
-
-            if (changingMonster is not null)
-            {
-                if (changingMonster.IsAlive()) {
-                                this._playerCurrentMonster = changingMonster;
-                
-                                return true; 
-                }
-            }
-
-            
-
-            return false;
         }
+
+        foreach( var monster in _playerTeam) {
+            if (monster.Id == index) {
+                changingMonster = monster;
+            }
+        }
+
+        if (changingMonster is null) return false;
+        if (!changingMonster.IsAlive()) return false;
+        _playerCurrentMonster = changingMonster;
+                
+        return true;
 
     }
     
     /// <inheritdoc cref="IMonsterBattle.MovesSelection"/>
     public bool MovesSelection(int moveIndex) {
 
-        if (!_playerCurrentMonster.IsOutOfPp(_playerCurrentMonster.GetMoves(moveIndex)) && this._battleStatus
-                && this._playerCurrentMonster.IsAlive()) {
-            Turn(this._playerCurrentMonster.GetMoves(moveIndex));
+        if (!_playerCurrentMonster.IsOutOfPp(_playerCurrentMonster.GetMoves(moveIndex)) && _battleStatus
+                && _playerCurrentMonster.IsAlive()) {
+            Turn(_playerCurrentMonster.GetMoves(moveIndex));
 
             return true;
         }
@@ -138,7 +129,7 @@ public class MonsterBattle : IMonsterBattle
     }
 
     private void Turn( IMoves monsterMove) {
-        if (this._playerCurrentMonster.GetStats().Speed > this._enemy.GetStats().Speed) {
+        if (_playerCurrentMonster.GetStats().Speed > _enemy.GetStats().Speed) {
             MonsterAttack(_playerCurrentMonster, _enemy, monsterMove);
             if (_enemy.IsAlive()) {
                 MonsterAttack(_enemy, _playerCurrentMonster, EnemyAttack());
@@ -153,26 +144,22 @@ public class MonsterBattle : IMonsterBattle
             _playerCurrentMonster.IncExp(_enemy.GetLevel() * ExpMultipler);
         }
         if (AllPlayerMonsterDefeated()) { // player's team defeated
-            this._battleStatus = false;
-            this._playerLose = true;
+            _battleStatus = false;
+            _playerLose = true;
 
         }
 
         if (!AreThereEnemies()) {
             // ending battle
 
-            if (_enemyTrainer is not null ){
-                _enemyTrainer.SetDefeated(true); 
-            }
-            this._battleStatus = false;
+            _enemyTrainer?.SetDefeated(true);
+            _battleStatus = false;
         } else {
             foreach (var monster in _enemyTeam)
             {
-                if (monster.IsAlive())
-                {
-                    _enemy = monster;
-                    break;
-                }
+                if (!monster.IsAlive()) continue;
+                _enemy = monster;
+                break;
             }
         }
 
@@ -180,7 +167,7 @@ public class MonsterBattle : IMonsterBattle
 
     private void MonsterAttack(IMonster m1, IMonster m2, IMoves move) {
 
-        int damage = move.GetDamage(m2.GetMonsterType()) * move.GetBase() + m1.GetStats().Attack - m2.GetStats().Defense;
+        var damage = move.GetDamage(m2.GetMonsterType()) * move.GetBase() + m1.GetStats().Attack - m2.GetStats().Defense;
         if (damage < 1) {
             damage = 1;
         }
@@ -196,7 +183,7 @@ public class MonsterBattle : IMonsterBattle
         return _enemyTeam.Any(m => m.IsAlive());
     }
 
-    private void RestoreAllMonsters( IList<IMonster> monsters) {
+    private static void RestoreAllMonsters( IEnumerable<IMonster> monsters) {
         foreach (var monster in monsters)
         {
             monster.RestoreAllMovesPp();
@@ -207,7 +194,7 @@ public class MonsterBattle : IMonsterBattle
     
     /// <inheritdoc cref="IMonsterBattle.IsCurrentMonsterAlive"/>
     public bool IsCurrentMonsterAlive() {
-        return this._playerCurrentMonster.IsAlive();
+        return _playerCurrentMonster.IsAlive();
     }
 
     private bool AllPlayerMonsterDefeated() {
@@ -222,7 +209,7 @@ public class MonsterBattle : IMonsterBattle
     }
 
     private void ThrowExceptionIfItIsOver() {
-        if (!this._battleStatus) {
+        if (!_battleStatus) {
            throw  new InvalidOperationException(); 
         }
     }
@@ -250,30 +237,26 @@ public class MonsterBattle : IMonsterBattle
     }
     
     /// <inheritdoc cref="IMonsterBattle.GetNpcEnemy"/>
-    public Option<INpcTrainer> GetNpcEnemy() {
-        if (_enemyTrainer is not null)
-        {
-            return Option.Some(_enemyTrainer);
-        }
-
-        return Option.None<INpcTrainer>();
+    public Option<INpcTrainer> GetNpcEnemy()
+    {
+        return _enemyTrainer is not null ? Option.Some(_enemyTrainer) : Option.None<INpcTrainer>();
     }
     
     /// <inheritdoc cref="IMonsterBattle.IsOverOfPp"/>
     public bool IsOverOfPp() {
-        this._areEndPp = true;
-        for (int c = 0; c < this._playerCurrentMonster.GetNumberOfMoves(); c++) {
-            if (!this._playerCurrentMonster.IsOutOfPp(_playerCurrentMonster.GetMoves(c))) {
-                this._areEndPp = false;
+        _areEndPp = true;
+        for (var c = 0; c < _playerCurrentMonster.GetNumberOfMoves(); c++) {
+            if (!_playerCurrentMonster.IsOutOfPp(_playerCurrentMonster.GetMoves(c))) {
+                _areEndPp = false;
             }
         }
-        return this._areEndPp;
+        return _areEndPp;
     }
     
     /// <inheritdoc cref="IMonsterBattle.AttackWithExtraMove"/>
     public bool AttackWithExtraMove() {
 
-        if (this._battleStatus && this._playerCurrentMonster.IsAlive()) {
+        if (_battleStatus && _playerCurrentMonster.IsAlive()) {
 
             Turn(_extraMoves);
 
@@ -286,20 +269,20 @@ public class MonsterBattle : IMonsterBattle
     
     /// <inheritdoc cref="IMonsterBattle.HasPlayerLost"/>
     public bool HasPlayerLost() {
-        return this._playerLose;
+        return _playerLose;
     }
     
     /// <inheritdoc cref="IMonsterBattle.EndingBattle"/>
     public void EndingBattle() {
         if (HasPlayerLost()) {
-            this._trainer.SetMoney(_trainer.GetMoney() - MoneyLost);
+            _trainer.SetMoney(_trainer.GetMoney() - MoneyLost);
             RestoreAllMonsters(_playerTeam);
             RestoreAllMonsters(_enemyTeam);
         } else {
-            this._trainer.SetMoney(_trainer.GetMoney() + MoneyWon);
+            _trainer.SetMoney(_trainer.GetMoney() + MoneyWon);
         }
 
-        this._trainer.EvolveMonsters();
+        _trainer.EvolveMonsters();
     }
 
     private IMonster ChooseStartingMonster() {

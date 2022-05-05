@@ -1,15 +1,14 @@
-using System.Reflection;
-
 namespace Pokaiju.Guo.Player;
+using System.Reflection;
 
 class GenderAttr : Attribute
 {
     internal GenderAttr(string name)
     {
-        Name = name;
+        _name = name;
     }
 
-    private string Name { get; }
+    private string _name;
 }
 
 public static class GameItemType

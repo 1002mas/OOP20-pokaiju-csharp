@@ -1,6 +1,5 @@
-using Pokaiju.Barattini;
-
 namespace Pokaiju.Guo.GameItem;
+using Barattini;
 
 public abstract class AbstractGameItem : IGameItem
 {
@@ -21,28 +20,19 @@ public abstract class AbstractGameItem : IGameItem
     }
 
     /// <inheritdoc cref="IGameItem.GetNameItem" />
-    public string GetNameItem()
-    {
-        return _nameItem;
-    }
+    public string GetNameItem() => _nameItem;
 
     /// <inheritdoc cref="IGameItem.GetDescription" />
-    public string GetDescription()
-    {
-        return _description;
-    }
+    public string GetDescription() => _description;
 
     /// <inheritdoc cref="IGameItem.GetGameType" />
-    public GameItemTypes GetGameType()
-    {
-        return _type;
-    }
+    public GameItemTypes GetGameType() => _type;
 
     /// <inheritdoc cref="IGameItem.Use" />
     public abstract bool Use(IMonster? m);
 
 
-    protected bool Equals(AbstractGameItem other)
+    private bool Equals(AbstractGameItem other)
     {
         return _nameItem == other._nameItem && _type == other._type;
     }
@@ -51,8 +41,7 @@ public abstract class AbstractGameItem : IGameItem
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != GetType()) return false;
-        return Equals((AbstractGameItem) obj);
+        return obj.GetType() == GetType() && Equals((AbstractGameItem) obj);
     }
 
     public override int GetHashCode()

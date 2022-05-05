@@ -1,12 +1,11 @@
-using Optional;
-using Pokaiju.Barattini;
-using Pokaiju.Carafassi.GameMaps;
-using Pokaiju.Castorina.Npc;
-using Pokaiju.Castorina.Storage;
-using Pokaiju.Guo.GameItem;
-using Pokaiju.Pierantoni;
-
 namespace Pokaiju.Guo.Player;
+using Optional;
+using Barattini;
+using Carafassi.GameMaps;
+using Castorina.Npc;
+using Castorina.Storage;
+using GameItem;
+using Pierantoni;
 
 public interface IPlayer
 {

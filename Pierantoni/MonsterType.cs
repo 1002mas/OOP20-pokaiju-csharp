@@ -2,18 +2,18 @@ using System.Reflection;
 
 namespace Pokaiju.Pierantoni;
 
-class MonsterTypeAttribute : Attribute
+[AttributeUsage(AttributeTargets.All)]
+internal class MonsterTypeAttribute : Attribute
 {
     internal MonsterTypeAttribute(string name)
     {
         Name = name;
-        string path = "res/data/" + Name + ".dat";
+        var path = "res/data/" + Name + ".dat";
         try {
-            foreach (string line in File.ReadLines(path))
+            foreach (var line in File.ReadLines(path))
             {
-                string[] splittedLine;
-                splittedLine = line.Split(" ");
-                DamageMultiplier.Add(splittedLine[0], Double.Parse(splittedLine[1]));
+                var splittedLine = line.Split(" ");
+                DamageMultiplier.Add(splittedLine[0], double.Parse(splittedLine[1]));
             }
         } catch (FileNotFoundException e) {
             Console.WriteLine(e.StackTrace);
@@ -21,8 +21,8 @@ class MonsterTypeAttribute : Attribute
             Console.WriteLine(e1.StackTrace);
         }
     }
-    public String Name { get; }
-    public  IDictionary<String, Double> DamageMultiplier = new Dictionary<String, Double>();
+    public string Name { get; }
+    public readonly IDictionary<string, double> DamageMultiplier = new Dictionary<string, double>();
 }
 
 public  static class MonsterTypes
@@ -30,41 +30,31 @@ public  static class MonsterTypes
 
     private static MonsterTypeAttribute GetAtt(MonsterType type)
     {
-        Attribute? res =  Attribute.GetCustomAttribute(ForValue(type), typeof(MonsterTypeAttribute));
+        var res =  Attribute.GetCustomAttribute(ForValue(type), typeof(MonsterTypeAttribute));
         if (res  is not null)
         {
             return (MonsterTypeAttribute) res;
         }
-        else
-        {
-            throw new InvalidOperationException();
-        }
 
-        
+        throw new InvalidOperationException();
+
+
     }
     
     private static MemberInfo ForValue(MonsterType type)
     {
-        string? name = Enum.GetName(typeof(MonsterType), type);
-        if (name is not null)
+        var name = Enum.GetName(typeof(MonsterType), type);
+        if (name is null) throw new InvalidOperationException();
+        var info = typeof(MonsterType).GetField(name);
+        if (info is not null)
         {
-            FieldInfo? info = typeof(MonsterType).GetField(name);
-            if (info is not null)
-            {
-                return info;
-            }
-            else
-            {
-                throw new InvalidOperationException(); 
-            }
+            return info;
         }
-        else
-        {
-            throw new InvalidOperationException(); 
-        }
-        
 
-        
+        throw new InvalidOperationException();
+
+
+
     }
 
     public static double ResistanceTo(this MonsterType type, MonsterType enemyType) {

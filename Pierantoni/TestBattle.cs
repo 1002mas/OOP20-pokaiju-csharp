@@ -30,17 +30,17 @@ public class TestBattle
         IMoves m4 = new Moves("Fossa", Attack, MonsterType.Fire, Pp);
 
         IList<Tuple<IMoves, int>> firstListOfMoves = new List<Tuple<IMoves, int>>
-            {new Tuple<IMoves, int>(m1, 10), new Tuple<IMoves, int>(m2, 10)};
+            {new(m1, 10), new(m2, 10)};
         IList<Tuple<IMoves, int>> secondListOfMoves = new List<Tuple<IMoves, int>>
-            {new Tuple<IMoves, int>(m3, 10), new Tuple<IMoves, int>(m4, 10)};
+            {new (m3, 10), new(m4, 10)};
         IList<IMoves> firstMonsterSpeciesMoves = new List<IMoves> {m1, m2};
         IList<IMoves> secondMonsterSpeciesMoves = new List<IMoves> {m3, m4};
 
-        IMonsterSpecies species = new MonsterSpeciesBuilder().Name("bibol").Info("Info1")
+        var species = new MonsterSpeciesBuilder().Name("bibol").Info("Info1")
             .MonsterType(MonsterType.Fire).Health(Health).Attack(Pp).Defense(Defense).Speed(Pp)
             .MovesList(firstMonsterSpeciesMoves).Build();
 
-        IMonster playerMonster1 = new MonsterBuilder().Health(Health).Attack(Attack * 2).Defense(Defense).Speed(Speed)
+        var playerMonster1 = new MonsterBuilder().Health(Health).Attack(Attack * 2).Defense(Defense).Speed(Speed)
             .Exp(ExpBase).Level(FirstLevel).Wild(false).Species(species).MovesList(firstListOfMoves).Build();
 
         species = new MonsterSpeciesBuilder().Name("greyfish").Info("Info").MonsterType(MonsterType.Water)
@@ -58,16 +58,16 @@ public class TestBattle
         species = new MonsterSpeciesBuilder().Name("pirin").Info("Info").MonsterType(MonsterType.Grass)
             .Health(Attack).Attack(10).Defense(10).Speed(10).MovesList(secondMonsterSpeciesMoves).Build();
 
-        IMonster enemyTrainerMonster = new MonsterBuilder().Health(Health).Attack(Attack).Defense(Defense)
+        var enemyTrainerMonster = new MonsterBuilder().Health(Health).Attack(Attack).Defense(Defense)
             .Speed(Speed).Exp(ExpBase).Level(FirstLevel).Wild(true).Species(species).MovesList(secondListOfMoves)
             .Build();
 
 
         _player = new Player("Paolo", Gender.Man, 0, new Tuple<int, int>(0, 0), new GameMap(new GameMapData(0," ",0,100,new Dictionary<Tuple<int, int>, MapBlockType>(), new List<IMonsterSpecies>())));
 
-        this._player.AddMonster(playerMonster1);
-        this._player.AddMonster(_playerMonster2);
-        this._enemyTrainer = new NpcTrainer("Luca", new List<string> { "test"}, new Tuple<int, int>(0, 0), true, true, new List<IMonster>{enemyTrainerMonster}, false);
+        _player.AddMonster(playerMonster1);
+        _player.AddMonster(_playerMonster2);
+        _enemyTrainer = new NpcTrainer("Luca", new List<string> { "test"}, new Tuple<int, int>(0, 0), true, true, new List<IMonster>{enemyTrainerMonster}, false);
     }
 
     [Test]
@@ -80,7 +80,7 @@ public class TestBattle
 
     [Test]
     public void Capture() {
-        bool isCaptured = false;
+        var isCaptured = false;
         IMonsterBattle battle = new MonsterBattle(_player ?? throw new InvalidOperationException(), _wildMonster ?? throw new InvalidOperationException());
         while (!isCaptured) {
             isCaptured = battle.Capture();
@@ -90,7 +90,7 @@ public class TestBattle
 
     [Test]
     public void Escape() {
-        bool escaped = false;
+        var escaped = false;
         IMonsterBattle battle = new MonsterBattle(_player ?? throw new InvalidOperationException(), _wildMonster ?? throw new InvalidOperationException());
         while (!escaped) {
             escaped = battle.Escape();
@@ -101,11 +101,9 @@ public class TestBattle
     [Test]
     public void ChangeMonsters() {
         IMonsterBattle battle = new MonsterBattle(_player ?? throw new InvalidOperationException(), _wildMonster?? throw new InvalidOperationException());
-        if (_playerMonster2 is not null)
-        {
-            battle.PlayerChangeMonster(_playerMonster2.Id);
-            Assert.AreEqual(battle.GetCurrentPlayerMonster(), _playerMonster2);
-        }
+        if (_playerMonster2 is null) return;
+        battle.PlayerChangeMonster(_playerMonster2.Id);
+        Assert.AreEqual(battle.GetCurrentPlayerMonster(), _playerMonster2);
     }
 
     [Test]

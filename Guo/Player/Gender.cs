@@ -8,7 +8,7 @@ class GenderAttr : Attribute
         _name = name;
     }
 
-    private string _name;
+    private string _name ;
 }
 
 public static class GameItemType

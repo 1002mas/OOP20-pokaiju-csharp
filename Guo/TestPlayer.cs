@@ -83,6 +83,8 @@ public class TestPlayer
     [Test]
     public void ItemListCheck()
     {
+        Assert.False(GameItem.GameItemType.IsConsumableInBag(_monsterBall.GetGameType()));
+        Assert.True(GameItem.GameItemType.IsConsumableInBag(_healingPotion.GetGameType()));
         _player.AddItem(_monsterBall);
         Assert.True(_player.GetAllItems().Keys.Any(item => item.Equals(_monsterBall)),
             "Monster Ball doesn't exist in bag");

@@ -30,8 +30,8 @@ public class TestMonster
 
         IList<Tuple<IMoves, int>> listOfMoves = new List<Tuple<IMoves, int>>
         {
-            new Tuple<IMoves, int>(m1, 10), new Tuple<IMoves, int>(m2, 10),
-            new Tuple<IMoves, int>(m3, 10), new Tuple<IMoves, int>(m4, 10)
+            new(m1, 10), new(m2, 10),
+            new(m3, 10), new(m4, 10)
         };
 
         IList<IMoves> monsterSpeciesMoves = new List<IMoves> { m1, m2, m3, m4 };

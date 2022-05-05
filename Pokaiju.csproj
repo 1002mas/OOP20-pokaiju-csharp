@@ -18,10 +18,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="res\data\generatedId.txt" />
-      <None Include="res\data\generatedId.dat">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
+      <Content Include="res\data\*">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

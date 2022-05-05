@@ -32,13 +32,13 @@ namespace Pokaiju.Carafassi.GameEvents
         }
 
         /// <inheritdoc cref="AbstractGameEvent.GetMonster" />
-        new IList<IMonster> GetMonster()
+        public override IList<IMonster> GetMonster()
         {
             return new List<IMonster> {_monster};
         }
 
         /// <inheritdoc cref="AbstractGameEvent.IsBattle" />
-        new bool IsBattle()
+        public override bool IsBattle()
         {
             return true;
         }

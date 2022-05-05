@@ -76,13 +76,13 @@ namespace Pokaiju.Carafassi.GameEvents
         }
 
         /// <inheritdoc cref="IGameEvent.IsBattle" />
-        public bool IsBattle()
+        public virtual bool IsBattle()
         {
             return false;
         }
 
         /// <inheritdoc cref="IGameEvent.GetMonster" />
-        public IList<IMonster> GetMonster()
+        public virtual IList<IMonster> GetMonster()
         {
             return new List<IMonster>();
         }

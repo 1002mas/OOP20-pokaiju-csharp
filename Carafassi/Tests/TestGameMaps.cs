@@ -28,8 +28,6 @@ namespace Pokaiju.Carafassi.Tests
         {
             int baseStat = 5;
             IList<IMoves> movesSpecies = new List<IMoves>() {new Moves("Slap", 20, MonsterType.Fire, 10)};
-            IList<Tuple<IMoves, int>> moves = new List<Tuple<IMoves, int>>()
-                {new Tuple<IMoves, int>(movesSpecies[0], 2)};
 
             IMonsterSpecies monsterSpeciesA = new MonsterSpeciesBuilder().Name(MonsterName)
                 .MovesList(movesSpecies)

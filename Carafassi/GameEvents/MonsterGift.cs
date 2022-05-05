@@ -1,6 +1,7 @@
 using Pokaiju.Barattini;
 
 using System.Collections.Immutable;
+using Pokaiju.Guo.Player;
 
 namespace Pokaiju.Carafassi.GameEvents
 {
@@ -10,9 +11,7 @@ namespace Pokaiju.Carafassi.GameEvents
     public class MonsterGift : AbstractGameEvent
     {
         private readonly IList<IMonster> _monsters;
-
-        // TODO use IPlayer
-        private readonly string _player;
+        private readonly IPlayer _player;
 
 
         /// <summary>
@@ -28,7 +27,7 @@ namespace Pokaiju.Carafassi.GameEvents
         /// <param name="monsters">The list of monsters the player will receive.</param>
         /// <param name="player">The player receiving the monsters.</param>
         public MonsterGift(int id, bool isActive, bool isReactivable, bool isToActiveImmediately,
-            IList<IMonster> monsters, string player) : base(id, isActive, isReactivable, isToActiveImmediately)
+            IList<IMonster> monsters, IPlayer player) : base(id, isActive, isReactivable, isToActiveImmediately)
         {
             _monsters = monsters;
             _player = player;
@@ -39,7 +38,7 @@ namespace Pokaiju.Carafassi.GameEvents
         {
             foreach (IMonster monster in _monsters)
             {
-                // TODO _player.AddMonster(monster);
+                _player.AddMonster(monster);
             }
         }
 

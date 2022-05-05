@@ -1,6 +1,5 @@
-using Pokaiju.Barattini;
-
 namespace Pokaiju.Guo.GameItem;
+using Barattini;
 
 public abstract class AbstractGameItem : IGameItem
 {
@@ -42,7 +41,7 @@ public abstract class AbstractGameItem : IGameItem
     public abstract bool Use(IMonster? m);
 
 
-    protected bool Equals(AbstractGameItem other)
+    private bool Equals(AbstractGameItem other)
     {
         return _nameItem == other._nameItem && _type == other._type;
     }
@@ -51,8 +50,7 @@ public abstract class AbstractGameItem : IGameItem
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != GetType()) return false;
-        return Equals((AbstractGameItem) obj);
+        return obj.GetType() == GetType() && Equals((AbstractGameItem) obj);
     }
 
     public override int GetHashCode()

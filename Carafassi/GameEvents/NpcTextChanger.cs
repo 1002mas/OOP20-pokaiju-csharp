@@ -1,39 +1,38 @@
-using Pokaiju.Castorina.Npc;
+namespace Pokaiju.Carafassi.GameEvents;
 
-namespace Pokaiju.Carafassi.GameEvents
+using Castorina.Npc;
+
+/// <summary>
+/// This class allows to create an event that changes a npc dialogue text.
+/// </summary>
+public class NpcTextChanger : AbstractGameEvent
 {
+    private readonly INpcSimple _npc;
+    private readonly int _textId;
+
     /// <summary>
-    /// This class allows to create an event that changes a npc dialogue text.
+    /// It creates an event that allows to change a npc sentence.
     /// </summary>
-    public class NpcTextChanger : AbstractGameEvent
+    /// <param name="id">It is used to identify the event.</param>
+    /// <param name="isActive">If it is active when the player interacts with a trigger,
+    /// this event will use <see cref="AbstractGameEvent.Activate()"/></param>
+    /// <param name="isReactivable">If the event has to be has to deactivate and never be reactivated after
+    /// calling the function <see cref="AbstractGameEvent.Activate()"/></param>
+    /// <param name="isToActiveImmediately">If the event has to be activated right after
+    /// another event is triggered.</param>
+    /// <param name="npc">The npc that changes sentence.</param>
+    /// <param name="textId">Sentence ID. Be careful, there is no check about the id. Giving a wrong ID
+    /// will result in an error later.</param>
+    public NpcTextChanger(int id, bool isActive, bool isReactivable, bool isToActiveImmediately, INpcSimple npc,
+        int textId) : base(id, isActive, isReactivable, isToActiveImmediately)
     {
-        private readonly INpcSimple _npc;
-        private readonly int _textId;
+        _npc = npc;
+        _textId = textId;
+    }
 
-        /// <summary>
-        /// It creates an event that allows to change a npc sentence.
-        /// </summary>
-        /// <param name="id">It is used to identify the event.</param>
-        /// <param name="isActive">If it is active when the player interacts with a trigger,
-        /// this event will use <see cref="AbstractGameEvent.Activate()"/></param>
-        /// <param name="isReactivable">If the event has to be has to deactivate and never be reactivated after
-        /// calling the function <see cref="AbstractGameEvent.Activate()"/></param>
-        /// <param name="isToActiveImmediately">If the event has to be activated right after
-        /// another event is triggered.</param>
-        /// <param name="npc">The npc that changes sentence.</param>
-        /// <param name="textId">Sentence ID. Be careful, there is no check about the id. Giving a wrong ID
-        /// will result in an error later.</param>
-        public NpcTextChanger(int id, bool isActive, bool isReactivable, bool isToActiveImmediately, INpcSimple npc,
-            int textId) : base(id, isActive, isReactivable, isToActiveImmediately)
-        {
-            _npc = npc;
-            _textId = textId;
-        }
-
-        /// <inheritdoc cref="AbstractGameEvent.ActivateEvent" />
-        protected override void ActivateEvent()
-        {
-            _npc.SetDialogueText(_textId);
-        }
+    /// <inheritdoc cref="AbstractGameEvent.ActivateEvent" />
+    protected override void ActivateEvent()
+    {
+        _npc.SetDialogueText(_textId);
     }
 }

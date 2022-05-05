@@ -22,26 +22,26 @@ public class NpcTrainer : NpcSimple, INpcTrainer
     public NpcTrainer(string name, IList<string> sentences, Tuple<int, int> position, bool isVisible, 
         bool isEnabled, IList<IMonster> monsterOwned, bool isDefeated) : base(name, TypeOfNpc.Trainer, sentences, position, isVisible, isEnabled)
     {
-        this._monstersOwned = monsterOwned;
-        this._isDefeated = isDefeated;
+        _monstersOwned = monsterOwned;
+        _isDefeated = isDefeated;
     }
     
     /// <inheritdoc cref="INpcTrainer.GetMonstersOwned"/>
     public IList<IMonster> GetMonstersOwned()
     {
-        return this._monstersOwned;
+        return _monstersOwned;
     }
     
     /// <inheritdoc cref="INpcTrainer.IsDefeated"/>
     public bool IsDefeated()
     {
-        return this._isDefeated;
+        return _isDefeated;
     }
     
     /// <inheritdoc cref="INpcTrainer.SetDefeated"/>
     public void SetDefeated(bool isDefeated)
     {
-        this._isDefeated = isDefeated;
+        _isDefeated = isDefeated;
         SetDialogueText(IsDefeated() ? DefeatedTextId : 0);
     }
 }

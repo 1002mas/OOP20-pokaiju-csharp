@@ -15,14 +15,13 @@ public interface INpcSimple
     /// <summary>
     /// This function returns npc statement if it is a talking one.
     /// </summary>
-    /// <returns>a string Option containing a sentence if is a talking one, an
-    /// Option.None otherwise</returns>        
+    /// <returns>a string Option containing a sentence if is a talking one, an  Option.None otherwise</returns>        
     Option<string> InteractWith();
 
     /// <summary>
-    ///This function returns a triggered event.
+    /// This function returns a triggered event.
     /// </summary>
-    ///<returns>the event if any is triggered, Option.None otherwise</returns>
+    /// <returns>the event if any is triggered, Option.None otherwise</returns>
     Option<IGameEvent> GetTriggeredEvent();
 
 
@@ -40,17 +39,17 @@ public interface INpcSimple
     TypeOfNpc GetTypeOfNpc();
 
 
-    ///<summary>
-    ///This function returns npc position.
+    /// <summary>
+    /// This function returns npc position.
     /// </summary>
     /// <returns>NpcPosition</returns>      
     Tuple<int, int> GetPosition();
 
 
-    ///<summary>
+    /// <summary>
     /// This function changes the npc position in the map.
-    ///</summary>
-    ///<param name="newPosition"></param>
+    /// </summary>
+    /// <param name="newPosition"></param>
     void ChangeNpcPosition(Tuple<int, int> newPosition);
 
 
@@ -78,17 +77,17 @@ public interface INpcSimple
     /// <param name="enabled"></param>       
     void SetEnabled(bool enabled);
 
-    ///<summary>
-    ///This function adds an event that may trigger interacting with the player.
+    /// <summary>
+    /// This function adds an event that may trigger interacting with the player.
     /// </summary>
     /// <param name="gameEvent"></param>
     void AddGameEvent(IGameEvent gameEvent);
 
 
-    ///<summary>
-    ///This function returns a list of game events triggered by interacting with the npc.
-    ///</summary>
-    ///<returns>npc game events</returns>
+    /// <summary>
+    /// This function returns a list of game events triggered by interacting with the npc.
+    /// </summary>
+    /// <returns>npc game events</returns>
 
     IList<IGameEvent> GetGameEvents();
 

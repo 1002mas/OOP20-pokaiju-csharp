@@ -1,0 +1,11 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=771217ae_002Dd30e_002D49bd_002Db588_002D1345411ee386/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from TestNpc.cs #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Castorina/f:TestNpc.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Castorina/f:MonsterStorageTest.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Guo/f:TestPlayer.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Pierantoni/f:TestBattle.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Castorina/d:Tests/f:TestNpc.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;7F3EC473-9F64-0C0F-061A-5CE895EFF40B/d:Castorina/d:Tests/f:TestMonsterStorage.cs&lt;/ProjectFile&gt;&#xD;
+  &lt;/Or&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

@@ -7,7 +7,7 @@ namespace Pokaiju.Castorina.Npc;
 public class NpcHealer : NpcSimple
 {
     private readonly IPlayer _player;
-    
+
     /// <summary>
     /// Constructor for NpcHealer 
     /// </summary>
@@ -22,29 +22,29 @@ public class NpcHealer : NpcSimple
     {
         this._player = player;
     }
- 
-    private void Heal() 
+
+    private void Heal()
     {
-        foreach ( IMonster monster in this._player.GetAllMonsters()) 
+        foreach (IMonster monster in this._player.GetAllMonsters())
         {
             monster.SetHealth(monster.GetMaxHealth());
             monster.RestoreAllMovesPp();
         }
 
     }
-    
+
     /// <summary>
     /// Override of InteractWith() in NpcSimple  
     /// </summary>
     /// <returns>Option of string </returns>
-    public override Option<string> InteractWith() 
+    public override Option<string> InteractWith()
     {
         Option<string> result = base.InteractWith();
-        if (IsEnabled()) 
+        if (IsEnabled())
         {
             Heal();
         }
+
         return result;
     }
-
 }

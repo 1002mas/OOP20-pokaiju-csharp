@@ -1,6 +1,5 @@
-using Pokaiju.Barattini;
-
 namespace Pokaiju.Guo.GameItem;
+using Barattini;
 
 public abstract class AbstractGameItem : IGameItem
 {

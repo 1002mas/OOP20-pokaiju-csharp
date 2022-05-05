@@ -1,7 +1,5 @@
-using Pokaiju.Barattini;
-
-
 namespace Pokaiju.Guo.GameItem;
+using Barattini;
 
 public class EvolutionItem : AbstractGameItem
 {

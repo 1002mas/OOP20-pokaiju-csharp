@@ -74,7 +74,7 @@ public class TestPlayer
         _player.AddMonster(_monsterB);
         Assert.AreEqual(2, _player.GetAllMonsters().Count);
         Assert.False(_player.GetAllMonsters().Contains(_monsterC));
-        Assert.Equals("bibol", _player.GetAllMonsters()[0].GetName());
+        Assert.AreEqual("bibol", _player.GetAllMonsters()[0].GetName());
         Assert.AreNotEqual("bibol", _player.GetAllMonsters()[1].GetName());
         Assert.True(_player.RemoveMonster(_monsterB));
         Assert.False(_player.RemoveMonster(_monsterC));

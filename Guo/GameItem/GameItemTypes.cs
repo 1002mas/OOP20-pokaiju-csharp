@@ -1,6 +1,5 @@
-using System.Reflection;
-
 namespace Pokaiju.Guo.GameItem;
+using System.Reflection;
 
  class ItemAttr : Attribute
 {
@@ -19,7 +18,7 @@ public static class GameItemType
 {
     private static ItemAttr GetAttr(GameItemTypes p)
     {
-        ItemAttr? itemAtt = (ItemAttr?) Attribute.GetCustomAttribute(ForValue(p), typeof(ItemAttr));
+        var itemAtt = (ItemAttr?) Attribute.GetCustomAttribute(ForValue(p), typeof(ItemAttr));
         if (itemAtt is null)
         {
             throw new ArgumentNullException();
@@ -29,7 +28,7 @@ public static class GameItemType
     }
     private static MemberInfo ForValue(GameItemTypes p)
     {
-        string? name = Enum.GetName(typeof(GameItemTypes), p);
+        var name = Enum.GetName(typeof(GameItemTypes), p);
         if (name is null)
         {
             throw new ArgumentException();

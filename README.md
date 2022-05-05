@@ -2,7 +2,7 @@
 
 ## Description
 
-University C# partial translation project.
+C# partial translation of an universitary project.
 
 ## See Also
 

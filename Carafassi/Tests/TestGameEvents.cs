@@ -12,10 +12,10 @@ namespace Pokaiju.Carafassi.Tests
     [TestFixture]
     public class TestGameEvents
     {
-        private IPlayer _player;
-        private IMonster _monsterA;
-        private IMonster _monsterB;
-        private IMonster _monsterC;
+        private IPlayer? _player;
+        private IMonster? _monsterA;
+        private IMonster? _monsterB;
+        private IMonster? _monsterC;
 
         [SetUp]
         public void SetUp()

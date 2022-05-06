@@ -38,7 +38,7 @@ public class GameMap : IGameMap
                (!npc.HasValue || npc.HasValue && !npc.ValueOrFailure().IsEnabled());
     }
 
-    private static IList<Tuple<IMoves, int>> GetRandomListMoves(IMonsterSpecies species)
+    private IList<Tuple<IMoves, int>> GetRandomListMoves(IMonsterSpecies species)
     {
         const int maxProb = 10;
         const int prob = 5;

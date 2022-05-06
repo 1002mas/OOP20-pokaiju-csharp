@@ -74,7 +74,7 @@ public class TestGameEvents
         Assert.IsFalse(npcEvent.IsReactivable);
     }
 
-    private static IGameMap InitMonsterSpawnMap(Tuple<int, int> eventPosition, IEnumerable<INpcSimple> npcs,
+    private IGameMap InitMonsterSpawnMap(Tuple<int, int> eventPosition, IEnumerable<INpcSimple> npcs,
         IGameEvent monsterEvent)
     {
         IDictionary<Tuple<int, int>, MapBlockType> blocks = new Dictionary<Tuple<int, int>, MapBlockType>();
